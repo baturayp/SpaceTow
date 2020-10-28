@@ -5,15 +5,6 @@ using Cinemachine;
 
 public class Conductor : MonoBehaviour
 {
-	// [Header("Animated objects in the scene")]
-	// [Tooltip("Select all objects that needs to pause and start")]
-	// public GameObject[] animatedObjects;
-	// public ParticleSystem[] particles;
-
-	// [Header("Cinemachine cameras")]
-	// public GameObject startCam, vcCam1;
-	// public CinemachineVirtualCamera cineCam;
-
 	public enum Rank { PERFECT, GOOD, BAD, MISS, CONT };
 
 	public delegate void BeatOnHitAction(int trackNumber, Rank rank);
@@ -47,8 +38,6 @@ public class Conductor : MonoBehaviour
 	public float startLineY, finishLineY, removeLineY;
 
 	public float badOffsetY, goodOffsetY, perfectOffsetY;
-
-	private const float MobileOffsetMultiplier = 1.4f;
 
 	//different colors for each track
 	public Color[] trackColors;
@@ -96,7 +85,6 @@ public class Conductor : MonoBehaviour
 			//check if the node should be removed
 			if (previousMusicNodes[trackNumber].MultiTimesHit())
 			{
-				//print("Multi-Times Succeed!");
 				previousMusicNodes[trackNumber] = null;
 			}
 		}
@@ -113,19 +101,16 @@ public class Conductor : MonoBehaviour
             {
 				//not paused, ignore
 				if (!frontNode.paused) return;
-
 				//right time to start pressing
 				if (frontNode.paused && frontNode.beat > songposition - 0.30f && !frontNode.pressed)
                 {
 					frontNode.pressed = true;
-					frontNode.SetGradientColors(Color.green, Color.green, 1.0f);
 					BeatOnHitEvent?.Invoke(trackNumber, Rank.CONT);
 				}
-
 				//if too late to press
 				else if (frontNode.paused && frontNode.beat < songposition)
 				{
-					frontNode.SetGradientColors(Color.red, Color.red, 1.0f);
+					return;
 				}
 			}
 
@@ -176,12 +161,11 @@ public class Conductor : MonoBehaviour
 				queueForTracks[trackNumber].Dequeue();
 			}
 
-			//if pressed on right-time and released
+			//if pressed at right-time and released
 			if (frontNode.paused && frontNode.pressed && !frontNode.restartedLong)
             {
 				if (songposition > endTarget - 0.25f)
                 {
-					frontNode.SetGradientColors(Color.green, Color.green, 1.0f);
 					frontNode.PerfectHit();
 					KeyUpBeatEvent?.Invoke(trackNumber);
 					BeatOnHitEvent?.Invoke(trackNumber, Rank.PERFECT);
@@ -189,7 +173,6 @@ public class Conductor : MonoBehaviour
 				}
 				else if (songposition > endTarget - 0.40f)
                 {
-					frontNode.SetGradientColors(Color.yellow, Color.yellow, 1.0f);
 					frontNode.GoodHit();
 					KeyUpBeatEvent?.Invoke(trackNumber);
 					BeatOnHitEvent?.Invoke(trackNumber, Rank.GOOD);
@@ -197,7 +180,6 @@ public class Conductor : MonoBehaviour
 				}
 				else
                 {
-					frontNode.SetGradientColors(Color.red, Color.red, 1.0f);
 					frontNode.BadHit();
 					KeyUpBeatEvent?.Invoke(trackNumber);
 					BeatOnHitEvent?.Invoke(trackNumber, Rank.BAD);
@@ -212,13 +194,6 @@ public class Conductor : MonoBehaviour
 		//reset static variables
 		paused = true;
 		pauseTimeStamp = -1f;
-
-		//if in mobile platforms, multiply the offsets
-#if UNITY_IOS || UNITY_ANDROID
-		perfectOffsetY *= MobileOffsetMultiplier;
-		goodOffsetY *= MobileOffsetMultiplier;
-		badOffsetY *= MobileOffsetMultiplier;
-#endif
 
 		//display countdown canvas
 		countDownCanvas.SetActive(true);
@@ -273,8 +248,6 @@ public class Conductor : MonoBehaviour
 	{
 		yield return new WaitForSeconds(0.001f);
 		SetGameObjects(false);
-		// startCam.SetActive(false);
-		// vcCam1.SetActive(true);
 	}
 
 	void StartSong()
@@ -415,7 +388,7 @@ public class Conductor : MonoBehaviour
 					currNode.restartedLong = true;
 					BeatOnHitEvent?.Invoke(i, Rank.MISS);
 					KeyUpBeatEvent?.Invoke(i);
-					currNode.DeactivationRedirector(Color.red);
+					currNode.FadeOutRedirector();
 					queueForTracks[i].Dequeue();
 				}
 			}
@@ -487,10 +460,6 @@ public class Conductor : MonoBehaviour
 
 	void SetGameObjects(bool state)
 	{
-		// foreach(var ani in animatedObjects){ani.GetComponent<Animator>().enabled = state;}
-		// if (state) { cineCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 1; }
-		// if (!state) { cineCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 0; }
-		// if (state) { foreach (var particle in particles) { particle.Play(); } }
-		// if (!state) { foreach (var particle in particles) { particle.Pause(); } }
+		//animated objects that needs to paused when song paused
 	}
 }

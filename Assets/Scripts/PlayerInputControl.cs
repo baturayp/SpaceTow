@@ -9,7 +9,7 @@ public class PlayerInputControl : MonoBehaviour
     public delegate void KeyupAction(int trackNumber);
     public static event KeyupAction KeyupEvent;
 
-    public CircleCollider2D[] tappingSpheres;
+    public BoxCollider2D[] tappingBoxes;
 
     //in unity editor & standalone, input by keyboard
 #if UNITY_EDITOR || UNITY_STANDALONE
@@ -21,13 +21,11 @@ public class PlayerInputControl : MonoBehaviour
 
     void Start()
     {
-        trackLength = tappingSpheres.Length;
-        //just for debugging
+        trackLength = 2;
 #if UNITY_EDITOR || UNITY_STANDALONE
         keybindings = new KeyCode[4];
         keybindings[0] = KeyboardInputManager.instance.GetKeyCode(KeyboardInputManager.KeyBindings.Track1);
         keybindings[1] = KeyboardInputManager.instance.GetKeyCode(KeyboardInputManager.KeyBindings.Track2);
-        keybindings[2] = KeyboardInputManager.instance.GetKeyCode(KeyboardInputManager.KeyBindings.Track3);
         pauseKey = KeyboardInputManager.instance.GetKeyCode(KeyboardInputManager.KeyBindings.Pause);
 #endif
     }
@@ -65,7 +63,7 @@ public class PlayerInputControl : MonoBehaviour
                 //check if on a tapping sphere
                 for (int i = 0; i < trackLength; i++)
                 {
-                    if (tappingSpheres[i].OverlapPoint(Camera.main.ScreenToWorldPoint(touch.position)))
+                    if (tappingBoxes[i].OverlapPoint(Camera.main.ScreenToWorldPoint(touch.position)))
                     {
                         Inputted(i);
                     }
@@ -77,7 +75,7 @@ public class PlayerInputControl : MonoBehaviour
                 //check if on a tapping sphere
                 for (int i = 0; i < trackLength; i++)
                 {
-                    if (tappingSpheres[i].OverlapPoint(Camera.main.ScreenToWorldPoint(touch.position)))
+                    if (tappingBoxes[i].OverlapPoint(Camera.main.ScreenToWorldPoint(touch.position)))
                     {
                         Keyup(i);
                     }

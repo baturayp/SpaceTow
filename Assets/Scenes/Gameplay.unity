@@ -580,8 +580,7 @@ MonoBehaviour:
   scoreBoard: {fileID: 1999020094}
   trackSpawnPosX:
   - -7
-  - 5
-  - 8
+  - 7
   startLineY: 8
   finishLineY: -3.5
   removeLineY: -6
@@ -591,7 +590,6 @@ MonoBehaviour:
   trackColors:
   - {r: 0.54509807, g: 0.33333334, b: 0.9882353, a: 1}
   - {r: 0.2901961, g: 0.27058825, b: 1, a: 1}
-  - {r: 0.32941177, g: 0.59607846, b: 0.972549, a: 1}
   countDownCanvas: {fileID: 1759781536}
   countDownText: {fileID: 1759781537}
 --- !u!4 &1760618930
@@ -712,6 +710,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 763348145328464640, guid: e12e70d4a29d6594092965241800a512, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 763348147430866705, guid: e12e70d4a29d6594092965241800a512, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -799,6 +801,10 @@ PrefabInstance:
     - target: {fileID: 763348147430866709, guid: e12e70d4a29d6594092965241800a512, type: 3}
       propertyPath: m_Name
       value: UIController
+      objectReference: {fileID: 0}
+    - target: {fileID: 4150257978472884241, guid: e12e70d4a29d6594092965241800a512, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e12e70d4a29d6594092965241800a512, type: 3}

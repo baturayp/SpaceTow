@@ -4,9 +4,6 @@ public class ParticleSystemManager : MonoBehaviour
 {
 	public ParticleSet[] particleSet;
 
-	public ParticleSystem perfectionEffect;
-	public ParticleSystem heartScoreEffect;
-
 	void Start()
 	{
 		Conductor.BeatOnHitEvent += BeatOnHit;
@@ -25,12 +22,10 @@ public class ParticleSystemManager : MonoBehaviour
 		if (rank == Conductor.Rank.PERFECT)
 		{
 			particleSet[track].perfect.Play();
-			perfectionEffect.Play();
 			//heartScoreEffect.Play();
 		}
 		if (rank == Conductor.Rank.GOOD)
 		{
-			perfectionEffect.Play();
 			particleSet[track].good.Play();
 		}
 		if (rank == Conductor.Rank.BAD)
