@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MusicNode : MonoBehaviour
 {
-	public TextMesh timesText;
 	public SpriteRenderer ringSprite;
+	public GameObject sphereObj;
 	public Color color;
 	[NonSerialized] public float startY;
 	[NonSerialized] public float endY;
@@ -43,10 +43,6 @@ public class MusicNode : MonoBehaviour
 
 		//reset rotation
 		transform.Rotate(0, 0, 0);
-
-		//set times
-		if (times > 0) timesText.text = times.ToString();
-		else timesText.text = "";
 	}
 
 	void Update()
@@ -107,9 +103,6 @@ public class MusicNode : MonoBehaviour
 			StartCoroutine(FadeOut());
 			return true;
 		}
-
-		timesText.text = times.ToString();
-
 		return false;
 	}
 
