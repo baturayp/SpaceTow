@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class MusicNode : MonoBehaviour
 {
-	public SpriteRenderer ringSprite;
-	public GameObject sphereObj;
-	public Color color;
+	public SpriteRenderer targetSprite;
 	[NonSerialized] public float startY;
 	[NonSerialized] public float endY;
 	[NonSerialized] public float removeLineY;
@@ -16,9 +14,11 @@ public class MusicNode : MonoBehaviour
 	[NonSerialized] public bool paused;
 	[NonSerialized] public bool restartedLong;
 	[NonSerialized] public bool pressed;
+	private MeteorNode meteorNode;
+	private float startZ, endZ;
 
 
-	public void Initialize(float posX, float startY, float endY, float removeLineY, float posZ, float targetBeat, int times, float duration, Color color)
+	public void Initialize(float posX, float startY, float endY, float removeLineY, float startLineZ, float finishLineZ, float posZ, float targetBeat, int times, float duration, MeteorNode meteor)
 	{
 		this.startY = startY;
 		this.endY = endY;
@@ -26,7 +26,9 @@ public class MusicNode : MonoBehaviour
 		this.times = times;
 		this.duration = duration;
 		this.removeLineY = removeLineY;
-		this.color = color;
+		this.startZ = startLineZ;
+		this.endZ = finishLineZ;
+		this.meteorNode = meteor;
 
 		paused = false;
 		restartedLong = false;
@@ -35,14 +37,15 @@ public class MusicNode : MonoBehaviour
 		//set position
 		transform.position = new Vector3(posX, startY, posZ);
 
-		//set color
-		ringSprite.color = color;
+		meteorNode.transform.position = new Vector3(posX, endY, startLineZ);
 
 		//set scale
 		transform.localScale = new Vector3(1, 1, 1);
 
 		//reset rotation
 		transform.Rotate(0, 0, 0);
+
+		targetSprite.color = new Color(0,0,0,0);
 	}
 
 	void Update()
@@ -57,12 +60,17 @@ public class MusicNode : MonoBehaviour
 		//remove itself when out of the screen (remove line)
 		if (transform.position.y < removeLineY)
 		{
+			meteorNode.gameObject.SetActive(false);
 			gameObject.SetActive(false);
 		}
 		
 		//avoid transforming when paused
 		if (paused) return;
 
+		//meteor position
+		meteorNode.transform.position = new Vector3(transform.position.x, endY, startZ + (endZ - startZ) * (1f - ((beat) - Conductor.songposition) / (Conductor.BeatsShownOnScreen / Conductor.tempo)));
+
+		//node position
 		transform.position = new Vector3(transform.position.x, startY + (endY - startY) * (1f - ((beat) - Conductor.songposition) / (Conductor.BeatsShownOnScreen / Conductor.tempo)), transform.position.z);
 	}
 
@@ -74,15 +82,16 @@ public class MusicNode : MonoBehaviour
 	IEnumerator FadeOut()
 	{
 		float elapsedTime = 0.0f;
-		Color c = ringSprite.color;
+		Color c = targetSprite.color;
 		while (elapsedTime < 0.2f)
 		{
 			elapsedTime += Time.deltaTime;
 			c.a = 1.0f - Mathf.Clamp01(elapsedTime / 0.2f);
-			ringSprite.color = c;
+			targetSprite.color = c;
 			transform.localScale = new Vector3(1 + elapsedTime, 1 + elapsedTime, 1);
 			yield return null;
 		}
+		meteorNode.gameObject.SetActive(false);
 		gameObject.SetActive(false);
 	}
 
@@ -96,7 +105,7 @@ public class MusicNode : MonoBehaviour
 	public bool MultiTimesHit()
 	{
 		//update text
-		ringSprite.color = Color.green;
+		targetSprite.color = Color.green;
 		times--;
 		if (times == 0)
 		{
@@ -109,21 +118,21 @@ public class MusicNode : MonoBehaviour
 	public void PerfectHit()
 	{
 		paused = true;
-		if (duration == 0) ringSprite.color = Color.green;
+		if (duration == 0) targetSprite.color = Color.green;
 		StartCoroutine(FadeOut());
 	}
 
 	public void GoodHit()
 	{
 		paused = true;
-		if (duration == 0) ringSprite.color = Color.yellow;
+		if (duration == 0) targetSprite.color = Color.yellow;
 		StartCoroutine(FadeOut());
 	}
 
 	public void BadHit()
 	{
 		paused = true;
-		if (duration == 0) ringSprite.color = Color.red;
+		if (duration == 0) targetSprite.color = Color.red;
 		StartCoroutine(FadeOut());
 	}
 }

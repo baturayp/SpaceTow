@@ -10,7 +10,7 @@ public class PlayingUIController : MonoBehaviour
 	public GameObject scoreText;
 
 	//save score
-	private int currLiveCount = 15, currPerfection = 0, fullNoteCounts;
+	private int currLiveCount = 45, currPerfection = 0, fullNoteCounts;
 
 	//fade in-out layer
 	public Image fadeInOut;

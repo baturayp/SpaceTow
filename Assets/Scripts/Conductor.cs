@@ -35,12 +35,10 @@ public class Conductor : MonoBehaviour
 	[Header("Node spawn points")]
 	public float[] trackSpawnPosX;
 
-	public float startLineY, finishLineY, removeLineY;
+	//z axis belongs to meteor object
+	public float startLineY, finishLineY, removeLineY, startLineZ, finishLineZ;
 
 	public float badOffsetY, goodOffsetY, perfectOffsetY;
-
-	//different colors for each track
-	public Color[] trackColors;
 
 	//current song position and remaining time
 	public static float songposition, remainingTime;
@@ -65,7 +63,7 @@ public class Conductor : MonoBehaviour
 	private const int StartCountDown = 3;
 	public GameObject countDownCanvas, countDownText;
 
-	//z coordinate of music nodes
+	//z coordinate of music nodes, unnecessary now but keeping
 	private float layerZ = 0f;
 
 	//total tracks
@@ -309,7 +307,7 @@ public class Conductor : MonoBehaviour
 				SongInfo.Note currNote = currTrack.notes[nextIndex];
 
 				//get a new node
-				MusicNode musicNode = MusicNodePool.instance.GetNode(trackSpawnPosX[i], startLineY, finishLineY, removeLineY, layerZ, currNote.dueTo, currNote.manyTimes, currNote.duration, trackColors[i]);
+				MusicNode musicNode = MusicNodePool.instance.GetNode(trackSpawnPosX[i], startLineY, finishLineY, removeLineY, startLineZ, finishLineZ, layerZ, currNote.dueTo, currNote.manyTimes, currNote.duration);
 
 				//enqueue
 				queueForTracks[i].Enqueue(musicNode);
