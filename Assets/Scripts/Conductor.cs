@@ -65,10 +65,8 @@ public class Conductor : MonoBehaviour
 	private const int StartCountDown = 3;
 	public GameObject countDownCanvas, countDownText;
 
-
-	//layer each music node, so that the first one would be at the front
-	private const float LayerOffsetZ = 0.001f, FirstLayerZ = -6f;
-	private float[] nextLayerZ;
+	//z coordinate of music nodes
+	private float layerZ = 0f;
 
 	//total tracks
 	private int len;
@@ -215,7 +213,6 @@ public class Conductor : MonoBehaviour
 		//initialize arrays
 		len = trackSpawnPosX.Length;
 		trackNextIndices = new int[len];
-		nextLayerZ = new float[len];
 		queueForTracks = new Queue<MusicNode>[len];
 		previousMusicNodes = new MusicNode[len];
 		for (int i = 0; i < len; i++)
@@ -223,7 +220,6 @@ public class Conductor : MonoBehaviour
 			trackNextIndices[i] = 0;
 			queueForTracks[i] = new Queue<MusicNode>();
 			previousMusicNodes[i] = null;
-			nextLayerZ[i] = FirstLayerZ;
 		}
 
 		tracks = songInfo.tracks; //keep a reference of the tracks
@@ -311,10 +307,6 @@ public class Conductor : MonoBehaviour
 			if (nextIndex < currTrack.notes.Length && currTrack.notes[nextIndex].dueTo < beatToShow)
 			{
 				SongInfo.Note currNote = currTrack.notes[nextIndex];
-
-				//set z position
-				float layerZ = nextLayerZ[i];
-				nextLayerZ[i] += LayerOffsetZ;
 
 				//get a new node
 				MusicNode musicNode = MusicNodePool.instance.GetNode(trackSpawnPosX[i], startLineY, finishLineY, removeLineY, layerZ, currNote.dueTo, currNote.manyTimes, currNote.duration, trackColors[i]);
