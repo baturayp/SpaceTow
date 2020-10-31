@@ -19,6 +19,8 @@ public class PlayerInputControl : MonoBehaviour
     //cache the number of tracks
     private int trackLength;
 
+    public Animator punchAnim;
+
     void Start()
     {
         trackLength = 2;
@@ -89,6 +91,7 @@ public class PlayerInputControl : MonoBehaviour
     {
         //inform Conductor and other interested classes
         InputtedEvent?.Invoke(i);
+        punchAnim.SetTrigger(i.ToString());
     }
 
     void Keyup(int i)
