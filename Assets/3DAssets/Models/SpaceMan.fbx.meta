@@ -15,6 +15,9 @@ ModelImporter:
   - first:
       74: 786504323170427181
     second: Armature|T-Pose
+  - first:
+      74: 6795751423787487312
+    second: Armature|PunchFourFrame
   externalObjects:
   - first:
       type: UnityEngine:Material
