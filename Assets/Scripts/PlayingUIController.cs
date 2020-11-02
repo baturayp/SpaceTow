@@ -31,8 +31,8 @@ public class PlayingUIController : MonoBehaviour
 
 	void Start()
 	{
-		//get the length of all notes from messenger
-		fullNoteCounts = SongInfoMessenger.Instance.currentSong.TotalHitCounts();
+		//length of all notes
+		fullNoteCounts = Conductor.fullNoteCounts;
 
 		//register to events
 		Conductor.BeatOnHitEvent += BeatOnHit;

@@ -32,6 +32,11 @@ public class Conductor : MonoBehaviour
 
 	private SongInfo songInfo;
 
+	//song to play without selecting it from main menu
+	public SongInfo developmentSong;
+
+	public static int fullNoteCounts;
+
 	[Header("Node spawn points")]
 	public float[] trackSpawnPosX;
 
@@ -60,7 +65,6 @@ public class Conductor : MonoBehaviour
 	public static float BeatsShownOnScreen = 4f, tempo = 1f;
 
 	//count down canvas
-	private const int StartCountDown = 3;
 	public GameObject countDownCanvas, countDownText;
 
 	//z coordinate of music nodes, unnecessary now but keeping
@@ -195,9 +199,12 @@ public class Conductor : MonoBehaviour
 		countDownCanvas.SetActive(true);
 
 		//get the song info from messenger
-		songInfo = SongInfoMessenger.Instance.currentSong;
+		//songInfo = SongInfoMessenger.Instance.currentSong;
+		songInfo = developmentSong;
+
 		tempo = songInfo.tempo;
 		BeatsShownOnScreen = songInfo.beatsShownOnScreen;
+		fullNoteCounts = songInfo.TotalHitCounts();
 
 		//listen to player input
 		PlayerInputControl.InputtedEvent += PlayerInputted;
@@ -234,8 +241,13 @@ public class Conductor : MonoBehaviour
 
 		AudioSource.volume = PlayerPrefs.GetFloat("Volume", 1f);
 
+#if UNITY_EDITOR
+		countDownCanvas.SetActive(false);
+#endif
+#if UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
 		//start countdown
 		StartCoroutine(CountDown());
+#endif
 	}
 
 	IEnumerator AnimationCoroutine()
@@ -291,7 +303,7 @@ public class Conductor : MonoBehaviour
 		songposition = (float)(AudioSettings.dspTime - dsptimesong - pausedTime) * AudioSource.pitch - (songInfo.songOffset);
 
 		//remaining time
-		remainingTime = SongInfoMessenger.Instance.currentSong.endTime - songposition;
+		remainingTime = songInfo.endTime - songposition;
 
 		//check if need to instantiate new nodes
 		float beatToShow = songposition + (BeatsShownOnScreen / tempo);
@@ -399,7 +411,7 @@ public class Conductor : MonoBehaviour
 			}
 		}
 
-		float endTime = SongInfoMessenger.Instance.currentSong.endTime;
+		float endTime = songInfo.endTime;
 
 		//check to see if the song reaches its end
 		if (songposition > songLength || songposition > endTime)
@@ -426,7 +438,7 @@ public class Conductor : MonoBehaviour
 	{
 		yield return new WaitForSeconds(1f);
 
-		for (int i = StartCountDown; i >= 1; i--)
+		for (int i = 3; i >= 1; i--)
 		{
 			countDownText.GetComponent<TMPro.TextMeshProUGUI>().text = i.ToString();
 			yield return new WaitForSeconds(1f);

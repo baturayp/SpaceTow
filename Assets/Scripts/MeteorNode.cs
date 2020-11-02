@@ -7,6 +7,6 @@ public class MeteorNode : MonoBehaviour
 {
     public void Initialize()
     {
-        Debug.Log("meteor initialized");
+        //nothing to do yet
     }
 }
