@@ -1,0 +1,5 @@
+- 2 yeni animasyon eklendi
+- meteorların patladıkları noktada benzer büyüklükte olmaları için yakınlıkları farklı olmalı (perspektif)
+- bunu deneyip nasıl oluyor görmek tüm animasyonları yapmadan iyi olur..
+
+-- Unutmamak için yazıyorum daha sonra yaparız bunları :D

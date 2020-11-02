@@ -7,26 +7,50 @@ ModelImporter:
       74: -8945691123924629249
     second: Armature|Idle
   - first:
-      74: -6566819505719510916
-    second: Armature|Punch1
+      74: 5508062484833401239
+    second: Armature|PoseLib
   - first:
-      74: -1648772618289597411
-    second: Armature|PunchOneFrame
+      74: 7293978552787028566
+    second: Armature|Punch1_0
   - first:
-      74: 786504323170427181
-    second: Armature|T-Pose
+      74: 8871966576100612174
+    second: Armature|Punch1_1
   - first:
-      74: 6795751423787487312
-    second: Armature|PunchFourFrame
+      74: -1059064167393392061
+    second: Armature|Punch1_2
   - first:
-      74: 3717183778975177081
-    second: Armature|Punch1_13Frame
+      74: -4615006979906458688
+    second: Armature|Punch1_3
+  - first:
+      74: -8305029253461725828
+    second: Armature|Punch1_4
   - first:
       74: 8985758319066205193
     second: Armature|Punch1_End
   - first:
-      74: -1402788139681073414
-    second: Armature|Punch2_13Frame
+      74: -6756484947066824930
+    second: Armature|Punch1All
+  - first:
+      74: 4772771695555923998
+    second: Armature|Punch2_0
+  - first:
+      74: -4228627392531135011
+    second: Armature|Punch2_1
+  - first:
+      74: 6948737068079705407
+    second: Armature|Punch2_2
+  - first:
+      74: -5278991564506169589
+    second: Armature|Punch2_3
+  - first:
+      74: 2812423004703813890
+    second: Armature|Punch2_4
+  - first:
+      74: 7763736993294003114
+    second: Armature|Punch2All
+  - first:
+      74: 786504323170427181
+    second: Armature|T-Pose
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -47,9 +71,68 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Armature|Punch1_End' has import animation warnings
+    animationImportWarnings: "\nClip 'Armature|Punch1_0' has import animation warnings
       that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'Arm_Up.R' has translation animation that
+      to improve retargeting quality.\n\t'Arm_Up.L' has translation animation that
+      will be discarded.\n\t'Arm_Up.R' has translation animation that will be discarded.\n\nClip
+      'Armature|Punch1_2' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Arm_Up.L'
+      has translation animation that will be discarded.\n\t'Arm_Down.L' has scale
+      animation that will be discarded.\n\t'Arm_Up.R' has translation animation that
+      will be discarded.\n\t'Arm_Down.R' has scale animation that will be discarded.\n\nClip
+      'Armature|Punch1_3' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Arm_Up.L'
+      has translation animation that will be discarded.\n\t'Arm_Down.L' has translation
+      animation that will be discarded.\n\t'Arm_Down.L' has scale animation that
+      will be discarded.\n\t'Arm_Down.R' has scale animation that will be discarded.\n\nClip
+      'Armature|Punch1_4' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Arm_Up.L'
+      has translation animation that will be discarded.\n\t'Arm_Down.L' has translation
+      animation that will be discarded.\n\t'Arm_Down.L' has scale animation that
+      will be discarded.\n\t'Arm_Down.R' has scale animation that will be discarded.\n\nClip
+      'Armature|Punch1_End' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Arm_Up.R'
+      has translation animation that will be discarded.\n\nClip 'Armature|Punch1All'
+      has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Arm_Up.L'
+      has translation animation that will be discarded.\n\t'Arm_Down.L' has translation
+      animation that will be discarded.\n\t'Arm_Down.L' has scale animation that
+      will be discarded.\n\t'Arm_Up.R' has translation animation that will be discarded.\n\t'Arm_Down.R'
+      has scale animation that will be discarded.\n\nClip 'Armature|Punch2_0' has
+      import animation warnings that might lower retargeting quality:\nNote: Activate
+      translation DOF on avatar to improve retargeting quality.\n\t'Spine_Up' has
+      scale animation that will be discarded.\n\t'Head' has scale animation that
+      will be discarded.\n\t'Arm_Up.L' has scale animation that will be discarded.\n\t'Arm_Up.R'
+      has scale animation that will be discarded.\n\nClip 'Armature|Punch2_2' has
+      import animation warnings that might lower retargeting quality:\nNote: Activate
+      translation DOF on avatar to improve retargeting quality.\n\t'Arm_Up.L' has
+      translation animation that will be discarded.\n\t'Arm_Down.L' has translation
+      animation that will be discarded.\n\t'Arm_Down.L' has scale animation that
+      will be discarded.\n\t'Arm_Up.R' has translation animation that will be discarded.\n\t'Arm_Down.R'
+      has translation animation that will be discarded.\n\t'Arm_Down.R' has scale
+      animation that will be discarded.\n\nClip 'Armature|Punch2_3' has import animation
+      warnings that might lower retargeting quality:\nNote: Activate translation
+      DOF on avatar to improve retargeting quality.\n\t'Arm_Up.L' has translation
+      animation that will be discarded.\n\t'Arm_Down.L' has translation animation
+      that will be discarded.\n\t'Arm_Down.L' has scale animation that will be discarded.\n\t'Arm_Up.R'
+      has translation animation that will be discarded.\n\t'Arm_Down.R' has translation
+      animation that will be discarded.\n\t'Arm_Down.R' has scale animation that
+      will be discarded.\n\nClip 'Armature|Punch2_4' has import animation warnings
+      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'Arm_Up.L' has translation animation that
+      will be discarded.\n\t'Arm_Down.L' has translation animation that will be discarded.\n\t'Arm_Down.L'
+      has scale animation that will be discarded.\n\t'Arm_Up.R' has translation animation
+      that will be discarded.\n\t'Arm_Down.R' has translation animation that will
+      be discarded.\n\t'Arm_Down.R' has scale animation that will be discarded.\n\nClip
+      'Armature|Punch2All' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Spine_Up'
+      has scale animation that will be discarded.\n\t'Head' has scale animation that
+      will be discarded.\n\t'Arm_Up.L' has translation animation that will be discarded.\n\t'Arm_Up.L'
+      has scale animation that will be discarded.\n\t'Arm_Down.L' has translation
+      animation that will be discarded.\n\t'Arm_Down.L' has scale animation that
+      will be discarded.\n\t'Arm_Up.R' has translation animation that will be discarded.\n\t'Arm_Up.R'
+      has scale animation that will be discarded.\n\t'Arm_Down.R' has translation
+      animation that will be discarded.\n\t'Arm_Down.R' has scale animation that
       will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
@@ -78,11 +161,11 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 1
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
+      keepOriginalPositionXZ: 1
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
@@ -93,11 +176,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|Punch1_13Frame
-      takeName: Armature|Punch1_13Frame
+      name: Armature|PoseLib
+      takeName: Armature|PoseLib
       internalID: 0
       firstFrame: 0
-      lastFrame: 12
+      lastFrame: 1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -122,8 +205,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|Punch1_End
-      takeName: Armature|Punch1_End
+      name: Armature|Punch1_0
+      takeName: Armature|Punch1_0
       internalID: 0
       firstFrame: 0
       lastFrame: 2
@@ -151,25 +234,25 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|Punch2_13Frame
-      takeName: Armature|Punch2_13Frame
+      name: Armature|Punch1_1
+      takeName: Armature|Punch1_1
       internalID: 0
       firstFrame: 0
-      lastFrame: 12
+      lastFrame: 2
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
+      keepOriginalPositionXZ: 1
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
@@ -180,8 +263,95 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|PunchFourFrame
-      takeName: Armature|PunchFourFrame
+      name: Armature|Punch1_2
+      takeName: Armature|Punch1_2
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 2
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Punch1_3
+      takeName: Armature|Punch1_3
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 5
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Punch1_4
+      takeName: Armature|Punch1_4
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 5
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Punch1_End
+      takeName: Armature|Punch1_End
       internalID: 0
       firstFrame: 0
       lastFrame: 4
@@ -209,8 +379,66 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|PunchOneFrame
-      takeName: Armature|PunchOneFrame
+      name: Armature|Punch1All
+      takeName: Armature|Punch1All
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 35
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Punch2_0
+      takeName: Armature|Punch2_0
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 2
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Punch2_1
+      takeName: Armature|Punch2_1
       internalID: 0
       firstFrame: 0
       lastFrame: 1
@@ -222,12 +450,128 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 1
-      loopBlendPositionY: 1
-      loopBlendPositionXZ: 1
-      keepOriginalOrientation: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Punch2_2
+      takeName: Armature|Punch2_2
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 2
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Punch2_3
+      takeName: Armature|Punch2_3
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 5
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Punch2_4
+      takeName: Armature|Punch2_4
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 5
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Punch2All
+      takeName: Armature|Punch2All
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 35
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
@@ -496,47 +840,47 @@ ModelImporter:
       parentName: Spine_Down
       position: {x: 3.3861802e-15, y: 0.106318116, z: 0.0000000037252899}
       rotation: {x: 0.00000003038882, y: -0.9877453, z: -0.15607452, w: -0.00000042781798}
-      scale: {x: 0.99999994, y: 1.0000002, z: 1.0000002}
+      scale: {x: 0.99999994, y: 1.0000005, z: 1.0000002}
     - name: Spine_Up
       parentName: Spine_Mid
-      position: {x: 1.6653345e-16, y: 0.15966357, z: -0.0000000055879354}
+      position: {x: -7.2164497e-16, y: 0.15966357, z: -0.0000000018626454}
       rotation: {x: -0.019972978, y: 0.000000015314894, z: -0.000000010287681, w: 0.9998005}
-      scale: {x: 1, y: 0.9999999, z: 0.9999998}
+      scale: {x: 1, y: 0.99999994, z: 0.9999999}
     - name: Head
       parentName: Spine_Up
-      position: {x: 0.0000000030411367, y: 0.3000335, z: 0.02625541}
+      position: {x: 0.0000000030411333, y: 0.3000335, z: 0.02625541}
       rotation: {x: 0.078310825, y: 0.00000009278389, z: -0.0000000070525994, w: 0.99692905}
-      scale: {x: 1, y: 0.9999998, z: 0.9999998}
+      scale: {x: 1, y: 0.9999999, z: 0.99999994}
     - name: Arm_Up.L
       parentName: Spine_Up
-      position: {x: -0.252969, y: 0.19115175, z: 0.111340195}
+      position: {x: -0.252969, y: 0.19115175, z: 0.1113402}
       rotation: {x: -0.45930898, y: 0.45930898, z: 0.53762, w: 0.53762}
-      scale: {x: 0.99999994, y: 1.0000004, z: 0.99999964}
+      scale: {x: 1.0000004, y: 1.0000011, z: 0.99999946}
     - name: Arm_Down.L
       parentName: Arm_Up.L
-      position: {x: 0.000000046100467, y: 0.21029215, z: 0.00000002188608}
+      position: {x: -0.000000013504177, y: 0.2102922, z: 0.00000001816079}
       rotation: {x: -0.000000014901159, y: -0.000000014901159, z: 0.00000004470348, w: 1}
-      scale: {x: 1.0000001, y: 1, z: 1.0000001}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1.0000001}
     - name: Hand.L
       parentName: Arm_Down.L
-      position: {x: -0.000000016530976, y: 0.23556279, z: 0.000000008381903}
+      position: {x: 0.000000012340024, y: 0.23556279, z: 0.000000019557774}
       rotation: {x: -0, y: -0, z: -2.2204455e-16, w: 1}
-      scale: {x: 0.9999997, y: 0.9999998, z: 1}
+      scale: {x: 1.0000002, y: 1.0000004, z: 0.99999994}
     - name: Arm_Up.R
       parentName: Spine_Up
-      position: {x: 0.25296906, y: 0.19115177, z: 0.11134008}
+      position: {x: 0.25296906, y: 0.19115177, z: 0.1113401}
       rotation: {x: -0.45930904, y: -0.4593088, z: -0.53761995, w: 0.5376201}
-      scale: {x: 1, y: 1.0000004, z: 0.9999998}
+      scale: {x: 0.9999999, y: 1.0000004, z: 0.99999946}
     - name: Arm_Down.R
       parentName: Arm_Up.R
-      position: {x: 0.0000000433065, y: 0.21029222, z: 0.000000016763806}
+      position: {x: 0.000000013038516, y: 0.21029224, z: 0.000000020489097}
       rotation: {x: -0, y: -0, z: -0.00000008940697, w: 1}
-      scale: {x: 1, y: 0.99999994, z: 1}
+      scale: {x: 1.0000004, y: 1.0000004, z: 1.0000002}
     - name: Hand.R
       parentName: Arm_Down.R
-      position: {x: 0.000000030267984, y: 0.23556273, z: 0.000000028871}
+      position: {x: -4.656613e-10, y: 0.23556276, z: -0.000000026077032}
       rotation: {x: -0, y: -0, z: -0, w: 1}
-      scale: {x: 1.0000001, y: 1.0000002, z: 1.0000001}
+      scale: {x: 1, y: 1, z: 0.9999999}
     - name: Leg_Up.R
       parentName: Spine_Down
       position: {x: -0.11415458, y: 0.021053784, z: -0.116081335}
@@ -556,7 +900,7 @@ ModelImporter:
       parentName: Foot.R
       position: {x: -0, y: 0.0734463, z: 0.000000013038516}
       rotation: {x: 0.0013079791, y: 0.9750392, z: -0.2220276, w: 0.00079002965}
-      scale: {x: 1.0000002, y: 1.0000001, z: 1.0000007}
+      scale: {x: 1.0000004, y: 1, z: 1.0000007}
     - name: SpaceMan
       parentName: SpaceMan(Clone)
       position: {x: -0, y: 0, z: 0}
