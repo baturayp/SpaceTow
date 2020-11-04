@@ -18,6 +18,8 @@ public class InfiniteStarField : MonoBehaviour
     public float starSize = 1.0f;
     public float starDistance = 10;
     public float starClipDistance = 2;
+    public Color starColor1;
+    public Color starColor2;
 
 
     // Start is called before the first frame update
@@ -77,12 +79,23 @@ public class InfiniteStarField : MonoBehaviour
                 randomVal.y *= -1;
 
 
-            float col1 = Random.Range(0.8f, 1f);
-            float col2 = Random.Range(0.8f, 1f);
-            float col3 = Random.Range(0.8f, 1f);
+            float col1 = Random.Range(0.0f, 0.4f);
+            float col2 = Random.Range(0.0f, 0.4f);
+            float col3 = Random.Range(0.0f, 0.4f);
+
+            Color newStarColor;
+
+            if (i % 2 == 0)
+            {
+                newStarColor = new Color(starColor1.r + col1, starColor1.g + col2, starColor1.b + col3, 1);
+            }
+            else
+            {
+                newStarColor = new Color(starColor2.r + col1, starColor2.g + col2, starColor2.b + col3, 1);
+            }
 
             points[i].position = randomVal * starDistance + tx.position;
-            points[i].startColor = new Color(col1, col2, col3, 1);
+            points[i].startColor = newStarColor;
             points[i].startSize = starSize;
 
 

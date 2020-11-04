@@ -86,5 +86,5 @@ Material:
     - _LightC: {r: 1, g: 0.76034176, b: 0, a: 1}
     - _MainColor: {r: 0.754717, g: 0.58974457, b: 0.49483803, a: 1}
     - _RimLight: {r: 1, g: 0.91382337, b: 0.68799996, a: 1}
-    - _ShadowColor: {r: 0.10849057, g: 0.15048689, b: 0.4339623, a: 1}
+    - _ShadowColor: {r: 0, g: 0.3122301, b: 0.38679248, a: 1}
   m_BuildTextureStacks: []
