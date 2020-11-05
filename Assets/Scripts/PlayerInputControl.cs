@@ -85,7 +85,8 @@ public class PlayerInputControl : MonoBehaviour
     {
         //inform Conductor and other interested classes
         InputtedEvent?.Invoke(i);
-        punchAnim.SetInteger("AnimSelection", i);
+        punchAnim.SetTrigger("PunchStart");
+        punchAnim.SetTrigger(i.ToString());
     }
 
     void Keyup(int i)

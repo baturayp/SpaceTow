@@ -15,6 +15,7 @@ public class MusicNode : MonoBehaviour
 	[NonSerialized] public bool restartedLong;
 	[NonSerialized] public bool pressed;
 	private MeteorNode meteorNode;
+	private float aCos;
 	private float startZ, endZ;
 
 
@@ -29,6 +30,7 @@ public class MusicNode : MonoBehaviour
 		this.startZ = startLineZ;
 		this.endZ = finishLineZ;
 		this.meteorNode = meteor;
+		aCos = Mathf.Cos(targetBeat);
 
 		paused = false;
 		restartedLong = false;
@@ -69,6 +71,9 @@ public class MusicNode : MonoBehaviour
 
 		//meteor position
 		meteorNode.transform.position = new Vector3(transform.position.x, endY, startZ + (endZ - startZ) * (1f - ((beat) - Conductor.songposition) / (Conductor.BeatsShownOnScreen / Conductor.tempo)));
+
+		//meteor rotation
+		meteorNode.transform.Rotate(aCos,aCos,aCos, Space.Self);
 
 		//node position
 		transform.position = new Vector3(transform.position.x, startY + (endY - startY) * (1f - ((beat) - Conductor.songposition) / (Conductor.BeatsShownOnScreen / Conductor.tempo)), transform.position.z);

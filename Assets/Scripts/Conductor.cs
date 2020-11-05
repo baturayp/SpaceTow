@@ -24,9 +24,6 @@ public class Conductor : MonoBehaviour
 	public static bool paused = true;
 	private bool songStarted = false;
 
-	//in-game scoreboard to show when countdown ends
-	public GameObject scoreBoard;
-
 	public static float pauseTimeStamp = -1f; //negative means not managed
 	private float pausedTime = 0f;
 
@@ -243,8 +240,9 @@ public class Conductor : MonoBehaviour
 
 #if UNITY_EDITOR
 		countDownCanvas.SetActive(false);
+		StartSong();
 #endif
-#if UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE
+#if UNITY_IOS || UNITY_ANDROID
 		//start countdown
 		StartCoroutine(CountDown());
 #endif
@@ -265,7 +263,6 @@ public class Conductor : MonoBehaviour
 		AudioSource.Play();
 
 		SetGameObjects(true);
-		scoreBoard.SetActive(true);
 
         //unpause
         paused = false;
