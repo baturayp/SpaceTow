@@ -6,10 +6,9 @@ public class MusicNodePool : MonoBehaviour
 {
 	public static MusicNodePool instance;
 	public GameObject nodePrefab;
-	public GameObject meteorPrefab;
+	public GameObject[] meteorPrefab;
 	public int initialAmount;
 	private List<MusicNode> nodeList;
-	private List<MeteorNode> meteorList;
 
 	void Awake()
 	{
@@ -25,15 +24,6 @@ public class MusicNodePool : MonoBehaviour
 			GameObject nodes = Instantiate(nodePrefab);
 			nodes.SetActive(false);
 			nodeList.Add(nodes.GetComponent<MusicNode>());
-		}
-
-		//create initial meteors
-		meteorList = new List<MeteorNode>();
-		for (int i = 0; i < initialAmount; i++)
-		{
-			GameObject meteors = Instantiate(meteorPrefab);
-			meteors.SetActive(false);
-			meteorList.Add(meteors.GetComponent<MeteorNode>());
 		}
 	}
 
@@ -60,19 +50,9 @@ public class MusicNodePool : MonoBehaviour
 
 	MeteorNode GetMeteor()
 	{
-		//check if there is an inactive instance
-		foreach (MeteorNode meteor in meteorList)
-		{
-			if (!meteor.gameObject.activeInHierarchy)
-			{
-				meteor.Initialize();
-				meteor.gameObject.SetActive(true);
-				return meteor;
-			}
-		}
-		MeteorNode meteorNode = Instantiate(meteorPrefab).GetComponent<MeteorNode>();
+		int randomMeteor = Random.Range(0,5);
+		MeteorNode meteorNode = Instantiate(meteorPrefab[randomMeteor]).GetComponent<MeteorNode>();
 		meteorNode.Initialize();
-		meteorList.Add(meteorNode);
 		return meteorNode;
 	}
 }

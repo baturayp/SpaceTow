@@ -6,26 +6,25 @@ using UnityEngine;
 public class MeteorNode : MonoBehaviour
 {
     public GameObject meteorWhole;
-    public GameObject[] meteorPieces;
+    public Rigidbody[] meteorPieces;
 
     public void Initialize()
     {
         //nothing to do yet
     }
 
-    public void BreakUpRedirector()
+    public void Explode()
     {
-        //redirect
+        meteorWhole.SetActive(false);
+        Vector3 explosionPosition = meteorWhole.transform.position;
+        foreach (Rigidbody piece in meteorPieces)
+        {
+            piece.AddExplosionForce(20.0f, explosionPosition, 5.0f, 0f, ForceMode.Impulse);
+        }
     }
 
-    IEnumerator BreakUp()
+    public void Destroy()
     {
-        float elapsedTime = 0.0f;
-        while (elapsedTime < 0.8f)
-        {
-            elapsedTime += Time.deltaTime;
-            //move pieces
-            yield return null;
-        }
+        Destroy(gameObject);
     }
 }

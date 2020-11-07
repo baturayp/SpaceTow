@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MusicNode : MonoBehaviour
 {
-	public SpriteRenderer targetSprite;
 	[NonSerialized] public float startY;
 	[NonSerialized] public float endY;
 	[NonSerialized] public float removeLineY;
@@ -46,8 +45,6 @@ public class MusicNode : MonoBehaviour
 
 		//reset rotation
 		transform.Rotate(0, 0, 0);
-
-		targetSprite.color = new Color(0,0,0,0);
 	}
 
 	void Update()
@@ -62,7 +59,7 @@ public class MusicNode : MonoBehaviour
 		//remove itself when out of the screen (remove line)
 		if (transform.position.y < removeLineY)
 		{
-			meteorNode.gameObject.SetActive(false);
+			meteorNode.Destroy();
 			gameObject.SetActive(false);
 		}
 		
@@ -87,16 +84,12 @@ public class MusicNode : MonoBehaviour
 	IEnumerator FadeOut()
 	{
 		float elapsedTime = 0.0f;
-		Color c = targetSprite.color;
-		while (elapsedTime < 0.2f)
+		while (elapsedTime < 0.5f)
 		{
 			elapsedTime += Time.deltaTime;
-			c.a = 1.0f - Mathf.Clamp01(elapsedTime / 0.2f);
-			targetSprite.color = c;
-			transform.localScale = new Vector3(1 + elapsedTime, 1 + elapsedTime, 1);
 			yield return null;
 		}
-		meteorNode.gameObject.SetActive(false);
+		meteorNode.Destroy();
 		gameObject.SetActive(false);
 	}
 
@@ -110,7 +103,6 @@ public class MusicNode : MonoBehaviour
 	public bool MultiTimesHit()
 	{
 		//update text
-		targetSprite.color = Color.green;
 		times--;
 		if (times == 0)
 		{
@@ -123,21 +115,21 @@ public class MusicNode : MonoBehaviour
 	public void PerfectHit()
 	{
 		paused = true;
-		if (duration == 0) targetSprite.color = Color.green;
+		meteorNode.Explode();
 		StartCoroutine(FadeOut());
 	}
 
 	public void GoodHit()
 	{
 		paused = true;
-		if (duration == 0) targetSprite.color = Color.yellow;
+		meteorNode.Explode();
 		StartCoroutine(FadeOut());
 	}
 
 	public void BadHit()
 	{
 		paused = true;
-		if (duration == 0) targetSprite.color = Color.red;
+		meteorNode.Explode();
 		StartCoroutine(FadeOut());
 	}
 }

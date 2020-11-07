@@ -84,7 +84,7 @@ public class SongPickingControl : MonoBehaviour
 		secondBoardIsActive = false;
     }
 
-     public void FlipToSongFromFirst()
+    public void FlipToSongFromFirst()
     {
         StartCoroutine(flipOutAnimation.AnimationCoroutine(
             firstBoardTransform,
