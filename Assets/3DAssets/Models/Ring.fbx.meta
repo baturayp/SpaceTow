@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1b40922e3d6301445ad2618bcb723f84
+guid: 9dfffe14d0bf93d4190b3650563c0aa8
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
@@ -8,16 +8,6 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: GeneralMat
-    second: {fileID: 2100000, guid: 8dbfe22984ad9384d8e9a6befb49c00a, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: No Name
-    second: {fileID: 2100000, guid: 90e086223d6cd0c4a8831c9425acdcd5, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: TowTruck
     second: {fileID: 2100000, guid: 8dbfe22984ad9384d8e9a6befb49c00a, type: 2}
   materials:
     materialImportMode: 1

@@ -5,14 +5,17 @@
         _MainTex ("Texture", 2D) = "black" {}
         _BloomLight1 ("Bloom Light 1", Range (0,1)) = 0
         _BloomLight2 ("Bloom Light 2", Range (0,1)) = 0
+        _BloomLight3 ("Bloom Light 3", Range (0,1)) = 0
         _BloomColor1 ("Bloom Color 1", Color) = (1,1,1,1)
         _BloomColor2 ("Bloom Color 2", Color) = (1,1,1,1)
+        _BloomColor3 ("Bloom Color 3", Color) = (1,1,1,1)
     }
     SubShader
     {
         Blend SrcAlpha OneMinusSrcAlpha
 
-
+        ZWrite Off
+        ZTest Always
 
         Tags
         {
@@ -29,7 +32,7 @@
             #pragma fragment frag
             #include "UnityCG.cginc"
 
-
+            
 
 
             struct appdata
@@ -49,8 +52,10 @@
             float _RotationSpeed;
             half _BloomLight1;
             half _BloomLight2;
+            half _BloomLight3;
             fixed4 _BloomColor1;
             fixed4 _BloomColor2;
+            fixed4 _BloomColor3;
 
             v2f vert (appdata v)
             {
@@ -65,9 +70,9 @@
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
 
-                fixed a = (col.r*_BloomLight1 + col.b*_BloomLight2);
+                fixed a = (col.r*_BloomLight1 + col.b*_BloomLight2 + col.g*_BloomLight3);
 
-                col = col.r*_BloomColor1 + col.b*_BloomColor2;
+                col = col.r*_BloomColor1 + col.b*_BloomColor2 + col.g*_BloomColor3;
 
                 //a = 1-a;
 

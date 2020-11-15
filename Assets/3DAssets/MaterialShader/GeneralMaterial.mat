@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SpaceMan 1
+  m_Name: GeneralMaterial
   m_Shader: {fileID: 4800000, guid: 5505ee45ba0ef904f841364043c6f363, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -37,6 +37,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmmiMask:
+        m_Texture: {fileID: 2800000, guid: ee18eb89f1319964099a0e9f49515610, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -77,7 +81,7 @@ Material:
     - _RimAngle: -0.061
     - _RimIntensity: 1.27
     - _SmoothnessTextureChannel: 0
-    - _SpecLightVal: 3
+    - _SpecLightVal: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0

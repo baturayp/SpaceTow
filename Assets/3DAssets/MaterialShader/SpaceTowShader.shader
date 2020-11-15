@@ -4,6 +4,7 @@
     {
         _MainTex ("Texture", 2D) = "white" {}
         _SpecualarMask ("SpecularMask", 2D) = "black" {}
+        _EmmiMask ("EmmisionMask", 2D) = "black" {}
         _LightVal0 ("Light Value 1", range(0,1)) = 1
         _LightVal1 ("Light Value 2", range(0,1)) = 1
         _SpecLightVal ("Specular Intensity", range(0,5)) = 3
@@ -12,6 +13,7 @@
         _ShadowColor("Shadow Color", Color) = (0.3,0.33,0.54,1)
         _LightC ("Light Color", Color) = (0.77,0.70,0.19,1)
         _RimLight ("Rim Color", Color) = (0.77,0.70,0.19,1)
+
 
     }
     SubShader
@@ -36,6 +38,7 @@
             
             uniform sampler2D _MainTex;
             uniform sampler2D _SpecualarMask;
+            uniform sampler2D _EmmiMask;
             uniform fixed _LightVal0;
             uniform fixed _LightVal1;
             uniform fixed4 _ShadowColor;
@@ -84,16 +87,18 @@
             {                
                 fixed3 mainSample  = tex2D(_MainTex, i.uv);
                 fixed specSample = tex2D(_SpecualarMask, i.uv);
+                fixed emmisSample = tex2D(_EmmiMask, i.uv);
 
 
-                fixed3 diffuseLight =  lerp (_LightC, 0.89, clamp(i.stylisticLight.r*2 -_LightVal0,0,1));
-                diffuseLight =  lerp ((_ShadowColor), diffuseLight,clamp(i.stylisticLight.r*2 -_LightVal1,0,1));
+                fixed3 diffuseLight =  lerp (_LightC, 0.89, clamp(i.stylisticLight.r*2 -_LightVal0, 0, 1));
+                diffuseLight =  lerp ((_ShadowColor), diffuseLight,clamp(i.stylisticLight.r*2 -_LightVal1, 0, 1));
+                diffuseLight = lerp(diffuseLight , 1 , clamp(emmisSample, 0, 1));
 
-                fixed3 specularLight = clamp((i.stylisticLight.g * _LightC * specSample * _SpecLightVal),0,1);
+                fixed3 specularLight = clamp((i.stylisticLight.g * _LightC * specSample * _SpecLightVal), 0, 1);
 
-                fixed3 rimLight = clamp (i.stylisticLight.g * _RimLight * _RimIntensity * (1 - i.stylisticLight.r),0,1);
+                fixed3 rimLight = clamp (i.stylisticLight.g * _RimLight * _RimIntensity * (1 - i.stylisticLight.r), 0, 1);
 
-                return fixed4 ((mainSample * _MainColor * diffuseLight) + specularLight + rimLight,1);
+                return fixed4 ((mainSample * _MainColor * diffuseLight) + specularLight + rimLight, 1);
                 
 
             }
