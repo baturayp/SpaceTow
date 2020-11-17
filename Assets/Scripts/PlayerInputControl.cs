@@ -18,8 +18,6 @@ public class PlayerInputControl : MonoBehaviour
     //cache the number of tracks
     private int trackLength;
 
-    public Animator punchAnim;
-
     void Start()
     {
         trackLength = 2;
