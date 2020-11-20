@@ -19,9 +19,7 @@ public class Conductor : MonoBehaviour
 	public delegate void SongCompletedAction();
 	public static event SongCompletedAction SongCompletedEvent;
 
-	//where is upcoming note, 0 left, 1 right, -1 center
-	public static int nextNoteTrack;
-	private MusicNode[] upcomingNotes;
+	public static float[] dueToNextNote;
 	private float songLength;
 
 	//if the whole game is paused
@@ -215,20 +213,19 @@ public class Conductor : MonoBehaviour
 		PlayingUIController.LostEvent += SongCompleted;
 
 		songLength = songInfo.song.length;
-		nextNoteTrack = -1;
 
 		//initialize arrays
 		len = trackSpawnPosX.Length;
 		trackNextIndices = new int[len];
 		queueForTracks = new Queue<MusicNode>[len];
 		previousMusicNodes = new MusicNode[len];
-		upcomingNotes = new MusicNode[len];
+		dueToNextNote = new float[len];
 		for (int i = 0; i < len; i++)
 		{
 			trackNextIndices[i] = 0;
 			queueForTracks[i] = new Queue<MusicNode>();
 			previousMusicNodes[i] = null;
-			upcomingNotes[i] = null;
+			dueToNextNote[i] = -1;
 		}
 
 		tracks = songInfo.tracks; //keep a reference of the tracks
@@ -350,16 +347,16 @@ public class Conductor : MonoBehaviour
 		for (int i = 0; i < len; i++)
 		{
 			//empty queue, continue
-			if (queueForTracks[i].Count == 0) 
+			if (queueForTracks[i].Count == 0)
 			{
-				nextNoteTrack = -1;
+				dueToNextNote[i] = -1;
 				continue;
 			}
 
 			MusicNode currNode = queueForTracks[i].Peek();
 
 			//upcoming notes
-			upcomingNotes[i] = currNode;
+			dueToNextNote[i] = currNode.beat - songposition;
 
 			//multi-times note
 			if (currNode.times > 0 && currNode.transform.position.y <= finishLineY + goodOffsetY)
@@ -420,25 +417,6 @@ public class Conductor : MonoBehaviour
 				//dispatch miss event (if a multi-times note is missed, its next single note would also be missed)
 				BeatOnHitEvent?.Invoke(i, Rank.MISS);
 			}
-
-			//dirty coding, change asap
-			//determine spaceman position
-			if (upcomingNotes[0] != null && upcomingNotes[1] == null)
-			{
-				nextNoteTrack = 0;
-			}
-			if (upcomingNotes[0] == null && upcomingNotes[1] != null)
-			{
-				nextNoteTrack = 1;
-			}
-			if (upcomingNotes[0] != null && upcomingNotes[1] != null)
-			{
-				MusicNode upcoming0 = upcomingNotes[0];
-				MusicNode upcoming1 = upcomingNotes[1];
-				if (upcoming0.beat < upcoming1.beat) nextNoteTrack = 0;
-				if (upcoming1.beat < upcoming0.beat) nextNoteTrack = 1;
-				if (upcoming0.beat == upcoming1.beat) nextNoteTrack = -1;
-			}
 		}
 
 		float endTime = songInfo.endTime;
@@ -461,7 +439,6 @@ public class Conductor : MonoBehaviour
 	void SongCompleted()
     {
 		songStarted = false;
-		nextNoteTrack = -1;
 		SongCompletedEvent?.Invoke();
 	}
 

@@ -275,7 +275,6 @@ GameObject:
   m_Component:
   - component: {fileID: 763348145651418775}
   - component: {fileID: 763348145651418773}
-  - component: {fileID: 4580569880236516699}
   m_Layer: 5
   m_Name: ScoreDiv
   m_TagString: Untagged
@@ -311,25 +310,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 763348145651418774}
   m_CullTransparentMesh: 0
---- !u!95 &4580569880236516699
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 763348145651418774}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &763348146195854839
 GameObject:
   m_ObjectHideFlags: 0
@@ -1445,7 +1425,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1050132418139578248}
   - component: {fileID: 9053619942339644926}
-  - component: {fileID: 2208697040139659945}
   m_Layer: 5
   m_Name: SuccessState
   m_TagString: Untagged
@@ -1481,25 +1460,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3076026068154908218}
   m_CullTransparentMesh: 0
---- !u!95 &2208697040139659945
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3076026068154908218}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3274663608045423148
 GameObject:
   m_ObjectHideFlags: 0
@@ -1719,7 +1679,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2870041927905644360}
   - component: {fileID: 1647788585995921406}
-  - component: {fileID: 4471548452249579297}
   m_Layer: 5
   m_Name: FailState
   m_TagString: Untagged
@@ -1755,25 +1714,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4200157649750277316}
   m_CullTransparentMesh: 0
---- !u!95 &4471548452249579297
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4200157649750277316}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5243228378392879562
 GameObject:
   m_ObjectHideFlags: 0
@@ -2114,7 +2054,6 @@ GameObject:
   - component: {fileID: 314157032928678378}
   - component: {fileID: 7352141824257775865}
   - component: {fileID: 5293062345718729773}
-  - component: {fileID: 1410894279479650516}
   m_Layer: 5
   m_Name: PlayNext
   m_TagString: Untagged
@@ -2234,25 +2173,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!95 &1410894279479650516
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9023061594841431508}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9112402677317978029
 GameObject:
   m_ObjectHideFlags: 0

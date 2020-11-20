@@ -6,6 +6,8 @@ public class SpaceMan : MonoBehaviour
 {
     public GameObject spaceMan;
     public Animator spaceManAnim;
+    private bool animating;
+    Coroutine motionAnim;
     
     void Start()
     {
@@ -21,24 +23,52 @@ public class SpaceMan : MonoBehaviour
 
     void Update()
     {
-        spaceManAnim.SetInteger("readyState", Conductor.nextNoteTrack);
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            spaceManAnim.SetLayerWeight(1, 0);
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            spaceManAnim.SetLayerWeight(1, 1);
+        }
     }
 
     void PlayerInputted(int trackNumber)
     {
-        spaceManAnim.SetInteger("punchState", trackNumber == 0 ? -1 : trackNumber);
+        if (!animating)
+        {
+            motionAnim = StartCoroutine(Motion(0.2f, 0.2f, 0f,trackNumber == 0 ? -2 : 2));
+        }
     }
 
     void BeatOnHit(int trackNumber, Conductor.Rank rank)
     {
         if (rank != Conductor.Rank.MISS)
         {
-            spaceManAnim.SetInteger("punchState", trackNumber == 0 ? -2 : 2);
+            StopCoroutine(motionAnim);
+            motionAnim = StartCoroutine(Motion(0.05f, 0.3f, 0f,trackNumber == 0 ? -2 : 2));
         }
     }
 
-    public void ResetState()
+    IEnumerator Motion(float hitTime, float backTime, float fromVal, float toVal)
     {
-        spaceManAnim.SetInteger("punchState", 0);
+        float elapsedTime = 0.0f;
+        animating = true;
+        while (elapsedTime < hitTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float val = Mathf.Lerp(fromVal, toVal, elapsedTime / hitTime);
+            spaceManAnim.SetFloat("position", val);
+            yield return null;
+        }
+        elapsedTime = 0.0f;
+        while (elapsedTime < backTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float val = Mathf.Lerp(toVal, fromVal, elapsedTime / backTime);
+            spaceManAnim.SetFloat("position", val);
+            yield return null;
+        }
+        animating = false;
     }
 }
