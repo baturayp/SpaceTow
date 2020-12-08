@@ -34,6 +34,7 @@ public class SpaceMan : MonoBehaviour
     {
         GUI.contentColor = Color.green;
         GUI.Label(new Rect (10, 10, 400, 20), debugLog);
+        GUI.Label(new Rect (10, 30, 400, 20), "  N-M          J-K             I-O");
     }
 
     void Update()
@@ -42,11 +43,11 @@ public class SpaceMan : MonoBehaviour
         {
             animNum--;
         }
-        if (Input.GetKeyDown(KeyCode.M) && animNum < 7)
+        if (Input.GetKeyDown(KeyCode.M) && animNum < 5)
         {
             animNum++;
         }
-        if (Input.GetKeyDown(KeyCode.J) && speedVal > 0.1)
+        if (Input.GetKeyDown(KeyCode.J) && speedVal >= 0.2f)
         {
             speedVal = speedVal - 0.1f;
         }
@@ -56,7 +57,7 @@ public class SpaceMan : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.I)) successState = false;
         if (Input.GetKeyDown(KeyCode.O)) successState = true;
-        debugLog = "Clip: " + animNum.ToString() + " Speed: " + speedVal.ToString() + (successState ? " Hit" : " Miss");
+        debugLog = "Clip: " + animNum.ToString() + "| Speed: " + speedVal.ToString() + (successState ? "| Hit" : "| Miss");
     }
 
     void KeyDownAction(int trackNumber, Conductor.Rank rank)
