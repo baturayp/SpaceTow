@@ -27,7 +27,7 @@ public class MusicNodePool : MonoBehaviour
 		}
 	}
 
-	public MusicNode GetNode(float posX, float startY, float endY, float removeLineY, float startLineZ, float finishLineZ, float posZ, float beat, int times, float duration)
+	public MusicNode GetNode(float posX, float startY, float endY, float removeLineY, float startLineZ, float finishLineZ, float posZ, float beat)
 	{
 		//get an empty meteor or init a new one
 		MeteorNode meteor = GetMeteor();
@@ -36,14 +36,14 @@ public class MusicNodePool : MonoBehaviour
 		{
 			if (!node.gameObject.activeInHierarchy)
 			{
-				node.Initialize(posX, startY, endY, removeLineY, startLineZ, finishLineZ, posZ, beat, times, duration, meteor);
+				node.Initialize(posX, startY, endY, removeLineY, startLineZ, finishLineZ, posZ, beat, meteor);
 				node.gameObject.SetActive(true);
 				return node;
 			}
 		}
 		//no inactive instances, instantiate a new GetComponent
 		MusicNode musicNode = Instantiate(nodePrefab).GetComponent<MusicNode>();
-		musicNode.Initialize(posX, startY, endY, removeLineY, startLineZ, finishLineZ, posZ, beat, times, duration, meteor);
+		musicNode.Initialize(posX, startY, endY, removeLineY, startLineZ, finishLineZ, posZ, beat, meteor);
 		nodeList.Add(musicNode);
 		return musicNode;
 	}

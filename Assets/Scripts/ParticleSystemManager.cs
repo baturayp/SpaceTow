@@ -6,14 +6,12 @@ public class ParticleSystemManager : MonoBehaviour
 
 	void Start()
 	{
-		Conductor.BeatOnHitEvent += BeatOnHit;
-		Conductor.KeyUpBeatEvent += KeyUpBeat;
+		Conductor.KeyDownEvent += BeatOnHit;
 	}
 
 	void OnDestroy()
 	{
-		Conductor.BeatOnHitEvent -= BeatOnHit;
-		Conductor.KeyUpBeatEvent -= KeyUpBeat;
+		Conductor.KeyDownEvent -= BeatOnHit;
 	}
 
 	//will be informed by the Conductor after a beat is hit
@@ -22,7 +20,6 @@ public class ParticleSystemManager : MonoBehaviour
 		if (rank == Conductor.Rank.PERFECT)
 		{
 			particleSet[track].perfect.Play();
-			//heartScoreEffect.Play();
 		}
 		if (rank == Conductor.Rank.GOOD)
 		{
@@ -32,16 +29,6 @@ public class ParticleSystemManager : MonoBehaviour
 		{
 			particleSet[track].bad.Play();
 		}
-		if (rank == Conductor.Rank.CONT)
-		{
-			particleSet[track].cont.Play();
-		}
-	}
-
-	void KeyUpBeat(int track)
-	{
-		particleSet[track].cont.Pause();
-		particleSet[track].cont.Clear();
 	}
 
 	[System.Serializable]
@@ -50,6 +37,5 @@ public class ParticleSystemManager : MonoBehaviour
 		public ParticleSystem perfect;
 		public ParticleSystem good;
 		public ParticleSystem bad;
-		public ParticleSystem cont;
 	}
 }

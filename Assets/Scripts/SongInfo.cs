@@ -25,7 +25,7 @@ public class SongInfo : ScriptableObject
 	public Tempo[] dynamicTempo;
 
 	[Header("Just for reference, notes populated automatically, edit them from NoteEditor")]
-	public Track[] tracks = new Track[3];
+	public Track[] tracks = new Track[2];
 
 	[Header("Adjusts how much notes appears on screen in advance. 4 is a fair default.")]
 	public float beatsShownOnScreen = 4f;
@@ -42,14 +42,7 @@ public class SongInfo : ScriptableObject
 		{
 			foreach (Note note in track.notes)
 			{
-				if (note.manyTimes == 0)
-				{
-					totalHits += 1;
-				}
-				else if (note.manyTimes > 0)
-				{
-					totalHits += note.manyTimes;
-				}
+				totalHits += 1;
 			}
 		}
 
@@ -82,8 +75,8 @@ public class SongInfo : ScriptableObject
 	public class Note
 	{
 		public float dueTo;
-		public int manyTimes;
-		public float duration;
+		//public int manyTimes;
+		//public float duration;
 		public int track;
 	}
 
@@ -127,8 +120,6 @@ public class SongInfo : ScriptableObject
 		tracks[0].notes = track0.ToArray();
 		var track1 = notes.Where(note => note.track == 1).ToList();
 		tracks[1].notes = track1.ToArray();
-		var track2 = notes.Where(note => note.track == 2).ToList();
-		tracks[2].notes = track2.ToArray();
 	}
 
 	static Note ToAsset(JsonNote note, int BPM, int track)
@@ -136,8 +127,6 @@ public class SongInfo : ScriptableObject
 		var noteAsset = new Note
 		{
 			dueTo = (float)(note.num) / (note.LPB) / (BPM / 60f),
-			manyTimes = note.type == 3 ? note.times : 0,
-			duration = note.type == 2 ? ((float)(note.num + note.length) / (note.LPB) / (BPM / 60f)) - ((float)(note.num) / (note.LPB) / (BPM / 60f)) : 0,
 			track = track,
 		};
 		return noteAsset;

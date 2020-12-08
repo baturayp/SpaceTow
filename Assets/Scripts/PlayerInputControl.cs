@@ -3,11 +3,11 @@
 public class PlayerInputControl : MonoBehaviour
 {
 
-    public delegate void InputtedAction(int trackNumber);
-    public static event InputtedAction InputtedEvent;
+    public delegate void KeyDownAction(int trackNumber);
+    public static event KeyDownAction KeyDownEvent;
 
-    public delegate void KeyupAction(int trackNumber);
-    public static event KeyupAction KeyupEvent;
+    public delegate void KeyUpAction(int trackNumber);
+    public static event KeyUpAction KeyUpEvent;
 
     public BoxCollider2D[] tappingBoxes;
 
@@ -24,7 +24,7 @@ public class PlayerInputControl : MonoBehaviour
 #if UNITY_EDITOR || UNITY_STANDALONE
         keybindings = new KeyCode[2];
         keybindings[0] = (KeyCode)System.Enum.Parse(typeof(KeyCode), "A");
-        keybindings[1] = (KeyCode)System.Enum.Parse(typeof(KeyCode), "S");
+        keybindings[1] = (KeyCode)System.Enum.Parse(typeof(KeyCode), "D");
 #endif
     }
 
@@ -82,11 +82,11 @@ public class PlayerInputControl : MonoBehaviour
     void Inputted(int i)
     {
         //inform Conductor and other interested classes
-        InputtedEvent?.Invoke(i);
+        KeyDownEvent?.Invoke(i);
     }
 
     void Keyup(int i)
     {
-        KeyupEvent?.Invoke(i);
+        KeyUpEvent?.Invoke(i);
     }
 }

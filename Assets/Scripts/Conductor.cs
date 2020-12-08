@@ -5,15 +5,15 @@ using Cinemachine;
 
 public class Conductor : MonoBehaviour
 {
-	public enum Rank { PERFECT, GOOD, BAD, MISS, CONT };
+	public enum Rank { PERFECT, GOOD, BAD, MISS, WASTE };
 
 	//keypress action
-	public delegate void BeatOnHitAction(int trackNumber, Rank rank);
-	public static event BeatOnHitAction BeatOnHitEvent;
+	public delegate void KeyDownAction(int trackNumber, Rank rank);
+	public static event KeyDownAction KeyDownEvent;
 
 	//keyup action
-	public delegate void KeyUpBeatAction(int trackNumber);
-	public static event KeyUpBeatAction KeyUpBeatEvent;
+	public delegate void KeyUpAction(int trackNumber);
+	public static event KeyUpAction KeyUpEvent;
 
 	//song completion
 	public delegate void SongCompletedAction();
@@ -53,9 +53,6 @@ public class Conductor : MonoBehaviour
 	//queue, saving the MusicNodes which currently on screen
 	private Queue<MusicNode>[] queueForTracks;
 
-	//multi-times notes might be paused on the finish line, but already dequed
-	private MusicNode[] previousMusicNodes;
-
 	//keep a reference of the sound tracks
 	private SongInfo.Track[] tracks;
 
@@ -75,117 +72,46 @@ public class Conductor : MonoBehaviour
 
 	void PlayerInputted(int trackNumber)
 	{
-		//check if multi-times node exists
-		if (previousMusicNodes[trackNumber] != null)
-		{
-			//dispatch beat on hit event (multi-times node is always PERFECT)
-			BeatOnHitEvent?.Invoke(trackNumber, Rank.PERFECT);
-
-			//check if the node should be removed
-			if (previousMusicNodes[trackNumber].MultiTimesHit())
-			{
-				previousMusicNodes[trackNumber] = null;
-			}
-		}
-		else if (queueForTracks[trackNumber].Count != 0)
+		if (queueForTracks[trackNumber].Count != 0)
 		{
 			//peek the node in the queue
 			MusicNode frontNode = queueForTracks[trackNumber].Peek();
 
-			//take care multi-notes inside update
-			if (frontNode.times > 0) return;
-
-			//long notes
-			if (frontNode.duration > 0)
-            {
-				//not paused, ignore
-				if (!frontNode.paused) return;
-				//right time to start pressing
-				if (frontNode.paused && frontNode.beat > songposition - 0.30f && !frontNode.pressed)
-                {
-					frontNode.pressed = true;
-					BeatOnHitEvent?.Invoke(trackNumber, Rank.CONT);
-				}
-				//if too late to press
-				else if (frontNode.paused && frontNode.beat < songposition)
-				{
-					return;
-				}
-			}
-
 			float offsetY = Mathf.Abs(frontNode.gameObject.transform.position.y - finishLineY);
 
-			//single notes
-			if (frontNode.times == 0 && frontNode.duration == 0)
+			if (offsetY < perfectOffsetY) //perfect hit
 			{
-				if (offsetY < perfectOffsetY) //perfect hit
-				{
-					frontNode.PerfectHit();
-					BeatOnHitEvent?.Invoke(trackNumber, Rank.PERFECT);
-					queueForTracks[trackNumber].Dequeue();
-				}
-				else if (offsetY < goodOffsetY) //good hit
-				{
-					frontNode.GoodHit();
-					BeatOnHitEvent?.Invoke(trackNumber, Rank.GOOD);
-					queueForTracks[trackNumber].Dequeue();
-				}
-				else if (offsetY < badOffsetY) //bad hit
-				{
-					frontNode.BadHit();
-					BeatOnHitEvent?.Invoke(trackNumber, Rank.BAD);
-					queueForTracks[trackNumber].Dequeue();
-				}
+				frontNode.PerfectHit();
+				KeyDownEvent?.Invoke(trackNumber, Rank.PERFECT);
+				queueForTracks[trackNumber].Dequeue();
 			}
+			else if (offsetY < goodOffsetY) //good hit
+			{
+				frontNode.GoodHit();
+				KeyDownEvent?.Invoke(trackNumber, Rank.GOOD);
+				queueForTracks[trackNumber].Dequeue();
+			}
+			else if (offsetY < badOffsetY) //bad hit
+			{
+				frontNode.BadHit();
+				KeyDownEvent?.Invoke(trackNumber, Rank.BAD);
+				queueForTracks[trackNumber].Dequeue();
+			}
+			//wasted (empty) hit
+			else 
+			{
+				KeyDownEvent?.Invoke(trackNumber, Rank.WASTE);
+			}
+		}
+		else 
+		{
+			KeyDownEvent?.Invoke(trackNumber, Rank.WASTE);
 		}
 	}
 
 	void KeyUpped(int trackNumber)
 	{
-		if (queueForTracks[trackNumber].Count != 0)
-		{
-			MusicNode frontNode = queueForTracks[trackNumber].Peek();
-			if (frontNode.duration <= 0) return;
-			if (!frontNode.paused) return;
-			if (frontNode.restartedLong) return;
-
-			float endTarget = frontNode.beat + frontNode.duration;
-
-			//keyup action when not pressed on right-time
-			if (frontNode.paused && !frontNode.pressed && !frontNode.restartedLong)
-            {
-				frontNode.BadHit();
-				KeyUpBeatEvent?.Invoke(trackNumber);
-				BeatOnHitEvent?.Invoke(trackNumber, Rank.BAD);
-				queueForTracks[trackNumber].Dequeue();
-			}
-
-			//if pressed at right-time and released
-			if (frontNode.paused && frontNode.pressed && !frontNode.restartedLong)
-            {
-				if (songposition > endTarget - 0.25f)
-                {
-					frontNode.PerfectHit();
-					KeyUpBeatEvent?.Invoke(trackNumber);
-					BeatOnHitEvent?.Invoke(trackNumber, Rank.PERFECT);
-					queueForTracks[trackNumber].Dequeue();
-				}
-				else if (songposition > endTarget - 0.40f)
-                {
-					frontNode.GoodHit();
-					KeyUpBeatEvent?.Invoke(trackNumber);
-					BeatOnHitEvent?.Invoke(trackNumber, Rank.GOOD);
-					queueForTracks[trackNumber].Dequeue();
-				}
-				else
-                {
-					frontNode.BadHit();
-					KeyUpBeatEvent?.Invoke(trackNumber);
-					BeatOnHitEvent?.Invoke(trackNumber, Rank.BAD);
-					queueForTracks[trackNumber].Dequeue();
-				}
-            }
-		}
+		//keyupped
 	}
 
 	void Start()
@@ -206,8 +132,8 @@ public class Conductor : MonoBehaviour
 		fullNoteCounts = songInfo.TotalHitCounts();
 
 		//listen to player input
-		PlayerInputControl.InputtedEvent += PlayerInputted;
-		PlayerInputControl.KeyupEvent += KeyUpped;
+		PlayerInputControl.KeyDownEvent += PlayerInputted;
+		PlayerInputControl.KeyUpEvent += KeyUpped;
 
 		//listen playing ui for lost state
 		PlayingUIController.LostEvent += SongCompleted;
@@ -218,13 +144,11 @@ public class Conductor : MonoBehaviour
 		len = trackSpawnPosX.Length;
 		trackNextIndices = new int[len];
 		queueForTracks = new Queue<MusicNode>[len];
-		previousMusicNodes = new MusicNode[len];
 		dueToNextNote = new float[len];
 		for (int i = 0; i < len; i++)
 		{
 			trackNextIndices[i] = 0;
 			queueForTracks[i] = new Queue<MusicNode>();
-			previousMusicNodes[i] = null;
 			dueToNextNote[i] = -1;
 		}
 
@@ -275,7 +199,6 @@ public class Conductor : MonoBehaviour
 
 	void Update()
 	{
-
 		//for count down
 		if (!songStarted) return;
 
@@ -320,7 +243,7 @@ public class Conductor : MonoBehaviour
 				SongInfo.Note currNote = currTrack.notes[nextIndex];
 
 				//get a new node
-				MusicNode musicNode = MusicNodePool.instance.GetNode(trackSpawnPosX[i], startLineY, finishLineY, removeLineY, startLineZ, finishLineZ, layerZ, currNote.dueTo, currNote.manyTimes, currNote.duration);
+				MusicNode musicNode = MusicNodePool.instance.GetNode(trackSpawnPosX[i], startLineY, finishLineY, removeLineY, startLineZ, finishLineZ, layerZ, currNote.dueTo);
 
 				//enqueue
 				queueForTracks[i].Enqueue(musicNode);
@@ -358,64 +281,11 @@ public class Conductor : MonoBehaviour
 			//upcoming notes
 			dueToNextNote[i] = currNode.beat - songposition;
 
-			//multi-times note
-			if (currNode.times > 0 && currNode.transform.position.y <= finishLineY + goodOffsetY)
-			{
-				//have previous note stuck on the finish line
-				if (previousMusicNodes[i] != null)
-				{
-					previousMusicNodes[i].MultiTimesFailed();
-					BeatOnHitEvent?.Invoke(i, Rank.MISS);
-				}
-				//pause the note
-				currNode.paused = true;
-				//align to finish line
-				currNode.transform.position = new Vector3(currNode.transform.position.x, finishLineY, currNode.transform.position.z);
-				//deque, but keep a reference
-				previousMusicNodes[i] = currNode;
-				queueForTracks[i].Dequeue();
-			}
-
-			//long note
-			else if (currNode.duration > 0 && currNode.transform.position.y <= finishLineY)
-			{
-				if (previousMusicNodes[i] != null)
-				{
-					previousMusicNodes[i].MultiTimesFailed();
-					previousMusicNodes[i] = null;
-					BeatOnHitEvent?.Invoke(i, Rank.MISS);
-				}
-				//pause the note
-				currNode.paused = true;
-				if (!currNode.restartedLong)
-                {
-					//align to finish line
-					currNode.transform.position = new Vector3(currNode.transform.position.x, finishLineY, currNode.transform.position.z);
-				}
-				//keep long note at the position til duration ends
-				if (songposition > currNode.beat + currNode.duration)
-                {
-					currNode.restartedLong = true;
-					BeatOnHitEvent?.Invoke(i, Rank.MISS);
-					KeyUpBeatEvent?.Invoke(i);
-					currNode.FadeOutRedirector();
-					queueForTracks[i].Dequeue();
-				}
-			}
-
 			//single note
-			else if (currNode.times == 0 && currNode.duration == 0 && currNode.transform.position.y <= finishLineY - goodOffsetY)
+			if (currNode.transform.position.y <= finishLineY - goodOffsetY)
 			{
-				//have previous note stuck on the finish line
-				if (previousMusicNodes[i] != null)
-				{
-					previousMusicNodes[i].MultiTimesFailed();
-					previousMusicNodes[i] = null;
-					BeatOnHitEvent?.Invoke(i, Rank.MISS);
-				}
 				queueForTracks[i].Dequeue();
-				//dispatch miss event (if a multi-times note is missed, its next single note would also be missed)
-				BeatOnHitEvent?.Invoke(i, Rank.MISS);
+				KeyDownEvent?.Invoke(i, Rank.MISS);
 			}
 		}
 
@@ -462,8 +332,8 @@ public class Conductor : MonoBehaviour
 
 	void OnDestroy()
 	{
-		PlayerInputControl.InputtedEvent -= PlayerInputted;
-		PlayerInputControl.KeyupEvent -= KeyUpped; 
+		PlayerInputControl.KeyDownEvent -= PlayerInputted;
+		PlayerInputControl.KeyUpEvent -= KeyUpped; 
 		PlayingUIController.LostEvent -= SongCompleted;
 		AudioSource.clip.UnloadAudioData();
 	}

@@ -8,23 +8,17 @@ public class MusicNode : MonoBehaviour
 	[NonSerialized] public float endY;
 	[NonSerialized] public float removeLineY;
 	[NonSerialized] public float beat;
-	[NonSerialized] public int times;
-	[NonSerialized] public float duration;
 	[NonSerialized] public bool paused;
-	[NonSerialized] public bool restartedLong;
-	[NonSerialized] public bool pressed;
 	private MeteorNode meteorNode;
 	private float aCos;
 	private float startZ, endZ;
 
 
-	public void Initialize(float posX, float startY, float endY, float removeLineY, float startLineZ, float finishLineZ, float posZ, float targetBeat, int times, float duration, MeteorNode meteor)
+	public void Initialize(float posX, float startY, float endY, float removeLineY, float startLineZ, float finishLineZ, float posZ, float targetBeat, MeteorNode meteor)
 	{
 		this.startY = startY;
 		this.endY = endY;
 		this.beat = targetBeat;
-		this.times = times;
-		this.duration = duration;
 		this.removeLineY = removeLineY;
 		this.startZ = startLineZ;
 		this.endZ = finishLineZ;
@@ -32,8 +26,6 @@ public class MusicNode : MonoBehaviour
 		aCos = Mathf.Cos(targetBeat);
 
 		paused = false;
-		restartedLong = false;
-		pressed = false;
 
 		//set position
 		transform.position = new Vector3(posX, startY, posZ);
@@ -50,11 +42,6 @@ public class MusicNode : MonoBehaviour
 	void Update()
 	{
 		if (Conductor.pauseTimeStamp > 0f) return; //resume not managed
-
-		if (restartedLong) //restarted long notes
-        {
-			transform.position = new Vector3(transform.position.x, startY + (endY - startY) * (1f - ((beat + duration) - Conductor.songposition) / (Conductor.BeatsShownOnScreen / Conductor.tempo)), transform.position.z);
-		}
 
 		//remove itself when out of the screen (remove line)
 		if (transform.position.y < removeLineY)
@@ -91,25 +78,6 @@ public class MusicNode : MonoBehaviour
 		}
 		meteorNode.Destroy();
 		gameObject.SetActive(false);
-	}
-
-	//remove (multi-times note failed), might apply some animations later
-	public void MultiTimesFailed()
-	{
-		gameObject.SetActive(false);
-	}
-
-	//if the node is removed, return true
-	public bool MultiTimesHit()
-	{
-		//update text
-		times--;
-		if (times == 0)
-		{
-			StartCoroutine(FadeOut());
-			return true;
-		}
-		return false;
 	}
 
 	public void PerfectHit()

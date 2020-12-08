@@ -33,6 +33,57 @@ ModelImporter:
   - first:
       74: -1329339572250453006
     second: 1L4
+  - first:
+      74: -541559108836473392
+    second: 1L1
+  - first:
+      74: 6783855280860138678
+    second: 1L3
+  - first:
+      74: 4001199571633440470
+    second: Armature|Punch1All-L (3)
+  - first:
+      74: -5576322695886912176
+    second: 1L5
+  - first:
+      74: -244033943573327195
+    second: 1L6
+  - first:
+      74: 6245714536550342827
+    second: 1L7
+  - first:
+      74: -6532298476278261294
+    second: 1L8
+  - first:
+      74: -1100578833355560961
+    second: 1R1
+  - first:
+      74: 441059018362503988
+    second: 1R2
+  - first:
+      74: 3500262965595756394
+    second: 1R3
+  - first:
+      74: 7539640794812701214
+    second: 1R4
+  - first:
+      74: 7461933494995303544
+    second: 1R5
+  - first:
+      74: -9194287829088065396
+    second: 1R6
+  - first:
+      74: 3735846701714375626
+    second: 1R7
+  - first:
+      74: -2738610976849449167
+    second: 1R8
+  - first:
+      74: -6494945669316836459
+    second: 1L9
+  - first:
+      74: -8961812698024456422
+    second: 1L10
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -400,7 +451,7 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 1
-    rootMotionBoneName: 
+    rootMotionBoneName: Armature
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1

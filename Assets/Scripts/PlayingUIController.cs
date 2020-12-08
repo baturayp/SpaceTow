@@ -35,7 +35,7 @@ public class PlayingUIController : MonoBehaviour
 		fullNoteCounts = Conductor.fullNoteCounts;
 
 		//register to events
-		Conductor.BeatOnHitEvent += BeatOnHit;
+		Conductor.KeyDownEvent += BeatOnHit;
 		Conductor.SongCompletedEvent += SongCompleted;
 
 		//show ad
@@ -46,7 +46,7 @@ public class PlayingUIController : MonoBehaviour
     void OnDestroy()
 	{
 		//unregister from events
-		Conductor.BeatOnHitEvent -= BeatOnHit;
+		Conductor.KeyDownEvent -= BeatOnHit;
 		Conductor.SongCompletedEvent -= SongCompleted;
 		
 		//show ad
