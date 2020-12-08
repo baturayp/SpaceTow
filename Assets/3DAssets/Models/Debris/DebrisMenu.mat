@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SpaceEffectMat
-  m_Shader: {fileID: 4800000, guid: 070c7dfc725762b43aeffaea371ea3c1, type: 3}
+  m_Name: DebrisMenu
+  m_Shader: {fileID: 4800000, guid: 5505ee45ba0ef904f841364043c6f363, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -39,8 +39,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _EmmiMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 940d1f037e20d614a8fa1ad965c0d6da, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -55,10 +59,11 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SpecualarMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BloomLight1: 0
-    - _BloomLight2: 0.2
-    - _BloomLight3: 0.11
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -66,22 +71,24 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Light1: 1
-    - _Light2: 1
+    - _LightVal0: 1
+    - _LightVal1: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RotationSpeed: 1
+    - _RimIntensity: 1
     - _SmoothnessTextureChannel: 0
+    - _SpecLightVal: 3
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _BloomColor1: {r: 0.26820046, g: 0.38679248, b: 0.35234118, a: 1}
-    - _BloomColor2: {r: 0.0754717, g: 0.07527206, b: 0.07155571, a: 1}
-    - _BloomColor3: {r: 0.4708988, g: 0.5566038, b: 0.31768423, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _LightC: {r: 1, g: 0.5843237, b: 0, a: 1}
+    - _MainColor: {r: 0.754717, g: 0.58974457, b: 0.49483803, a: 1}
+    - _RimLight: {r: 0.5660378, g: 0.46632674, b: 0.2803489, a: 1}
+    - _ShadowColor: {r: 0.13394447, g: 0.40676695, b: 0.6603774, a: 1}
   m_BuildTextureStacks: []
