@@ -648,7 +648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d19a2f033a92a1c4b924f7dc4807fc5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 953478505}
+  camEra: {fileID: 953478505}
 --- !u!114 &132002978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8013,7 +8013,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d19a2f033a92a1c4b924f7dc4807fc5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 953478505}
+  camEra: {fileID: 0}
 --- !u!114 &495054756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11878,7 +11878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d19a2f033a92a1c4b924f7dc4807fc5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 953478505}
+  camEra: {fileID: 0}
 --- !u!1 &1179539328
 GameObject:
   m_ObjectHideFlags: 0
@@ -14183,7 +14183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d19a2f033a92a1c4b924f7dc4807fc5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 953478505}
+  camEra: {fileID: 0}
 --- !u!1001 &1645003031
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15518,7 +15518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d19a2f033a92a1c4b924f7dc4807fc5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 953478505}
+  camEra: {fileID: 0}
 --- !u!114 &1885252337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15998,7 +15998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d19a2f033a92a1c4b924f7dc4807fc5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 953478505}
+  camEra: {fileID: 0}
 --- !u!1001 &1929078267
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16741,7 +16741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d19a2f033a92a1c4b924f7dc4807fc5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 953478505}
+  camEra: {fileID: 0}
 --- !u!1001 &2058710107
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -13,10 +13,10 @@ public class MeteorNode : MonoBehaviour
         //nothing to do yet
     }
 
-    public void Explode()
+    public void Explode(Vector3 expVec)
     {
         meteorWhole.SetActive(false);
-        Vector3 explosionPosition = meteorWhole.transform.position;
+        Vector3 explosionPosition = meteorWhole.transform.position + expVec;
         foreach (Rigidbody piece in meteorPieces)
         {
             piece.AddExplosionForce(20.0f, explosionPosition, 5.0f, 0f, ForceMode.Impulse);

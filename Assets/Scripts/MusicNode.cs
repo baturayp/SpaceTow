@@ -8,32 +8,49 @@ public class MusicNode : MonoBehaviour
 	[NonSerialized] public float endY;
 	[NonSerialized] public float removeLineY;
 	[NonSerialized] public float beat;
+	[NonSerialized] public int meteorPos;
 	[NonSerialized] public bool paused;
+
+	//adjust them accordingly to animations
+	private float[] meteorFinalX = {0, 0, 0, 0, 2};
+	private float[] meteorFinalY = {0, 0, 0, 0, 4};
+	private float[] explosionXOffset = {0, 1, 1, 2, 2};
+	private float[] explosionYOffset = {0, 1, 0, 0, -2};
 	private MeteorNode meteorNode;
+	private Vector3 explotionVector;
 	private float aCos;
-	private float startZ, endZ;
+	private float metStartX, metStartY, metStartZ, metEndZ;
+	private float expX, expY;
+	private int trackNumber;
 
 
-	public void Initialize(float posX, float startY, float endY, float removeLineY, float startLineZ, float finishLineZ, float posZ, float targetBeat, MeteorNode meteor)
+	public void Initialize(float posX, float startY, float endY, float removeLineY, float meteorStartLineZ, float meteorFinishLineZ, float targetBeat, MeteorNode meteor, int trackNumber)
 	{
 		this.startY = startY;
 		this.endY = endY;
 		this.beat = targetBeat;
 		this.removeLineY = removeLineY;
-		this.startZ = startLineZ;
-		this.endZ = finishLineZ;
 		this.meteorNode = meteor;
+		this.trackNumber = trackNumber;
 		aCos = Mathf.Cos(targetBeat);
-
 		paused = false;
 
+		//make meteor appear at a predefined random point
+		meteorPos = UnityEngine.Random.Range(1,5);
+		metStartZ = meteorStartLineZ;
+		metEndZ = meteorFinishLineZ;
+		metStartX = trackNumber > 0 ? posX - meteorFinalX[meteorPos] : posX + meteorFinalX[meteorPos];
+		metStartY = endY + meteorFinalY[meteorPos];
+
+		//calculate explotion coordinates
+		expX = trackNumber > 0 ? 0 - explosionXOffset[meteorPos] : explosionXOffset[meteorPos];
+		expY = explosionYOffset[meteorPos];
+		explotionVector = new Vector3(expX, expY, 0);
+
 		//set position
-		transform.position = new Vector3(posX, startY, posZ);
+		transform.position = new Vector3(posX, startY, 0);
 
-		meteorNode.transform.position = new Vector3(posX, endY, startLineZ);
-
-		//set scale
-		transform.localScale = new Vector3(1, 1, 1);
+		meteorNode.transform.position = new Vector3(metStartX, metStartY, metStartZ);
 
 		//reset rotation
 		transform.Rotate(0, 0, 0);
@@ -54,7 +71,7 @@ public class MusicNode : MonoBehaviour
 		if (paused) return;
 
 		//meteor position
-		meteorNode.transform.position = new Vector3(transform.position.x, endY, startZ + (endZ - startZ) * (1f - ((beat) - Conductor.songposition) / (Conductor.BeatsShownOnScreen / Conductor.tempo)));
+		meteorNode.transform.position = new Vector3(metStartX, metStartY, metStartZ + (metEndZ - metStartZ) * (1f - ((beat) - Conductor.songposition) / (Conductor.BeatsShownOnScreen / Conductor.tempo)));
 
 		//meteor rotation
 		meteorNode.transform.Rotate(aCos,aCos,aCos, Space.Self);
@@ -63,19 +80,9 @@ public class MusicNode : MonoBehaviour
 		transform.position = new Vector3(transform.position.x, startY + (endY - startY) * (1f - ((beat) - Conductor.songposition) / (Conductor.BeatsShownOnScreen / Conductor.tempo)), transform.position.z);
 	}
 
-	public void FadeOutRedirector()
-	{
-		StartCoroutine(FadeOut());
-	}
-
 	IEnumerator FadeOut()
 	{
-		float elapsedTime = 0.0f;
-		while (elapsedTime < 0.5f)
-		{
-			elapsedTime += Time.deltaTime;
-			yield return null;
-		}
+		yield return new WaitForSeconds(0.5f);
 		meteorNode.Destroy();
 		gameObject.SetActive(false);
 	}
@@ -83,21 +90,21 @@ public class MusicNode : MonoBehaviour
 	public void PerfectHit()
 	{
 		paused = true;
-		meteorNode.Explode();
+		meteorNode.Explode(explotionVector);
 		StartCoroutine(FadeOut());
 	}
 
 	public void GoodHit()
 	{
 		paused = true;
-		meteorNode.Explode();
+		meteorNode.Explode(explotionVector);
 		StartCoroutine(FadeOut());
 	}
 
 	public void BadHit()
 	{
 		paused = true;
-		meteorNode.Explode();
+		meteorNode.Explode(explotionVector);
 		StartCoroutine(FadeOut());
 	}
 }

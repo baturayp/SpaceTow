@@ -60,7 +60,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecualarMask:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 10307, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -87,8 +87,8 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _LightC: {r: 1, g: 0.5843237, b: 0, a: 1}
-    - _MainColor: {r: 0.754717, g: 0.58974457, b: 0.49483803, a: 1}
+    - _LightC: {r: 0.28595585, g: 0.5913338, b: 0.5943396, a: 1}
+    - _MainColor: {r: 0.7169812, g: 0.50667995, b: 0.38554648, a: 1}
     - _RimLight: {r: 0.5660378, g: 0.46632674, b: 0.2803489, a: 1}
     - _ShadowColor: {r: 0.13394447, g: 0.40676695, b: 0.6603774, a: 1}
   m_BuildTextureStacks: []

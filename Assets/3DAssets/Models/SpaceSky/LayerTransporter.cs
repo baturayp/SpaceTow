@@ -6,7 +6,7 @@ public class LayerTransporter : MonoBehaviour
 {
 
     Vector3 myPos;
-    public GameObject camera;
+    public GameObject camEra;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +17,7 @@ public class LayerTransporter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (camera.transform.position.z > myPos.z +10)
+        if (camEra.transform.position.z > myPos.z +10)
         {
             myPos.z += 70; 
             gameObject.transform.position = myPos;

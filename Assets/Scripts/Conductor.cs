@@ -11,15 +11,12 @@ public class Conductor : MonoBehaviour
 	public delegate void KeyDownAction(int trackNumber, Rank rank);
 	public static event KeyDownAction KeyDownEvent;
 
-	//keyup action
-	public delegate void KeyUpAction(int trackNumber);
-	public static event KeyUpAction KeyUpEvent;
-
 	//song completion
 	public delegate void SongCompletedAction();
 	public static event SongCompletedAction SongCompletedEvent;
 
 	public static float[] dueToNextNote;
+	public static int[] nextNoteAnim;
 	private float songLength;
 
 	//if the whole game is paused
@@ -40,7 +37,7 @@ public class Conductor : MonoBehaviour
 	public float[] trackSpawnPosX;
 
 	//z axis belongs to meteor object
-	public float startLineY, finishLineY, removeLineY, startLineZ, finishLineZ;
+	public float startLineY, finishLineY, removeLineY, meteorStartLineZ, meteorFinishLineZ;
 
 	public float badOffsetY, goodOffsetY, perfectOffsetY;
 
@@ -62,9 +59,6 @@ public class Conductor : MonoBehaviour
 
 	//count down canvas
 	public GameObject countDownCanvas, countDownText;
-
-	//z coordinate of music nodes, unnecessary now but keeping
-	private float layerZ = 0f;
 
 	//total tracks
 	private int len;
@@ -109,11 +103,6 @@ public class Conductor : MonoBehaviour
 		}
 	}
 
-	void KeyUpped(int trackNumber)
-	{
-		//keyupped
-	}
-
 	void Start()
 	{
 		//reset static variables
@@ -133,7 +122,6 @@ public class Conductor : MonoBehaviour
 
 		//listen to player input
 		PlayerInputControl.KeyDownEvent += PlayerInputted;
-		PlayerInputControl.KeyUpEvent += KeyUpped;
 
 		//listen playing ui for lost state
 		PlayingUIController.LostEvent += SongCompleted;
@@ -145,11 +133,13 @@ public class Conductor : MonoBehaviour
 		trackNextIndices = new int[len];
 		queueForTracks = new Queue<MusicNode>[len];
 		dueToNextNote = new float[len];
+		nextNoteAnim = new int[len];
 		for (int i = 0; i < len; i++)
 		{
 			trackNextIndices[i] = 0;
 			queueForTracks[i] = new Queue<MusicNode>();
 			dueToNextNote[i] = -1;
+			nextNoteAnim[i]= 0;
 		}
 
 		tracks = songInfo.tracks; //keep a reference of the tracks
@@ -243,7 +233,7 @@ public class Conductor : MonoBehaviour
 				SongInfo.Note currNote = currTrack.notes[nextIndex];
 
 				//get a new node
-				MusicNode musicNode = MusicNodePool.instance.GetNode(trackSpawnPosX[i], startLineY, finishLineY, removeLineY, startLineZ, finishLineZ, layerZ, currNote.dueTo);
+				MusicNode musicNode = MusicNodePool.instance.GetNode(trackSpawnPosX[i], startLineY, finishLineY, removeLineY, meteorStartLineZ, meteorFinishLineZ, currNote.dueTo, i);
 
 				//enqueue
 				queueForTracks[i].Enqueue(musicNode);
@@ -273,6 +263,7 @@ public class Conductor : MonoBehaviour
 			if (queueForTracks[i].Count == 0)
 			{
 				dueToNextNote[i] = -1;
+				nextNoteAnim[i] = 0;
 				continue;
 			}
 
@@ -280,6 +271,7 @@ public class Conductor : MonoBehaviour
 
 			//upcoming notes
 			dueToNextNote[i] = currNode.beat - songposition;
+			nextNoteAnim[i] = currNode.meteorPos;
 
 			//single note
 			if (currNode.transform.position.y <= finishLineY - goodOffsetY)
@@ -333,7 +325,6 @@ public class Conductor : MonoBehaviour
 	void OnDestroy()
 	{
 		PlayerInputControl.KeyDownEvent -= PlayerInputted;
-		PlayerInputControl.KeyUpEvent -= KeyUpped; 
 		PlayingUIController.LostEvent -= SongCompleted;
 		AudioSource.clip.UnloadAudioData();
 	}

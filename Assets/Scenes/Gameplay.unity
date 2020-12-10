@@ -960,8 +960,8 @@ MonoBehaviour:
   startLineY: 8
   finishLineY: -3.5
   removeLineY: -6
-  startLineZ: 50
-  finishLineZ: 0
+  meteorStartLineZ: 100
+  meteorFinishLineZ: 0
   badOffsetY: 1
   goodOffsetY: 0.4
   perfectOffsetY: 0.25
