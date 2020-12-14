@@ -2,11 +2,8 @@
 
 public class PlayerInputControl : MonoBehaviour
 {
-
     public delegate void KeyDownAction(int trackNumber);
     public static event KeyDownAction KeyDownEvent;
-
-    public BoxCollider2D[] tappingBoxes;
 
     //in unity editor & standalone, input by keyboard
 #if UNITY_EDITOR || UNITY_STANDALONE
@@ -35,26 +32,6 @@ public class PlayerInputControl : MonoBehaviour
             if (Input.GetKeyDown(keybindings[i]))
             {
                 Inputted(i);
-            }
-        }
-#endif
-
-        //touch input
-#if UNITY_IOS || UNITY_ANDROID || UNITY_EDITOR
-        //check touch input
-        foreach (Touch touch in Input.touches)
-        {
-            //tap down
-            if (touch.phase == TouchPhase.Began)
-            {
-                //check if on a tapping sphere
-                for (int i = 0; i < trackLength; i++)
-                {
-                    if (tappingBoxes[i].OverlapPoint(Camera.main.ScreenToWorldPoint(touch.position)))
-                    {
-                        Inputted(i);
-                    }
-                }
             }
         }
 #endif

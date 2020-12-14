@@ -10,7 +10,7 @@ public class MeteorNode : MonoBehaviour
 
     public void Initialize()
     {
-        //nothing to do yet
+        //
     }
 
     public void Explode(Vector3 expVec)

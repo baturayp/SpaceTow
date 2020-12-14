@@ -12,8 +12,8 @@ public class MusicNode : MonoBehaviour
 	[NonSerialized] public bool paused;
 
 	//adjust them accordingly to animations
-	private float[] meteorFinalX = {0, 0, 0, 0, -1, -3, -3, -2, -3, -2, -1, -1};
-	private float[] meteorFinalY = {0, -1.5f, 1.5f, -1, 3.5f, 0, 0, -1, -1, 0, 0, 3};
+	private float[] meteorFinalX = {0, 7, 7, 7, 6, 4, 4, 5, 6, 5, 6, 6};
+	private float[] meteorFinalY = {0, -5, -5, -4.5f, 0, -3.5f, -3.5f, -4.5f, -4.5f, -3.5f, -3.5f, -0.5f};
 	private float[] explosionXOffset = {0, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 2};
 	private float[] explosionYOffset = {0, -1, 0, 0, 2, 0, 1, 0, 0, 1, -1, 0};
 	private MeteorNode meteorNode;
@@ -24,7 +24,7 @@ public class MusicNode : MonoBehaviour
 	private int trackNumber;
 
 
-	public void Initialize(float posX, float startY, float endY, float removeLineY, float meteorStartLineZ, float meteorFinishLineZ, float targetBeat, MeteorNode meteor, int trackNumber)
+	public void Initialize(float startY, float endY, float removeLineY, float meteorStartLineZ, float meteorFinishLineZ, float targetBeat, MeteorNode meteor, int trackNumber)
 	{
 		this.startY = startY;
 		this.endY = endY;
@@ -39,8 +39,8 @@ public class MusicNode : MonoBehaviour
 		meteorPos = UnityEngine.Random.Range(1,12);
 		metStartZ = meteorStartLineZ;
 		metEndZ = meteorFinishLineZ;
-		metStartX = trackNumber > 0 ? posX + meteorFinalX[meteorPos] : posX - meteorFinalX[meteorPos];
-		metStartY = endY + meteorFinalY[meteorPos];
+		metStartX = trackNumber > 0 ? 0 + meteorFinalX[meteorPos] : 0 - meteorFinalX[meteorPos];
+		metStartY = meteorFinalY[meteorPos];
 
 		//calculate explotion coordinates
 		expX = trackNumber > 0 ? 0 - explosionXOffset[meteorPos] : explosionXOffset[meteorPos];
@@ -48,7 +48,7 @@ public class MusicNode : MonoBehaviour
 		explotionVector = new Vector3(expX, expY, 0);
 
 		//set position
-		transform.position = new Vector3(posX, startY, 0);
+		transform.position = new Vector3(0, startY, 0);
 
 		meteorNode.transform.position = new Vector3(metStartX, metStartY, metStartZ);
 
@@ -71,7 +71,7 @@ public class MusicNode : MonoBehaviour
 		if (paused) return;
 
 		//meteor position
-		meteorNode.transform.position = new Vector3(metStartX, metStartY, metStartZ + (metEndZ - metStartZ) * (1f - ((beat) - Conductor.songposition) / (Conductor.BeatsShownOnScreen / Conductor.tempo)));
+		meteorNode.transform.localPosition = new Vector3(metStartX, metStartY, metStartZ + (metEndZ - metStartZ) * (1f - ((beat) - Conductor.songposition) / (Conductor.BeatsShownOnScreen / Conductor.tempo)));
 
 		//meteor rotation
 		meteorNode.transform.Rotate(aCos,aCos,aCos, Space.Self);

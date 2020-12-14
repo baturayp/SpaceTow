@@ -9,6 +9,7 @@ public class MusicNodePool : MonoBehaviour
 	public GameObject[] meteorPrefab;
 	public int initialAmount;
 	private List<MusicNode> nodeList;
+	public GameObject movingParts;
 
 	void Awake()
 	{
@@ -27,7 +28,7 @@ public class MusicNodePool : MonoBehaviour
 		}
 	}
 
-	public MusicNode GetNode(float posX, float startY, float endY, float removeLineY, float startLineZ, float finishLineZ, float beat, int trackNumber)
+	public MusicNode GetNode(float startY, float endY, float removeLineY, float startLineZ, float finishLineZ, float beat, int trackNumber)
 	{
 		//get an empty meteor or init a new one
 		MeteorNode meteor = GetMeteor();
@@ -36,14 +37,14 @@ public class MusicNodePool : MonoBehaviour
 		{
 			if (!node.gameObject.activeInHierarchy)
 			{
-				node.Initialize(posX, startY, endY, removeLineY, startLineZ, finishLineZ, beat, meteor, trackNumber);
+				node.Initialize(startY, endY, removeLineY, startLineZ, finishLineZ, beat, meteor, trackNumber);
 				node.gameObject.SetActive(true);
 				return node;
 			}
 		}
 		//no inactive instances, instantiate a new GetComponent
 		MusicNode musicNode = Instantiate(nodePrefab).GetComponent<MusicNode>();
-		musicNode.Initialize(posX, startY, endY, removeLineY, startLineZ, finishLineZ, beat, meteor, trackNumber);
+		musicNode.Initialize(startY, endY, removeLineY, startLineZ, finishLineZ, beat, meteor, trackNumber);
 		nodeList.Add(musicNode);
 		return musicNode;
 	}
@@ -51,7 +52,8 @@ public class MusicNodePool : MonoBehaviour
 	MeteorNode GetMeteor()
 	{
 		int randomMeteor = Random.Range(0,5);
-		MeteorNode meteorNode = Instantiate(meteorPrefab[randomMeteor]).GetComponent<MeteorNode>();
+		//instantiate as a child of movingParts
+		MeteorNode meteorNode = Instantiate(meteorPrefab[randomMeteor], movingParts.transform).GetComponent<MeteorNode>();
 		meteorNode.Initialize();
 		return meteorNode;
 	}

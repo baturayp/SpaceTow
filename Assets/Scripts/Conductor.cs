@@ -30,11 +30,9 @@ public class Conductor : MonoBehaviour
 
 	//song to play without selecting it from main menu
 	public SongInfo developmentSong;
+	public GameObject movingParts;
 
 	public static int fullNoteCounts;
-
-	[Header("Node spawn points")]
-	public float[] trackSpawnPosX;
 
 	//z axis belongs to meteor object
 	public float startLineY, finishLineY, removeLineY, meteorStartLineZ, meteorFinishLineZ;
@@ -42,7 +40,7 @@ public class Conductor : MonoBehaviour
 	public float badOffsetY, goodOffsetY, perfectOffsetY;
 
 	//current song position and remaining time
-	public static float songposition, remainingTime;
+	public static float songposition;
 
 	//index for each tracks
 	private int[] trackNextIndices;
@@ -61,7 +59,7 @@ public class Conductor : MonoBehaviour
 	public GameObject countDownCanvas, countDownText;
 
 	//total tracks
-	private int len;
+	private int len = 2;
 	private AudioSource AudioSource { get { return GetComponent<AudioSource>(); } }
 
 	void PlayerInputted(int trackNumber)
@@ -129,7 +127,6 @@ public class Conductor : MonoBehaviour
 		songLength = songInfo.song.length;
 
 		//initialize arrays
-		len = trackSpawnPosX.Length;
 		trackNextIndices = new int[len];
 		queueForTracks = new Queue<MusicNode>[len];
 		dueToNextNote = new float[len];
@@ -216,8 +213,8 @@ public class Conductor : MonoBehaviour
 		//calculate songposition
 		songposition = (float)(AudioSettings.dspTime - dsptimesong - pausedTime) * AudioSource.pitch - (songInfo.songOffset);
 
-		//remaining time
-		remainingTime = songInfo.endTime - songposition;
+		//move movingParts object
+		movingParts.transform.position = new Vector3(0,0, Mathf.Lerp(0, 250, songposition / songInfo.endTime));
 
 		//check if need to instantiate new nodes
 		float beatToShow = songposition + (BeatsShownOnScreen / tempo);
@@ -233,7 +230,7 @@ public class Conductor : MonoBehaviour
 				SongInfo.Note currNote = currTrack.notes[nextIndex];
 
 				//get a new node
-				MusicNode musicNode = MusicNodePool.instance.GetNode(trackSpawnPosX[i], startLineY, finishLineY, removeLineY, meteorStartLineZ, meteorFinishLineZ, currNote.dueTo, i);
+				MusicNode musicNode = MusicNodePool.instance.GetNode(startLineY, finishLineY, removeLineY, meteorStartLineZ, meteorFinishLineZ, currNote.dueTo, i);
 
 				//enqueue
 				queueForTracks[i].Enqueue(musicNode);
