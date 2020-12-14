@@ -39,6 +39,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _EmmiMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -83,8 +87,8 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _LightC: {r: 1, g: 0.76034176, b: 0, a: 1}
-    - _MainColor: {r: 0.754717, g: 0.58974457, b: 0.49483803, a: 1}
-    - _RimLight: {r: 1, g: 0.91382337, b: 0.68799996, a: 1}
-    - _ShadowColor: {r: 0, g: 0.3122301, b: 0.38679248, a: 1}
+    - _LightC: {r: 0.54, g: 0.09, b: 0.83, a: 1}
+    - _MainColor: {r: 0.63, g: 0.36, b: 0.7, a: 1}
+    - _RimLight: {r: 0.23, g: 0.54, b: 0.59, a: 1}
+    - _ShadowColor: {r: 0.12, g: 0.06, b: 0.52, a: 1}
   m_BuildTextureStacks: []
