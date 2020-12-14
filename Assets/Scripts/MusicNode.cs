@@ -12,10 +12,10 @@ public class MusicNode : MonoBehaviour
 	[NonSerialized] public bool paused;
 
 	//adjust them accordingly to animations
-	private float[] meteorFinalX = {0, 0, 0, 0, 2};
-	private float[] meteorFinalY = {0, 0, 0, 0, 4};
-	private float[] explosionXOffset = {0, 1, 1, 2, 2};
-	private float[] explosionYOffset = {0, 1, 0, 0, -2};
+	private float[] meteorFinalX = {0, 0, 0, 0, -1, -3, -3, -2, -3, -2, -1, -1};
+	private float[] meteorFinalY = {0, -1.5f, 1.5f, -1, 3.5f, 0, 0, -1, -1, 0, 0, 3};
+	private float[] explosionXOffset = {0, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 2};
+	private float[] explosionYOffset = {0, -1, 0, 0, 2, 0, 1, 0, 0, 1, -1, 0};
 	private MeteorNode meteorNode;
 	private Vector3 explotionVector;
 	private float aCos;
@@ -36,15 +36,15 @@ public class MusicNode : MonoBehaviour
 		paused = false;
 
 		//make meteor appear at a predefined random point
-		meteorPos = UnityEngine.Random.Range(1,5);
+		meteorPos = UnityEngine.Random.Range(1,12);
 		metStartZ = meteorStartLineZ;
 		metEndZ = meteorFinishLineZ;
-		metStartX = trackNumber > 0 ? posX - meteorFinalX[meteorPos] : posX + meteorFinalX[meteorPos];
+		metStartX = trackNumber > 0 ? posX + meteorFinalX[meteorPos] : posX - meteorFinalX[meteorPos];
 		metStartY = endY + meteorFinalY[meteorPos];
 
 		//calculate explotion coordinates
 		expX = trackNumber > 0 ? 0 - explosionXOffset[meteorPos] : explosionXOffset[meteorPos];
-		expY = explosionYOffset[meteorPos];
+		expY = 0 - explosionYOffset[meteorPos];
 		explotionVector = new Vector3(expX, expY, 0);
 
 		//set position
@@ -82,6 +82,9 @@ public class MusicNode : MonoBehaviour
 
 	IEnumerator FadeOut()
 	{
+		yield return new WaitForSeconds(Conductor.dueToNextNote[trackNumber]);
+		paused = true;
+		meteorNode.Explode(explotionVector);
 		yield return new WaitForSeconds(0.5f);
 		meteorNode.Destroy();
 		gameObject.SetActive(false);
@@ -89,22 +92,16 @@ public class MusicNode : MonoBehaviour
 
 	public void PerfectHit()
 	{
-		paused = true;
-		meteorNode.Explode(explotionVector);
 		StartCoroutine(FadeOut());
 	}
 
 	public void GoodHit()
 	{
-		paused = true;
-		meteorNode.Explode(explotionVector);
 		StartCoroutine(FadeOut());
 	}
 
 	public void BadHit()
 	{
-		paused = true;
-		meteorNode.Explode(explotionVector);
 		StartCoroutine(FadeOut());
 	}
 }

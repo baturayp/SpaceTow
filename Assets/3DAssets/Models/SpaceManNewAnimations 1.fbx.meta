@@ -1,41 +1,86 @@
 fileFormatVersion: 2
-guid: 4e3d28e462e8464649770463e29c3fdb
+guid: 8f1389b330d12aa40809ce6fe08d5863
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable:
   - first:
+      74: -7431721403545570520
+    second: Armature|A-Kick1-L
+  - first:
+      74: -697670464447959766
+    second: Armature|A-Kick1-R
+  - first:
+      74: -3712303244202219240
+    second: Armature|A-Kick2-L
+  - first:
+      74: -8880239269321617897
+    second: Armature|A-Kick2-R
+  - first:
+      74: 6758041841661279555
+    second: Armature|A-Punch1-L
+  - first:
+      74: 4022364687937651533
+    second: Armature|A-Punch1-R
+  - first:
+      74: -7438908924775976273
+    second: Armature|B-Kick1-L
+  - first:
+      74: 5180501276724381714
+    second: Armature|B-Kick1-R
+  - first:
+      74: 7422439462809984194
+    second: Armature|B-Punch1-L
+  - first:
+      74: 6874651711392732687
+    second: Armature|B-Punch1-R
+  - first:
+      74: -3724884140384890484
+    second: Armature|C-Head1-L
+  - first:
+      74: -6427546061384190313
+    second: Armature|C-Head1-R
+  - first:
+      74: 3762591950565473008
+    second: Armature|C-Punch1-L
+  - first:
+      74: 7665779847319955094
+    second: Armature|C-Punch1-R
+  - first:
+      74: 3113390880260180287
+    second: Armature|D-Kick1-R
+  - first:
+      74: 3578020836713714030
+    second: Armature|D-Kick1-L
+  - first:
+      74: 3869663887478393936
+    second: Armature|D-Punch1-L
+  - first:
+      74: -2301791555627379263
+    second: Armature|D-Punch1-R
+  - first:
+      74: -1286495609772200715
+    second: Armature|E-Kick1-L
+  - first:
+      74: -1430028211715361290
+    second: Armature|E-Kick1-R
+  - first:
+      74: -8120103067182545188
+    second: Armature|E-Punch1-L
+  - first:
+      74: 2894939528942019766
+    second: Armature|E-Punch1-R
+  - first:
+      74: -5595204001836973541
+    second: Armature|F-Kick1-L
+  - first:
+      74: -4805123379534858383
+    second: Armature|F-Kick1-M
+  - first:
+      74: -6454404450223277277
+    second: Armature|F-Punch1-M
+  - first:
       74: -8945691123924629249
     second: Armature|Idle
-  - first:
-      74: -1520726548247196262
-    second: Armature|Kick1A-L
-  - first:
-      74: 3178677837223765213
-    second: Armature|Kick1A-R
-  - first:
-      74: 1801789296141191473
-    second: Armature|Kick2A-L
-  - first:
-      74: -7537532035783014473
-    second: Armature|Kick2A-R
-  - first:
-      74: 7304959700861126623
-    second: Armature|Punch1A-L
-  - first:
-      74: -5633698584620723966
-    second: Armature|Punch1A-R
-  - first:
-      74: 1885259967630572338
-    second: Armature|Punch1B-L
-  - first:
-      74: -3790899755893362469
-    second: Armature|Punch1B-R
-  - first:
-      74: -9085956897165766976
-    second: Armature|Punch2B-L
-  - first:
-      74: -9166671853560287686
-    second: Armature|Punch2B-R
   - first:
       74: 786504323170427181
     second: Armature|T-Pose

@@ -7,14 +7,13 @@ public class SpaceMan : MonoBehaviour
     public GameObject spaceMan;
     public Animator spaceManAnim;
 
-    Coroutine attackRoutine;
+    private Coroutine attackRoutine;
 
     //animation frame values
     private float[] attackStart = {0.16f, 0.2f};
     private float[] attackSuccess = {0.4f, 0.6f};
     private float[] attackFailed = {0.8f, 1f};
     private float attackSpeed = 0.25f;
-    private float animVal;
 
     //temporary attack anim selector
     private int animNum = 1;
@@ -25,7 +24,6 @@ public class SpaceMan : MonoBehaviour
     
     void Start()
     {
-        animVal = 0f;
         Conductor.KeyDownEvent += KeyDownAction;
     }
 
@@ -50,7 +48,7 @@ public class SpaceMan : MonoBehaviour
             {
                 animNum--;
             }
-            if (Input.GetKeyDown(KeyCode.M) && animNum < 5)
+            if (Input.GetKeyDown(KeyCode.M) && animNum < 13)
             {
                 animNum++;
             }
@@ -116,7 +114,7 @@ public class SpaceMan : MonoBehaviour
         while (elapsedTime < hitDuration)
         {
             elapsedTime += Time.deltaTime;
-            animVal = Mathf.Lerp(attackStart[0], attackStart[1], elapsedTime / hitDuration);
+            var animVal = Mathf.Lerp(attackStart[0], attackStart[1], elapsedTime / hitDuration);
             spaceManAnim.Play(animToPlay, 0, animVal);
             spaceManAnim.Update(0f);
             yield return null;
@@ -125,13 +123,12 @@ public class SpaceMan : MonoBehaviour
         while (elapsedTime < backDuration)
         {
             elapsedTime += Time.deltaTime;
-            animVal = Mathf.Lerp(success ? attackSuccess[0] : attackFailed[0], 
+            var animVal = Mathf.Lerp(success ? attackSuccess[0] : attackFailed[0], 
                                    success ? attackSuccess[1] : attackFailed[1], elapsedTime / backDuration);
             spaceManAnim.Play(animToPlay, 0, animVal);
             spaceManAnim.Update(0f);
             yield return null;
         }
-        animVal = 0f;
         attackRoutine = null;
         spaceManAnim.Play("idle");
     }
