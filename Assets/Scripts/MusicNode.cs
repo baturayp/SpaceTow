@@ -50,7 +50,7 @@ public class MusicNode : MonoBehaviour
 		//set position
 		transform.position = new Vector3(0, startY, 0);
 
-		meteorNode.transform.position = new Vector3(metStartX, metStartY, metStartZ);
+		meteorNode.transform.localPosition = new Vector3(metStartX, metStartY, metStartZ);
 
 		//reset rotation
 		transform.Rotate(0, 0, 0);
