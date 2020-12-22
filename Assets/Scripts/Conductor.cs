@@ -30,7 +30,6 @@ public class Conductor : MonoBehaviour
 
 	//song to play without selecting it from main menu
 	public SongInfo developmentSong;
-	public GameObject movingParts;
 
 	public static int fullNoteCounts;
 
@@ -212,9 +211,6 @@ public class Conductor : MonoBehaviour
 
 		//calculate songposition
 		songposition = (float)(AudioSettings.dspTime - dsptimesong - pausedTime) * AudioSource.pitch - (songInfo.songOffset);
-
-		//move movingParts object
-		movingParts.transform.position = new Vector3(0,0, Mathf.Lerp(0, 250, songposition / songInfo.endTime));
 
 		//check if need to instantiate new nodes
 		float beatToShow = songposition + (BeatsShownOnScreen / tempo);

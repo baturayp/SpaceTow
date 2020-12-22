@@ -1,14 +1,3 @@
-/*  SU_StaticStars_Noise shader (version: 1.5)
-	SPACE for UNITY - Space Scene Construction Kit
-	https://www.imphenzia.com/space-for-unity
-	(c) 2017 Imphenzia AB
-
-	Shader to render static stars (custom skybox) with noise nebulas but without star color tinting.
-
-	Version History
-	1.5		- New feature in version 1.5.
-*/
-
 Shader "StaticStars" {
 	Properties {
 		_MainTex ("Stars Texture (RGB)", 2D) = "black" {}
