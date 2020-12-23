@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GeneralMaterial
+  m_Name: General_GreenYellow
   m_Shader: {fileID: 4800000, guid: 5505ee45ba0ef904f841364043c6f363, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -90,9 +90,9 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DiffuseLightC: {r: 0.77, g: 0.7, b: 0.19, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _LightC: {r: 1, g: 0.6, b: 0.16, a: 1}
+    - _LightC: {r: 0.17, g: 1, b: 0.09, a: 1}
     - _LightColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
-    - _MainColor: {r: 1, g: 1, b: 1, a: 1}
-    - _RimLight: {r: 0.66, g: 0.4, b: 0.15, a: 1}
-    - _ShadowColor: {r: 0.034, g: 0.29, b: 0.24, a: 1}
+    - _MainColor: {r: 0.73, g: 0.72, b: 0.66, a: 1}
+    - _RimLight: {r: 0.56, g: 0.58, b: 0.24, a: 1}
+    - _ShadowColor: {r: 0.33, g: 0.32, b: 0.18, a: 1}
   m_BuildTextureStacks: []

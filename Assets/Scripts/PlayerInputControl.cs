@@ -37,7 +37,7 @@ public class PlayerInputControl : MonoBehaviour
 #endif
     }
 
-    void Inputted(int i)
+    public void Inputted(int i)
     {
         //inform Conductor and other interested classes
         KeyDownEvent?.Invoke(i);

@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
 
 #if (UNITY_EDITOR)
-[ExecuteInEditMode]
 public class StagePalette : MonoBehaviour
 {
 
@@ -15,7 +13,6 @@ public class StagePalette : MonoBehaviour
     public Material[] materialIndex;
     public GameObject[] skyCanvas;
     public Image planetLight;
-    public Transform canvasSes;
     public enum colorState
     {
         OrangeCyan,
@@ -50,12 +47,8 @@ public class StagePalette : MonoBehaviour
 
     [ExecuteInEditMode]
 
-    void LateUpdate()
+    void Start()
     {
-        int childs = canvasSes.childCount;
-        for (int i = childs -1; i>=0; i--){
-            GameObject.DestroyImmediate(canvasSes.GetChild(i).gameObject);
-        }
         rendererIndex = new Renderer[3];
         OrangeCyan = new ColorSettings();
         Synthwave1 = new ColorSettings();
@@ -128,7 +121,7 @@ public class StagePalette : MonoBehaviour
                 materialIndex[i].SetColor("_LightC", OrangeCyan.lightColor);
                 materialIndex[i].SetColor("_RimLight", OrangeCyan.rimColor);
             }
-            Instantiate(skyCanvas[0],canvasSes);
+            Instantiate(skyCanvas[0]);
             planetLight.color = OrangeCyan.planetLightColor;
             myStarField.starColor1 = OrangeCyan.starColor1;
             myStarField.starColor2 = OrangeCyan.starColor2;
@@ -145,7 +138,7 @@ public class StagePalette : MonoBehaviour
                 materialIndex[i].SetColor("_LightC", Synthwave1.lightColor);
                 materialIndex[i].SetColor("_RimLight", Synthwave1.rimColor);
             }
-            Instantiate(skyCanvas[1],canvasSes);
+            Instantiate(skyCanvas[1]);
             planetLight.color = Synthwave1.planetLightColor;
             myStarField.starColor1 = Synthwave1.starColor1;
             myStarField.starColor2 = Synthwave1.starColor2;
@@ -163,7 +156,7 @@ public class StagePalette : MonoBehaviour
                 materialIndex[i].SetColor("_LightC", Synthwave2.lightColor);
                 materialIndex[i].SetColor("_RimLight", Synthwave2.rimColor);
             }
-            Instantiate(skyCanvas[2],canvasSes);
+            Instantiate(skyCanvas[2]);
             planetLight.color = Synthwave2.planetLightColor;
             myStarField.starColor1 = Synthwave2.starColor1;
             myStarField.starColor2 = Synthwave2.starColor2;
@@ -180,7 +173,7 @@ public class StagePalette : MonoBehaviour
                 materialIndex[i].SetColor("_LightC", BlueOrange.lightColor);
                 materialIndex[i].SetColor("_RimLight", BlueOrange.rimColor);
             }
-            Instantiate(skyCanvas[4],canvasSes);
+            Instantiate(skyCanvas[4]);
             planetLight.color = BlueOrange.planetLightColor;
             myStarField.starColor1 = BlueOrange.starColor1;
             myStarField.starColor2 = BlueOrange.starColor2;
