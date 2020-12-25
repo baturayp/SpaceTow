@@ -4,21 +4,35 @@ using UnityEngine;
 
 public class MoveUpAndDown : MonoBehaviour
 {
-    public GameObject DebrisLayer;
-    public float movementOffSet;
-    public float posY0;
-    float upDownAmount = 1;
-
-    // Start is called before the first frame update
+    public float startZ;
+    public float endZ;
+    public float fullScalePoint;
+    private Vector3 initialPosition;
+    
     void Start()
     {
-        movementOffSet = Random.Range(0.0f,1.0f);
-        posY0 = DebrisLayer.transform.position.y;
+        initialPosition = transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        DebrisLayer.transform.position = new Vector3(DebrisLayer.transform.position.x, posY0 + (Mathf.SmoothStep(0, upDownAmount, (Mathf.PingPong(Time.time*0.4f + movementOffSet, 1)))), DebrisLayer.transform.position.z);
+        if (Conductor.pauseTimeStamp > 0f) return;
+        //DebrisLayer.transform.position = new Vector3(DebrisLayer.transform.position.x, posY0 + (Mathf.SmoothStep(0, upDownAmount, (Mathf.PingPong(Time.time*0.4f + movementOffSet, 1)))), DebrisLayer.transform.position.z);
+        //transform.localPosition -= new Vector3(0, Mathf.SmoothStep(-0.02f, 0.02f, (Mathf.PingPong(Time.time*0.4f + movementOffSet, 1))),0.1f);
+        if (transform.position.z <= endZ)
+        {
+            transform.position = new Vector3(initialPosition.x, initialPosition.y, startZ);
+        }
+
+        // if (transform.position.z > fullScalePoint)
+        // {
+        //     transform.localScale = new Vector3(1/(transform.position.z - fullScalePoint), 1/(transform.position.z - fullScalePoint), 1/(transform.position.z - fullScalePoint));
+        // }
+        // else
+        // {
+        //     transform.localScale = new Vector3(1,1,1);
+        // }
+
+        transform.position -= new Vector3(0, Mathf.SmoothStep(-0.02f, 0.02f, (Mathf.PingPong(Time.time, 1))), 0.3f);
     }
 }

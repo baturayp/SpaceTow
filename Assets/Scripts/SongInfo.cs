@@ -21,9 +21,6 @@ public class SongInfo : ScriptableObject
 	[Header("Initial default tempo 1 for normal, 0.5 half, 2 double etc")]
 	public float tempo = 1f;
 
-	[Header("Dynamically change tempo at defined moments, set 0 to disable")]
-	public Tempo[] dynamicTempo;
-
 	[Header("Just for reference, notes populated automatically, edit them from NoteEditor")]
 	public Track[] tracks = new Track[2];
 
