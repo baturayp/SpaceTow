@@ -54,7 +54,7 @@ public class PlayingUIController : MonoBehaviour
 	}
 
 	//called by event
-	void BeatOnHit(int trackNumber, Conductor.Rank rank)
+	void BeatOnHit(int trackNumber, float beat, Conductor.Rank rank)
 	{
 		if (rank == Conductor.Rank.PERFECT)
 		{

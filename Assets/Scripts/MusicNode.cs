@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class MusicNode : MonoBehaviour
 {
-	[NonSerialized] public float startY;
-	[NonSerialized] public float endY;
-	[NonSerialized] public float removeLineY;
 	[NonSerialized] public float beat;
 	[NonSerialized] public int meteorPos;
 	[NonSerialized] public bool paused;
@@ -24,12 +21,9 @@ public class MusicNode : MonoBehaviour
 	private int trackNumber;
 
 
-	public void Initialize(float startY, float endY, float removeLineY, float meteorStartLineZ, float meteorFinishLineZ, float targetBeat, MeteorNode meteor, int trackNumber)
+	public void Initialize(float meteorStartLineZ, float meteorFinishLineZ, float targetBeat, MeteorNode meteor, int trackNumber)
 	{
-		this.startY = startY;
-		this.endY = endY;
 		this.beat = targetBeat;
-		this.removeLineY = removeLineY;
 		this.meteorNode = meteor;
 		this.trackNumber = trackNumber;
 		aCos = Mathf.Cos(targetBeat);
@@ -47,9 +41,6 @@ public class MusicNode : MonoBehaviour
 		expY = 0 - explosionYOffset[meteorPos];
 		explotionVector = new Vector3(expX, expY, 0);
 
-		//set position
-		transform.position = new Vector3(0, startY, 0);
-
 		meteorNode.transform.localPosition = new Vector3(metStartX, metStartY, metStartZ);
 
 		//reset rotation
@@ -61,7 +52,7 @@ public class MusicNode : MonoBehaviour
 		if (Conductor.pauseTimeStamp > 0f) return; //resume not managed
 
 		//remove itself when out of the screen (remove line)
-		if (transform.position.y < removeLineY)
+		if (Conductor.songposition > beat + 1.0f)
 		{
 			meteorNode.Destroy();
 			gameObject.SetActive(false);
@@ -75,14 +66,11 @@ public class MusicNode : MonoBehaviour
 
 		//meteor rotation
 		meteorNode.transform.Rotate(aCos,aCos,aCos, Space.Self);
-
-		//node position
-		transform.position = new Vector3(transform.position.x, startY + (endY - startY) * (1f - ((beat) - Conductor.songposition) / (Conductor.BeatsShownOnScreen / Conductor.tempo)), transform.position.z);
 	}
 
 	IEnumerator FadeOut()
 	{
-		yield return new WaitForSeconds(Conductor.dueToNextNote[trackNumber]);
+		yield return new WaitUntil(() => Conductor.songposition > beat);
 		paused = true;
 		meteorNode.Explode(explotionVector);
 		yield return new WaitForSeconds(0.5f);

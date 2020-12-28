@@ -17271,7 +17271,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 2027599424}
           m_TargetAssemblyTypeName: Conductor, Assembly-CSharp
-          m_MethodName: SetBool
+          m_MethodName: ButtonPressed
           m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -18933,133 +18933,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36cdb44167ae0264480be3a5629c0891, type: 3}
---- !u!1 &983558003
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 983558004}
-  - component: {fileID: 983558005}
-  m_Layer: 0
-  m_Name: secondAudioLayer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &983558004
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 983558003}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2027599425}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &983558005
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 983558003}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 369acb10dd0365a06ae6acc55d072691, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!4 &985443750 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 98272c12608e028468d06b1872e313e9, type: 3}
@@ -25620,7 +25493,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 2027599424}
           m_TargetAssemblyTypeName: Conductor, Assembly-CSharp
-          m_MethodName: SetBool
+          m_MethodName: ButtonPressed
           m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -33420,17 +33293,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   developmentSong: {fileID: 11400000, guid: e4089c29b82f4be258834d5fe815cc1d, type: 2}
-  startLineY: 8
-  finishLineY: 0
-  removeLineY: -4
   meteorStartLineZ: 100
   meteorFinishLineZ: 0
-  badOffsetY: 1.5
-  goodOffsetY: 0.4
-  perfectOffsetY: 0.25
+  badOffset: 0.35
+  goodOffset: 0.25
+  perfectOffset: 0.15
   countDownCanvas: {fileID: 403964377}
-  firstLayer: {fileID: 2027599422}
-  secondLayer: {fileID: 983558005}
+  songLayer: {fileID: 2027599422}
+  punchClip: {fileID: 8300000, guid: c3ce78e9620e42944aa13f45b92bc98e, type: 3}
 --- !u!4 &2027599425
 Transform:
   m_ObjectHideFlags: 0
@@ -33441,8 +33311,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 983558004}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
