@@ -17,7 +17,11 @@ MonoBehaviour:
   songTitle: Demo Song
   songOffset: 0
   bpm: 114
-  tempo: 2
+  appearTime:
+  - startTime: 0
+    offsetVal: 2.073
+  - startTime: 93
+    offsetVal: 4.2
   tracks:
   - notes:
     - dueTo: 10.526316
@@ -273,5 +277,4 @@ MonoBehaviour:
       track: 1
     - dueTo: 109.210526
       track: 1
-  beatsShownOnScreen: 4
-  endTime: 236
+  endTime: 220

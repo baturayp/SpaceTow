@@ -56,7 +56,8 @@ public class Conductor : MonoBehaviour
 	//buttons state
 	private bool leftButton, rightButton;
 
-	public static float BeatsShownOnScreen = 4f, tempo = 1f;
+	private int appearTimeLength;
+	public static float appearTime;
 
 	//count down canvas
 	public GameObject countDownCanvas;
@@ -67,7 +68,7 @@ public class Conductor : MonoBehaviour
 
 	//total tracks
 	private readonly int len = 2;
-	private Coroutine nextPunchWait;
+	private Coroutine[] nextPunchWait;
 
 	//audio related stuff
 	public AudioSource songLayer;
@@ -95,15 +96,15 @@ public class Conductor : MonoBehaviour
 		yield return new WaitUntil(() => songposition >= beatTime);
 		songLayer.PlayOneShot(punchClip);
 	}
-	IEnumerator Wait(float until)
+	IEnumerator Wait(float until, int track)
 	{
 		yield return new WaitUntil(() => songposition > until);
-		nextPunchWait = null;
+		nextPunchWait[track] = null;
 	}
 	
 	void PlayerInputted(int trackNumber)
 	{
-		if (nextPunchWait != null) return;
+		if (nextPunchWait[trackNumber] != null) return;
 		
 		if (queueForTracks[trackNumber].Count != 0)
 		{
@@ -118,7 +119,7 @@ public class Conductor : MonoBehaviour
 				KeyDownEvent?.Invoke(trackNumber, frontNode.beat, Rank.PERFECT);
 				queueForTracks[trackNumber].Dequeue();
 				StartCoroutine(BeatOnHit(frontNode.beat));
-				nextPunchWait = StartCoroutine(Wait(frontNode.beat - 0.1f));
+				nextPunchWait[trackNumber] = StartCoroutine(Wait(frontNode.beat, trackNumber));
 			}
 			else if (offset < goodOffset) //good hit
 			{
@@ -126,7 +127,7 @@ public class Conductor : MonoBehaviour
 				KeyDownEvent?.Invoke(trackNumber, frontNode.beat, Rank.GOOD);
 				queueForTracks[trackNumber].Dequeue();
 				StartCoroutine(BeatOnHit(frontNode.beat));
-				nextPunchWait = StartCoroutine(Wait(frontNode.beat - 0.1f));
+				nextPunchWait[trackNumber] = StartCoroutine(Wait(frontNode.beat, trackNumber));
 			}
 			else if (offset < badOffset) //bad hit
 			{
@@ -134,20 +135,22 @@ public class Conductor : MonoBehaviour
 				KeyDownEvent?.Invoke(trackNumber, frontNode.beat, Rank.BAD);
 				queueForTracks[trackNumber].Dequeue();
 				StartCoroutine(BeatOnHit(frontNode.beat));
-				nextPunchWait = StartCoroutine(Wait(frontNode.beat - 0.1f));
+				nextPunchWait[trackNumber] = StartCoroutine(Wait(frontNode.beat, trackNumber));
 			}
 			
 			//wasted (empty) hit
 			else 
 			{
 				KeyDownEvent?.Invoke(trackNumber, 0, Rank.WASTE);
-				nextPunchWait = StartCoroutine(Wait(songposition + 0.4f));
+				nextPunchWait[0] = StartCoroutine(Wait(songposition + 0.4f, 0));
+				nextPunchWait[1] = StartCoroutine(Wait(songposition + 0.4f, 1));
 			}
 		}
 		else 
 		{
 			KeyDownEvent?.Invoke(trackNumber, 0, Rank.WASTE);
-			nextPunchWait = StartCoroutine(Wait(songposition + 0.4f));
+			nextPunchWait[0] = StartCoroutine(Wait(songposition + 0.4f, 0));
+			nextPunchWait[1] = StartCoroutine(Wait(songposition + 0.4f, 1));
 		}
 	}
 
@@ -168,8 +171,9 @@ public class Conductor : MonoBehaviour
 		//songInfo = SongInfoMessenger.Instance.currentSong;
 		songInfo = developmentSong;
 
-		tempo = songInfo.tempo;
-		BeatsShownOnScreen = songInfo.beatsShownOnScreen;
+		appearTime = 2f;
+		appearTimeLength = songInfo.appearTime.Length;
+		
 		fullNoteCounts = songInfo.TotalHitCounts();
 
 		//keyboard controls
@@ -186,6 +190,7 @@ public class Conductor : MonoBehaviour
 
 		//initialize arrays
 		trackNextIndices = new int[len];
+		nextPunchWait = new Coroutine[len];
 		queueForTracks = new Queue<MusicNode>[len];
 		nextNoteAnim = new int[len];
 		for (int i = 0; i < len; i++)
@@ -255,8 +260,13 @@ public class Conductor : MonoBehaviour
 		//calculate songposition
 		songposition = (float)(AudioSettings.dspTime - dsptimesong - pausedTime) * songLayer.pitch - (songInfo.songOffset);
 
+		for (int i = 0; i < appearTimeLength; i++)
+		{
+			if(songposition >= songInfo.appearTime[i].startTime) appearTime = songInfo.appearTime[i].offsetVal;
+		}
+
 		//check if need to instantiate new nodes
-		float beatToShow = songposition + (BeatsShownOnScreen / tempo);
+		float beatToShow = songposition + appearTime;
 
 		//loop the tracks for new MusicNodes
 		for (int i = 0; i < len; i++)

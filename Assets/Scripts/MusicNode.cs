@@ -62,10 +62,15 @@ public class MusicNode : MonoBehaviour
 		if (paused) return;
 
 		//meteor position
-		meteorNode.transform.localPosition = new Vector3(metStartX, metStartY, metStartZ + (metEndZ - metStartZ) * (1f - ((beat) - Conductor.songposition) / (Conductor.BeatsShownOnScreen / Conductor.tempo)));
+		meteorNode.transform.localPosition = new Vector3(metStartX, metStartY, metStartZ + (metEndZ - metStartZ) * (1f - ((beat) - Conductor.songposition) / (Conductor.appearTime)));
 
 		//meteor rotation
 		meteorNode.transform.Rotate(aCos,aCos,aCos, Space.Self);
+
+		if (Conductor.songposition > beat - 0.35f)
+		{
+			meteorNode.SetMaterial(1f * (1f - ((beat) - Conductor.songposition) / 0.35f));
+		}
 	}
 
 	IEnumerator FadeOut()

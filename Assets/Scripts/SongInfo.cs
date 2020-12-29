@@ -18,14 +18,11 @@ public class SongInfo : ScriptableObject
 	[HideInInspector]
 	public float bpm;
 
-	[Header("Initial default tempo 1 for normal, 0.5 half, 2 double etc")]
-	public float tempo = 1f;
+	[Header("Meteor appear offsets")]
+	public Tempo[] appearTime;
 
 	[Header("Just for reference, notes populated automatically, edit them from NoteEditor")]
 	public Track[] tracks = new Track[2];
-
-	[Header("Adjusts how much notes appears on screen in advance. 4 is a fair default.")]
-	public float beatsShownOnScreen = 4f;
 	private int totalHits;
 
 	[Header("When to finish scene shows up, in seconds")]
@@ -88,7 +85,7 @@ public class SongInfo : ScriptableObject
 	public class Tempo
 	{
 		public float startTime;
-		public float tempoVal;
+		public float offsetVal;
 	}
 	// {note class}
 
