@@ -17,6 +17,7 @@ public class PlayingUIController : MonoBehaviour
 
 	//pause scene
 	public GameObject pauseButton, pauseScene;
+	public ParticleSystem[] particleSys;
 
 	//win scene
 	private const float DelayBetweenElements = 0.2f;
@@ -85,11 +86,29 @@ public class PlayingUIController : MonoBehaviour
 		scoreText.GetComponent<TMPro.TextMeshProUGUI>().text = currLiveCount.ToString();
 	}
 
+	void StopParticles()
+	{
+		int ps = particleSys.Length;
+		for (int i = 0; i < ps; i++)
+		{
+			particleSys[i].Pause();
+		}
+	}
+	void StartParticles()
+	{
+		int ps = particleSys.Length;
+		for (int i = 0; i < ps; i++)
+		{
+			particleSys[i].Play();
+		}
+	}
+
 	public void PauseButtonOnClick()
 	{
 		//display pause scene
 		pauseScene.SetActive(true);
 		pauseButton.SetActive(false);
+		StopParticles();
 		Conductor.paused = true;
 	}
 
@@ -99,6 +118,7 @@ public class PlayingUIController : MonoBehaviour
 		//disable pause scene
 		pauseScene.SetActive(false);
 		pauseButton.SetActive(true);
+		StartParticles();
 		Conductor.paused = false;
 	}
 

@@ -9,16 +9,17 @@ public class MusicNode : MonoBehaviour
 	[NonSerialized] public bool paused;
 
 	//adjust them accordingly to animations
-	private float[] meteorFinalX = {0, 7, 7, 7, 6, 4, 4, 5, 6, 5, 6, 6};
-	private float[] meteorFinalY = {0, -5, -5, -4.5f, 0, -3.5f, -3.5f, -4.5f, -4.5f, -3.5f, -3.5f, -0.5f};
-	private float[] explosionXOffset = {0, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 2};
-	private float[] explosionYOffset = {0, -1, 0, 0, 2, 0, 1, 0, 0, 1, -1, 0};
+	private float[] meteorFinalX = {0, 0.7f, 0.7f, 0.8f, 0.9f, 0.35f, 0.45f, 0.5f, 0.5f, 0.6f, 0.5f, 0.75f};
+	private float[] meteorFinalY = {0, 0.3f, 0.25f, 0.3f, 0.9f, 0.45f, 0.35f, 0.4f, 0.25f, 0.45f, 0.70f, 0.85f};
+	private float[] explosionXOffset = {0, 0.1f, 0.1f, 0.2f, 0.2f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.2f};
+	private float[] explosionYOffset = {0, -0.1f, 0, 0, 0.2f, 0, 0.1f, 0, 0, 0.1f, -0.1f, 0};
 	private MeteorNode meteorNode;
 	private Vector3 explotionVector;
 	private float aCos;
 	private float metStartX, metStartY, metStartZ, metEndZ;
 	private float expX, expY;
 	private int trackNumber;
+	private float initYMultiplier = 5f;
 
 
 	public void Initialize(float meteorStartLineZ, float meteorFinishLineZ, float targetBeat, MeteorNode meteor, int trackNumber)
@@ -41,7 +42,9 @@ public class MusicNode : MonoBehaviour
 		expY = 0 - explosionYOffset[meteorPos];
 		explotionVector = new Vector3(expX, expY, 0);
 
-		meteorNode.transform.localPosition = new Vector3(metStartX, metStartY, metStartZ);
+		meteorNode.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+		float initPos = metStartX * (1 + ((beat - Conductor.songposition) * initYMultiplier));
+		meteorNode.transform.localPosition = new Vector3(initPos , metStartY, metStartZ);
 
 		//reset rotation
 		transform.Rotate(0, 0, 0);
@@ -51,22 +54,30 @@ public class MusicNode : MonoBehaviour
 	{
 		if (Conductor.pauseTimeStamp > 0f) return; //resume not managed
 
+		//avoid transforming when paused
+		if (paused) return;
+		
 		//remove itself when out of the screen (remove line)
-		if (Conductor.songposition > beat + 1.0f)
+		if (Conductor.songposition > beat + 0.15f)
 		{
 			meteorNode.Destroy();
 			gameObject.SetActive(false);
 		}
-		
-		//avoid transforming when paused
-		if (paused) return;
 
 		//meteor position
-		meteorNode.transform.localPosition = new Vector3(metStartX, metStartY, metStartZ + (metEndZ - metStartZ) * (1f - ((beat) - Conductor.songposition) / (Conductor.appearTime)));
+		meteorNode.transform.localPosition = new Vector3(metStartX * (1 + ((beat - Conductor.songposition) * initYMultiplier)), metStartY, metStartZ + (metEndZ - metStartZ) * (1f - ((beat) - Conductor.songposition) / (Conductor.appearTime)));
 
-		//meteor rotation
+		//meteor rotate itself around
 		meteorNode.transform.Rotate(aCos,aCos,aCos, Space.Self);
 
+		//scale down meteors as they get closer
+		if (Conductor.songposition > beat - 2f && Conductor.songposition < beat - 0.8f)
+		{
+			float ls = (beat - Conductor.songposition) / 4f;
+			meteorNode.transform.localScale = new Vector3(ls, ls, ls);
+		}
+
+		//make meteors glow
 		if (Conductor.songposition > beat - 0.35f)
 		{
 			meteorNode.SetMaterial(1f * (1f - ((beat) - Conductor.songposition) / 0.35f));
@@ -75,10 +86,19 @@ public class MusicNode : MonoBehaviour
 
 	IEnumerator FadeOut()
 	{
-		yield return new WaitUntil(() => Conductor.songposition > beat);
+		yield return new WaitUntil(() => Conductor.songposition >= beat);
 		paused = true;
 		meteorNode.Explode(explotionVector);
-		yield return new WaitForSeconds(0.5f);
+		//make meteors even smaller as they exploding
+		float elapsedTime = 0.0f;
+		while (elapsedTime < 0.4f)
+		{
+			elapsedTime += Time.deltaTime;
+			float ls = Mathf.Lerp(0.2f, 0.1f, elapsedTime / 0.4f);
+			Vector3 vs = new Vector3(ls, ls, ls);
+			meteorNode.transform.localScale = vs;
+			yield return null;
+		}
 		meteorNode.Destroy();
 		gameObject.SetActive(false);
 	}

@@ -69,7 +69,7 @@ public class MeteorNode : MonoBehaviour
         Vector3 explosionPosition = meteorWhole.transform.position + expVec;
         foreach (Rigidbody piece in meteorPieces)
         {
-            piece.AddExplosionForce(20.0f, explosionPosition, 5.0f, 0f, ForceMode.Impulse);
+            piece.AddExplosionForce(2.0f, explosionPosition, 5.0f, 0f, ForceMode.Impulse);
         }
     }
 
