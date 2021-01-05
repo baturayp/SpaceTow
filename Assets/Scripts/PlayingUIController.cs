@@ -10,14 +10,18 @@ public class PlayingUIController : MonoBehaviour
 	public GameObject scoreText;
 
 	//save score
-	private int currLiveCount = 45, currPerfection = 0, fullNoteCounts;
+	private int currLiveCount, currPerfection = 0, fullNoteCounts, totLiveCount = 50;
+	private float lastHealtScore;
+	private Coroutine healtScoreCoroutine = null;
 
 	//fade in-out layer
 	public Image fadeInOut;
 
 	//pause scene
 	public GameObject pauseButton, pauseScene;
-	public ParticleSystem[] particleSys;
+
+	//healt bar
+	public Image healthBarTop, healthBarBottom;
 
 	//win scene
 	private const float DelayBetweenElements = 0.2f;
@@ -34,9 +38,11 @@ public class PlayingUIController : MonoBehaviour
 	{
 		//length of all notes
 		fullNoteCounts = Conductor.fullNoteCounts;
+		currLiveCount = totLiveCount;
+		lastHealtScore = 1f;
 
 		//register to events
-		Conductor.KeyDownEvent += BeatOnHit;
+		Conductor.ScoreEvent += UpdateScore;
 		Conductor.SongCompletedEvent += SongCompleted;
 
 		//show ad
@@ -47,7 +53,7 @@ public class PlayingUIController : MonoBehaviour
     void OnDestroy()
 	{
 		//unregister from events
-		Conductor.KeyDownEvent -= BeatOnHit;
+		Conductor.ScoreEvent -= UpdateScore;
 		Conductor.SongCompletedEvent -= SongCompleted;
 		
 		//show ad
@@ -55,21 +61,14 @@ public class PlayingUIController : MonoBehaviour
 	}
 
 	//called by event
-	void BeatOnHit(int trackNumber, float beat, Conductor.Rank rank)
+	void UpdateScore(Conductor.Rank rank)
 	{
-		if (rank == Conductor.Rank.PERFECT)
+		if (rank == Conductor.Rank.HIT)
 		{
 			currPerfection += 2;
 		}
-		else if (rank == Conductor.Rank.GOOD)
-		{
-			currPerfection++;
-		}
-		else if (rank == Conductor.Rank.BAD)
-		{
-			//do something
-		}
-		else if (rank == Conductor.Rank.MISS)
+
+		if (rank == Conductor.Rank.MISS)
 		{
 			//loss
 			currLiveCount--;
@@ -84,23 +83,23 @@ public class PlayingUIController : MonoBehaviour
 	void UpdateScoreUI()
 	{;
 		scoreText.GetComponent<TMPro.TextMeshProUGUI>().text = currLiveCount.ToString();
+		if (healtScoreCoroutine != null) StopCoroutine(healtScoreCoroutine);
+		healtScoreCoroutine = StartCoroutine(HealtBarUpdate(lastHealtScore));
 	}
 
-	void StopParticles()
+	IEnumerator HealtBarUpdate(float from)
 	{
-		int ps = particleSys.Length;
-		for (int i = 0; i < ps; i++)
+		float elapsedTime = 0.0f;
+		while (elapsedTime < 0.2f)
 		{
-			particleSys[i].Pause();
+			elapsedTime += Time.deltaTime;
+			var fillAm = Mathf.Lerp(from, (float)currLiveCount/totLiveCount, elapsedTime / 0.2f);
+			healthBarTop.fillAmount = fillAm;
+			healthBarBottom.fillAmount = fillAm;
+			lastHealtScore = fillAm;
+			yield return null;
 		}
-	}
-	void StartParticles()
-	{
-		int ps = particleSys.Length;
-		for (int i = 0; i < ps; i++)
-		{
-			particleSys[i].Play();
-		}
+		healtScoreCoroutine = null;
 	}
 
 	public void PauseButtonOnClick()
@@ -108,7 +107,6 @@ public class PlayingUIController : MonoBehaviour
 		//display pause scene
 		pauseScene.SetActive(true);
 		pauseButton.SetActive(false);
-		StopParticles();
 		Conductor.paused = true;
 	}
 
@@ -118,7 +116,6 @@ public class PlayingUIController : MonoBehaviour
 		//disable pause scene
 		pauseScene.SetActive(false);
 		pauseButton.SetActive(true);
-		StartParticles();
 		Conductor.paused = false;
 	}
 

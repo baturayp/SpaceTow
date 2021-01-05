@@ -8,8 +8,6 @@ public class MeteorNode : MonoBehaviour
 {
     public GameObject meteorWhole;
     public Rigidbody[] meteorPieces;
-    public Image flare;
-    public GameObject canvas;
     private MeshRenderer wholeMesh;
     private MeshRenderer[] piecesMesh;
     private Material wholeMat;
@@ -30,21 +28,6 @@ public class MeteorNode : MonoBehaviour
         
         val = 0;
         SetState(false);
-        StartCoroutine(Flared());
-    }
-
-    IEnumerator Flared()
-    {
-        float elapsedTime = 0.0f;
-        while (elapsedTime < 0.5f)
-        {
-            elapsedTime += Time.deltaTime;
-            var fadeOut = Mathf.Lerp(1,0, elapsedTime/0.5f);
-            Color imgCol = new Color(1,1,1, fadeOut);
-            flare.color = imgCol;
-            yield return null;
-        }
-        canvas.SetActive(false);
     }
 
     void SetState(bool state)

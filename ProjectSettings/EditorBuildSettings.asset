@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/OrangeCyan_Scene.unity
-    guid: 44a5049a01f574c0fb479e9c02b6af7c
+    path: Assets/Scenes/Gameplay.unity
+    guid: 87f09f159f351589ca33053f9ec65dad
   m_configObjects: {}

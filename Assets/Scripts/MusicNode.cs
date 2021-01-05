@@ -7,6 +7,7 @@ public class MusicNode : MonoBehaviour
 	[NonSerialized] public float beat;
 	[NonSerialized] public int meteorPos;
 	[NonSerialized] public bool paused;
+	[NonSerialized] public int trackNumber;
 
 	//adjust them accordingly to animations
 	private float[] meteorFinalX = {0, 0.7f, 0.7f, 0.8f, 0.9f, 0.35f, 0.45f, 0.5f, 0.5f, 0.6f, 0.5f, 0.75f};
@@ -18,7 +19,6 @@ public class MusicNode : MonoBehaviour
 	private float aCos;
 	private float metStartX, metStartY, metStartZ, metEndZ;
 	private float expX, expY;
-	private int trackNumber;
 	private float initYMultiplier = 5f;
 
 
@@ -58,7 +58,7 @@ public class MusicNode : MonoBehaviour
 		if (paused) return;
 		
 		//remove itself when out of the screen (remove line)
-		if (Conductor.songposition > beat + 0.15f)
+		if (Conductor.songposition > beat + 0.30f)
 		{
 			meteorNode.Destroy();
 			gameObject.SetActive(false);
@@ -104,16 +104,6 @@ public class MusicNode : MonoBehaviour
 	}
 
 	public void PerfectHit()
-	{
-		StartCoroutine(FadeOut());
-	}
-
-	public void GoodHit()
-	{
-		StartCoroutine(FadeOut());
-	}
-
-	public void BadHit()
 	{
 		StartCoroutine(FadeOut());
 	}

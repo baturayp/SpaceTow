@@ -9,7 +9,7 @@ public class Planet : MonoBehaviour
     
     void Update()
     {
-        scaleFactor = Conductor.songposition < 60f ? 2f : (Conductor.songposition / 60f) * 2f;
+        scaleFactor = Conductor.songposition < 60f ? 4f : (Conductor.songposition / 60f) * 4f;
         planet.transform.localScale = new Vector3(scaleFactor,scaleFactor,scaleFactor);
     }
 }

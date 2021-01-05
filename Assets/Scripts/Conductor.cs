@@ -5,18 +5,15 @@ using UnityEngine.UI;
 
 public class Conductor : MonoBehaviour
 {
-	public enum Rank { PERFECT, GOOD, BAD, MISS, WASTE };
+	public enum Rank { HIT, MISS, WASTE };
 
 	//keypress action
-	public delegate void KeyDownAction(int trackNumber, float beat, Rank rank);
-	public static event KeyDownAction KeyDownEvent;
+	public delegate void ScoreAction( Rank rank);
+	public static event ScoreAction ScoreEvent;
 
 	//song completion
 	public delegate void SongCompletedAction();
 	public static event SongCompletedAction SongCompletedEvent;
-	public delegate void SpaceJump();
-	public static event SpaceJump SpaceJumpEvent;
-	public static int[] nextNoteAnim;
 	private float songLength;
 
 	//if the whole game is paused
@@ -36,7 +33,7 @@ public class Conductor : MonoBehaviour
 	//z axis belongs to meteor object
 	public float meteorStartLineZ, meteorFinishLineZ;
 
-	public float badOffset, goodOffset, perfectOffset;
+	public float hitOffset;
 
 	//current song position and remaining time
 	public static float songposition;
@@ -45,16 +42,16 @@ public class Conductor : MonoBehaviour
 	private int[] trackNextIndices;
 
 	//queue, saving the MusicNodes which currently on screen
-	private Queue<MusicNode>[] queueForTracks;
+	private Queue<MusicNode> beatQueue;
 
 	//keep a reference of the sound tracks
 	private SongInfo.Track[] tracks;
-
+	public SpaceMan spaceMan;
 	private float dsptimesong;
 	private float endTime;
 
 	//buttons state
-	private bool leftButton, rightButton;
+	private bool tapped;
 
 	private int appearTimeLength;
 	public static float appearTime;
@@ -68,89 +65,58 @@ public class Conductor : MonoBehaviour
 
 	//total tracks
 	private readonly int len = 2;
-	private Coroutine[] nextPunchWait;
+	private Coroutine nextPunchWait;
 
 	//audio related stuff
 	public AudioSource songLayer;
 	public AudioClip punchClip;
 
 
-	//check if button(s) pressed inside update
-	void CheckInput()
-	{
-		if (leftButton && rightButton) SpaceJumpEvent?.Invoke();
-		if (leftButton && !rightButton) PlayerInputted(0);
-		if (rightButton && !leftButton) PlayerInputted(1);
-		rightButton = false; leftButton = false;
-	}
-
-	//buttons inside the scene
-	public void ButtonPressed(int track)
-	{
-		leftButton |= track == 0;
-		rightButton |= track == 1;
-	}
-
-	IEnumerator BeatOnHit(float beatTime)
+	IEnumerator PunchCrack(float beatTime)
 	{
 		yield return new WaitUntil(() => songposition >= beatTime);
 		songLayer.PlayOneShot(punchClip);
 	}
-	IEnumerator Wait(float until, int track)
+	IEnumerator Wait(float until)
 	{
 		yield return new WaitUntil(() => songposition > until);
-		nextPunchWait[track] = null;
+		nextPunchWait = null;
 	}
 	
-	void PlayerInputted(int trackNumber)
+	void PlayerInputted()
 	{
-		if (nextPunchWait[trackNumber] != null) return;
+		if (nextPunchWait != null) return;
 		
-		if (queueForTracks[trackNumber].Count != 0)
+		if (beatQueue.Count != 0)
 		{
 			//peek the node in the queue
-			MusicNode frontNode = queueForTracks[trackNumber].Peek();
+			MusicNode frontNode = beatQueue.Peek();
 
 			float offset = Mathf.Abs(frontNode.beat - songposition);
 
-			if (offset < perfectOffset) //perfect hit
+			if (offset < hitOffset) //hitted
 			{
+				spaceMan.Punch(frontNode.trackNumber, frontNode.meteorPos, frontNode.beat);
+				ScoreEvent?.Invoke(Rank.HIT);
 				frontNode.PerfectHit();
-				KeyDownEvent?.Invoke(trackNumber, frontNode.beat, Rank.PERFECT);
-				queueForTracks[trackNumber].Dequeue();
-				StartCoroutine(BeatOnHit(frontNode.beat));
-				nextPunchWait[trackNumber] = StartCoroutine(Wait(frontNode.beat, trackNumber));
+				beatQueue.Dequeue();
+				StartCoroutine(PunchCrack(frontNode.beat));
+				nextPunchWait = StartCoroutine(Wait(frontNode.beat));
 			}
-			else if (offset < goodOffset) //good hit
-			{
-				frontNode.GoodHit();
-				KeyDownEvent?.Invoke(trackNumber, frontNode.beat, Rank.GOOD);
-				queueForTracks[trackNumber].Dequeue();
-				StartCoroutine(BeatOnHit(frontNode.beat));
-				nextPunchWait[trackNumber] = StartCoroutine(Wait(frontNode.beat, trackNumber));
-			}
-			else if (offset < badOffset) //bad hit
-			{
-				frontNode.BadHit();
-				KeyDownEvent?.Invoke(trackNumber, frontNode.beat, Rank.BAD);
-				queueForTracks[trackNumber].Dequeue();
-				StartCoroutine(BeatOnHit(frontNode.beat));
-				nextPunchWait[trackNumber] = StartCoroutine(Wait(frontNode.beat, trackNumber));
-			}
-			
+
 			//wasted (empty) hit
 			else 
 			{
-				KeyDownEvent?.Invoke(trackNumber, 0, Rank.WASTE);
-				nextPunchWait[0] = StartCoroutine(Wait(songposition + 0.4f, 0));
-				nextPunchWait[1] = StartCoroutine(Wait(songposition + 0.4f, 1));
+				ScoreEvent?.Invoke(Rank.WASTE);
+				spaceMan.Jump(songposition + 0.2f);
+				nextPunchWait = StartCoroutine(Wait(songposition + 0.4f));
 			}
 		}
 		else 
 		{
-			KeyDownEvent?.Invoke(trackNumber, 0, Rank.WASTE);
-			nextPunchWait[0] = StartCoroutine(Wait(songposition + 0.4f, 0));
-			nextPunchWait[1] = StartCoroutine(Wait(songposition + 0.4f, 1));
+			ScoreEvent?.Invoke(Rank.WASTE);
+			spaceMan.Jump(songposition + 0.2f);
+			nextPunchWait = StartCoroutine(Wait(songposition + 0.4f));
 		}
 	}
 
@@ -159,10 +125,6 @@ public class Conductor : MonoBehaviour
 		//reset static variables
 		paused = true;
 		pauseTimeStamp = -1f;
-
-		//set button states
-		leftButton = false;
-		rightButton = false;
 
 		//display countdown canvas
 		countDownCanvas.SetActive(true);
@@ -178,9 +140,8 @@ public class Conductor : MonoBehaviour
 
 		//keyboard controls
 #if UNITY_EDITOR || UNITY_STANDALONE
-		keybindings = new KeyCode[2];
+		keybindings = new KeyCode[1];
 		keybindings[0] = (KeyCode)System.Enum.Parse(typeof(KeyCode), "A");
-		keybindings[1] = (KeyCode)System.Enum.Parse(typeof(KeyCode), "D");
 #endif
 
 		//listen playing ui for lost state
@@ -190,14 +151,10 @@ public class Conductor : MonoBehaviour
 
 		//initialize arrays
 		trackNextIndices = new int[len];
-		nextPunchWait = new Coroutine[len];
-		queueForTracks = new Queue<MusicNode>[len];
-		nextNoteAnim = new int[len];
+		beatQueue = new Queue<MusicNode>();
 		for (int i = 0; i < len; i++)
 		{
 			trackNextIndices[i] = 0;
-			queueForTracks[i] = new Queue<MusicNode>();
-			nextNoteAnim[i]= 0;
 		}
 
 		tracks = songInfo.tracks;
@@ -253,8 +210,7 @@ public class Conductor : MonoBehaviour
 
 		//player input control
 #if UNITY_EDITOR || UNITY_STANDALONE
-		leftButton |= Input.GetKeyDown(keybindings[0]);
-		rightButton |= Input.GetKeyDown(keybindings[1]);
+		if (Input.GetKeyDown(keybindings[0])) PlayerInputted();
 #endif
 
 		//calculate songposition
@@ -282,36 +238,28 @@ public class Conductor : MonoBehaviour
 				MusicNode musicNode = MusicNodePool.instance.GetNode(meteorStartLineZ, meteorFinishLineZ, currNote.dueTo, i);
 
 				//enqueue
-				queueForTracks[i].Enqueue(musicNode);
+				beatQueue.Enqueue(musicNode);
 
 				//update the next index
 				trackNextIndices[i]++;
 			}
 		}
 
-		//loop the queue to check if any of them reaches the finish line
-		for (int i = 0; i < len; i++)
+		if (beatQueue.Count != 0)
 		{
-			//empty queue, continue
-			if (queueForTracks[i].Count == 0)
+			MusicNode currNode = beatQueue.Peek();
+			if (currNode.beat < songposition)
 			{
-				nextNoteAnim[i] = 0;
-				continue;
-			}
-
-			MusicNode currNode = queueForTracks[i].Peek();
-
-			//upcoming notes
-			nextNoteAnim[i] = currNode.meteorPos;
-
-			if (currNode.beat <= songposition)
-			{
-				queueForTracks[i].Dequeue();
-				KeyDownEvent?.Invoke(i, 0, Rank.MISS);
+				beatQueue.Dequeue();
+				ScoreEvent?.Invoke(Rank.MISS);
 			}
 		}
 
-		CheckInput();
+		if (Input.touchCount == 1)
+		{
+			Touch touch = Input.GetTouch(0);
+			if (touch.phase == TouchPhase.Began) PlayerInputted();
+		}
 
 		//check to see if the song reaches its end
 		if (songposition > songLength || songposition > endTime)

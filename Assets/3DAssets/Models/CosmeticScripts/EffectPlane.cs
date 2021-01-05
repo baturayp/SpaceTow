@@ -34,9 +34,9 @@ public class EffectPlane : MonoBehaviour
         myPlane.transform.Rotate(new Vector3(0, rotVal, 0));
 
         //Material Value Change..
-        changeVal0 = Mathf.SmoothStep(0, 0.2f , Mathf.PingPong(Time.time * 0.1f, 1f));
-        changeVal1 = Mathf.SmoothStep(0, 0.2f, Mathf.PingPong(Time.time * 0.1f + Offset1, 1f));
-        changeVal2 = Mathf.SmoothStep(0, 0.2f, Mathf.PingPong(Time.time * 0.1f + Offset2, 1f));
+        changeVal0 = Mathf.SmoothStep(0f, 0.2f , Mathf.PingPong(Time.time * 0.1f, 1f));
+        changeVal1 = Mathf.SmoothStep(0f, 0.2f, Mathf.PingPong(Time.time * 0.1f + Offset1, 1f));
+        changeVal2 = Mathf.SmoothStep(0f, 0.2f, Mathf.PingPong(Time.time * 0.1f + Offset2, 1f));
 
         block.SetFloat("_BloomLight1", changeVal0);
         block.SetFloat("_BloomLight2", changeVal1);

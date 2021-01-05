@@ -12,269 +12,367 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c222991a60d4cdeab920d7daba3a6c3, type: 3}
   m_Name: Demo Song
   m_EditorClassIdentifier: 
-  song: {fileID: 8300000, guid: 51ebd297033c1af1bbba8b96f1621b39, type: 3}
-  json: {fileID: 4900000, guid: 4d83b9fb18b8a0b7aad36ddb0dd327da, type: 3}
+  song: {fileID: 8300000, guid: d0257d5ff31dc1bbaa6a18ebb00b7359, type: 3}
+  json: {fileID: 4900000, guid: 98fd25f042cac70099c95c4d9bcf69c6, type: 3}
   songTitle: Demo Song
   songOffset: 0
-  bpm: 114
+  bpm: 120
   appearTime:
   - startTime: 0
-    offsetVal: 2.073
-  - startTime: 93
-    offsetVal: 4.2
+    offsetVal: 2
   tracks:
   - notes:
-    - dueTo: 10.526316
+    - dueTo: 18.25
       track: 0
-    - dueTo: 14.736842
+    - dueTo: 19.5
       track: 0
-    - dueTo: 18.947369
+    - dueTo: 22.25
       track: 0
-    - dueTo: 19.736841
+    - dueTo: 23.5
       track: 0
-    - dueTo: 20.526316
+    - dueTo: 26.25
       track: 0
-    - dueTo: 23.618422
+    - dueTo: 27.25
       track: 0
-    - dueTo: 24.276316
+    - dueTo: 27.75
       track: 0
-    - dueTo: 25.06579
+    - dueTo: 30
       track: 0
-    - dueTo: 27.697369
+    - dueTo: 30.5
       track: 0
-    - dueTo: 28.486841
+    - dueTo: 31.5
       track: 0
-    - dueTo: 29.013159
+    - dueTo: 34.5
       track: 0
-    - dueTo: 31.842106
+    - dueTo: 35
       track: 0
-    - dueTo: 32.63158
+    - dueTo: 35.75
       track: 0
-    - dueTo: 33.486843
+    - dueTo: 38
       track: 0
-    - dueTo: 35.92105
+    - dueTo: 38.5
       track: 0
-    - dueTo: 36.31579
+    - dueTo: 39.5
       track: 0
-    - dueTo: 36.842106
+    - dueTo: 42.5
       track: 0
-    - dueTo: 40.263157
+    - dueTo: 43
       track: 0
-    - dueTo: 41.05263
+    - dueTo: 43.75
       track: 0
-    - dueTo: 41.842106
+    - dueTo: 46.25
       track: 0
-    - dueTo: 44.736843
+    - dueTo: 46.75
       track: 0
-    - dueTo: 45.657894
+    - dueTo: 47.5
       track: 0
-    - dueTo: 48.81579
+    - dueTo: 50.25
       track: 0
-    - dueTo: 49.473682
+    - dueTo: 50.75
       track: 0
-    - dueTo: 53.157894
+    - dueTo: 51.25
       track: 0
-    - dueTo: 54.210526
+    - dueTo: 51.75
       track: 0
-    - dueTo: 57.105263
+    - dueTo: 54.25
       track: 0
-    - dueTo: 57.894737
+    - dueTo: 54.75
       track: 0
-    - dueTo: 58.68421
+    - dueTo: 55.25
       track: 0
-    - dueTo: 61.31579
+    - dueTo: 55.75
       track: 0
-    - dueTo: 62.105263
+    - dueTo: 58.5
       track: 0
-    - dueTo: 62.69737
+    - dueTo: 59
       track: 0
-    - dueTo: 65.52631
+    - dueTo: 62.25
       track: 0
-    - dueTo: 66.31579
+    - dueTo: 62.75
       track: 0
-    - dueTo: 67.10526
+    - dueTo: 63.5
       track: 0
-    - dueTo: 69.60526
+    - dueTo: 70.25
       track: 0
-    - dueTo: 70
+    - dueTo: 70.75
       track: 0
-    - dueTo: 70.52631
+    - dueTo: 71.25
       track: 0
-    - dueTo: 73.81579
+    - dueTo: 71.75
       track: 0
-    - dueTo: 74.210526
+    - dueTo: 74.25
       track: 0
-    - dueTo: 74.73684
+    - dueTo: 74.75
       track: 0
-    - dueTo: 75.52631
+    - dueTo: 75.25
       track: 0
-    - dueTo: 78.42105
+    - dueTo: 78.25
       track: 0
-    - dueTo: 79.07895
+    - dueTo: 78.75
       track: 0
-    - dueTo: 82.5
+    - dueTo: 79.5
       track: 0
-    - dueTo: 83.1579
+    - dueTo: 82.25
       track: 0
-    - dueTo: 86.8421
+    - dueTo: 82.75
       track: 0
-    - dueTo: 87.89474
+    - dueTo: 83.25
       track: 0
-    - dueTo: 90.789474
+    - dueTo: 83.75
       track: 0
-    - dueTo: 91.57895
+    - dueTo: 86.25
       track: 0
-    - dueTo: 92.36842
+    - dueTo: 86.75
       track: 0
-    - dueTo: 97.36842
+    - dueTo: 87.25
       track: 0
-    - dueTo: 98.42105
+    - dueTo: 87.75
       track: 0
-    - dueTo: 99.47369
+    - dueTo: 90.25
       track: 0
-    - dueTo: 105.789474
+    - dueTo: 90.75
       track: 0
-    - dueTo: 106.8421
+    - dueTo: 91.5
       track: 0
-    - dueTo: 107.89474
+    - dueTo: 94.25
       track: 0
-    - dueTo: 108.947365
+    - dueTo: 94.75
+      track: 0
+    - dueTo: 95.25
+      track: 0
+    - dueTo: 95.75
+      track: 0
+    - dueTo: 98.25
+      track: 0
+    - dueTo: 99
+      track: 0
+    - dueTo: 99.5
+      track: 0
+    - dueTo: 106.25
+      track: 0
+    - dueTo: 106.75
+      track: 0
+    - dueTo: 107.25
+      track: 0
+    - dueTo: 107.75
+      track: 0
+    - dueTo: 110.25
+      track: 0
+    - dueTo: 110.75
+      track: 0
+    - dueTo: 111.25
+      track: 0
+    - dueTo: 111.75
+      track: 0
+    - dueTo: 114.5
+      track: 0
+    - dueTo: 115
+      track: 0
+    - dueTo: 115.75
+      track: 0
+    - dueTo: 118.25
+      track: 0
+    - dueTo: 118.75
+      track: 0
+    - dueTo: 119.5
+      track: 0
+    - dueTo: 122.5
+      track: 0
+    - dueTo: 123
+      track: 0
+    - dueTo: 123.75
+      track: 0
+    - dueTo: 126.25
+      track: 0
+    - dueTo: 126.75
+      track: 0
+    - dueTo: 127.5
       track: 0
   - notes:
-    - dueTo: 11.578947
+    - dueTo: 18
       track: 1
-    - dueTo: 15.789474
+    - dueTo: 18.5
       track: 1
-    - dueTo: 19.473684
+    - dueTo: 19.25
       track: 1
-    - dueTo: 20
+    - dueTo: 19.75
       track: 1
-    - dueTo: 23.223684
+    - dueTo: 22
       track: 1
-    - dueTo: 24.013159
+    - dueTo: 22.5
       track: 1
-    - dueTo: 24.802631
+    - dueTo: 23.25
       track: 1
-    - dueTo: 27.43421
+    - dueTo: 23.75
       track: 1
-    - dueTo: 28.223684
+    - dueTo: 26
       track: 1
-    - dueTo: 28.75
+    - dueTo: 26.5
       track: 1
-    - dueTo: 29.276316
+    - dueTo: 27.5
       track: 1
-    - dueTo: 31.578947
+    - dueTo: 30.25
       track: 1
-    - dueTo: 32.36842
+    - dueTo: 31.25
       track: 1
-    - dueTo: 33.223682
+    - dueTo: 31.75
       track: 1
-    - dueTo: 35.789474
+    - dueTo: 34
       track: 1
-    - dueTo: 36.05263
+    - dueTo: 34.75
       track: 1
-    - dueTo: 36.57895
+    - dueTo: 35.25
       track: 1
-    - dueTo: 37.36842
+    - dueTo: 38.25
       track: 1
-    - dueTo: 40
+    - dueTo: 38.75
       track: 1
-    - dueTo: 40.789474
+    - dueTo: 39.25
       track: 1
-    - dueTo: 41.57895
+    - dueTo: 42
       track: 1
-    - dueTo: 44.210526
+    - dueTo: 42.75
       track: 1
-    - dueTo: 45.263157
+    - dueTo: 43.25
       track: 1
-    - dueTo: 48.42105
+    - dueTo: 46
       track: 1
-    - dueTo: 49.210526
+    - dueTo: 46.5
+      track: 1
+    - dueTo: 47.25
       track: 1
     - dueTo: 50
       track: 1
-    - dueTo: 52.63158
+    - dueTo: 50.5
       track: 1
-    - dueTo: 53.68421
+    - dueTo: 51
       track: 1
-    - dueTo: 54.473682
+    - dueTo: 51.5
       track: 1
-    - dueTo: 56.842106
+    - dueTo: 54
       track: 1
-    - dueTo: 57.36842
+    - dueTo: 54.5
       track: 1
-    - dueTo: 58.42105
+    - dueTo: 55
       track: 1
-    - dueTo: 61.05263
+    - dueTo: 55.5
       track: 1
-    - dueTo: 61.842106
+    - dueTo: 58
       track: 1
-    - dueTo: 62.43421
+    - dueTo: 58.75
       track: 1
-    - dueTo: 62.960526
+    - dueTo: 59.25
       track: 1
-    - dueTo: 65.26316
+    - dueTo: 59.75
       track: 1
-    - dueTo: 66.052635
+    - dueTo: 62
       track: 1
-    - dueTo: 66.8421
+    - dueTo: 62.5
       track: 1
-    - dueTo: 69.47369
+    - dueTo: 63.25
       track: 1
-    - dueTo: 69.73684
+    - dueTo: 70
       track: 1
-    - dueTo: 70.26316
+    - dueTo: 70.5
       track: 1
-    - dueTo: 71.052635
+    - dueTo: 71
       track: 1
-    - dueTo: 73.68421
+    - dueTo: 71.5
       track: 1
-    - dueTo: 73.947365
+    - dueTo: 74
       track: 1
-    - dueTo: 74.47369
+    - dueTo: 74.5
       track: 1
-    - dueTo: 75.26316
+    - dueTo: 75
       track: 1
-    - dueTo: 77.89474
+    - dueTo: 75.5
       track: 1
-    - dueTo: 78.947365
+    - dueTo: 78
       track: 1
-    - dueTo: 79.3421
+    - dueTo: 78.5
       track: 1
-    - dueTo: 82.10526
+    - dueTo: 79.25
       track: 1
-    - dueTo: 82.89474
+    - dueTo: 79.75
       track: 1
-    - dueTo: 83.68421
+    - dueTo: 82
       track: 1
-    - dueTo: 86.31579
+    - dueTo: 82.5
       track: 1
-    - dueTo: 87.36842
+    - dueTo: 83
       track: 1
-    - dueTo: 88.1579
+    - dueTo: 83.5
       track: 1
-    - dueTo: 90.52631
+    - dueTo: 86
       track: 1
-    - dueTo: 91.052635
+    - dueTo: 86.5
       track: 1
-    - dueTo: 92.10526
+    - dueTo: 87
       track: 1
-    - dueTo: 96.8421
+    - dueTo: 87.5
       track: 1
-    - dueTo: 97.89474
+    - dueTo: 90
       track: 1
-    - dueTo: 98.947365
+    - dueTo: 90.5
       track: 1
-    - dueTo: 100.52631
+    - dueTo: 91.25
       track: 1
-    - dueTo: 105.26316
+    - dueTo: 91.75
       track: 1
-    - dueTo: 106.31579
+    - dueTo: 94
       track: 1
-    - dueTo: 107.10526
+    - dueTo: 94.5
       track: 1
-    - dueTo: 108.42105
+    - dueTo: 95
       track: 1
-    - dueTo: 109.210526
+    - dueTo: 95.5
+      track: 1
+    - dueTo: 98
+      track: 1
+    - dueTo: 98.75
+      track: 1
+    - dueTo: 99.25
+      track: 1
+    - dueTo: 99.75
+      track: 1
+    - dueTo: 106
+      track: 1
+    - dueTo: 106.5
+      track: 1
+    - dueTo: 107
+      track: 1
+    - dueTo: 107.5
+      track: 1
+    - dueTo: 110
+      track: 1
+    - dueTo: 110.5
+      track: 1
+    - dueTo: 111
+      track: 1
+    - dueTo: 111.5
+      track: 1
+    - dueTo: 114
+      track: 1
+    - dueTo: 114.75
+      track: 1
+    - dueTo: 115.25
+      track: 1
+    - dueTo: 118
+      track: 1
+    - dueTo: 118.5
+      track: 1
+    - dueTo: 119.25
+      track: 1
+    - dueTo: 122
+      track: 1
+    - dueTo: 122.75
+      track: 1
+    - dueTo: 123.25
+      track: 1
+    - dueTo: 126
+      track: 1
+    - dueTo: 126.5
+      track: 1
+    - dueTo: 127.25
       track: 1
   endTime: 220
