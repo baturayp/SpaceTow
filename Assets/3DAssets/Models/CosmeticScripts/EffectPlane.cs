@@ -29,6 +29,7 @@ public class EffectPlane : MonoBehaviour
 
     void Update()
     {
+        if(Conductor.pauseTimeStamp > 0) return;
         //Rotation..
         rotVal = (Time.deltaTime * 10) % 360;
         myPlane.transform.Rotate(new Vector3(0, rotVal, 0));

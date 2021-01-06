@@ -98,7 +98,7 @@ public class Conductor : MonoBehaviour
 			{
 				spaceMan.Punch(frontNode.trackNumber, frontNode.meteorPos, frontNode.beat);
 				ScoreEvent?.Invoke(Rank.HIT);
-				frontNode.PerfectHit();
+				frontNode.Explode(2.0f, 0f, true);
 				beatQueue.Dequeue();
 				StartCoroutine(PunchCrack(frontNode.beat));
 				nextPunchWait = StartCoroutine(Wait(frontNode.beat));

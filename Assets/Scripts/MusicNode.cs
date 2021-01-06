@@ -8,6 +8,9 @@ public class MusicNode : MonoBehaviour
 	[NonSerialized] public int meteorPos;
 	[NonSerialized] public bool paused;
 	[NonSerialized] public int trackNumber;
+	private GameObject towTruck;
+	private bool towTruckShaking;
+	private Vector3 towTruckInitialPos;
 
 	//adjust them accordingly to animations
 	private float[] meteorFinalX = {0, 0.7f, 0.7f, 0.8f, 0.9f, 0.35f, 0.45f, 0.5f, 0.5f, 0.6f, 0.5f, 0.75f};
@@ -29,6 +32,8 @@ public class MusicNode : MonoBehaviour
 		this.trackNumber = trackNumber;
 		aCos = Mathf.Cos(targetBeat);
 		paused = false;
+		towTruck = GameObject.FindGameObjectWithTag("towtruck");
+		towTruckInitialPos = towTruck.transform.position;
 
 		//make meteor appear at a predefined random point
 		meteorPos = UnityEngine.Random.Range(1,12);
@@ -54,18 +59,23 @@ public class MusicNode : MonoBehaviour
 	{
 		if (Conductor.pauseTimeStamp > 0f) return; //resume not managed
 
+		if (towTruckShaking)
+		{
+			towTruck.transform.position = towTruckInitialPos + UnityEngine.Random.insideUnitSphere * 0.01f;
+		}
+
 		//avoid transforming when paused
 		if (paused) return;
 		
 		//remove itself when out of the screen (remove line)
-		if (Conductor.songposition > beat + 0.30f)
+		if (meteorNode.transform.localPosition.z < 0f)
 		{
-			meteorNode.Destroy();
-			gameObject.SetActive(false);
+			paused = true;
+			Explode(10f, 2f, false);
 		}
 
 		//meteor position
-		meteorNode.transform.localPosition = new Vector3(metStartX * (1 + ((beat - Conductor.songposition) * initYMultiplier)), metStartY, metStartZ + (metEndZ - metStartZ) * (1f - ((beat) - Conductor.songposition) / (Conductor.appearTime)));
+		meteorNode.transform.localPosition = new Vector3(metStartX * (1 + ((beat - Conductor.songposition) * initYMultiplier)), metStartY, metStartZ + (metEndZ - metStartZ) * (1f - ((beat) - Conductor.songposition) / (Conductor.appearTime)));;
 
 		//meteor rotate itself around
 		meteorNode.transform.Rotate(aCos,aCos,aCos, Space.Self);
@@ -78,17 +88,19 @@ public class MusicNode : MonoBehaviour
 		}
 
 		//make meteors glow
-		if (Conductor.songposition > beat - 0.35f)
+		if (Conductor.songposition > beat - 0.25f)
 		{
 			meteorNode.SetMaterial(1f * (1f - ((beat) - Conductor.songposition) / 0.35f));
 		}
 	}
 
-	IEnumerator FadeOut()
+	IEnumerator ExplosionRoutine(float force, float upwardsModifier, bool successHit)
 	{
 		yield return new WaitUntil(() => Conductor.songposition >= beat);
 		paused = true;
-		meteorNode.Explode(explotionVector);
+		meteorNode.Explode(explotionVector, force, upwardsModifier, successHit);
+		if (!successHit) towTruckShaking = true;
+		if (!successHit) Handheld.Vibrate();
 		//make meteors even smaller as they exploding
 		float elapsedTime = 0.0f;
 		while (elapsedTime < 0.4f)
@@ -96,15 +108,17 @@ public class MusicNode : MonoBehaviour
 			elapsedTime += Time.deltaTime;
 			float ls = Mathf.Lerp(0.2f, 0.1f, elapsedTime / 0.4f);
 			Vector3 vs = new Vector3(ls, ls, ls);
-			meteorNode.transform.localScale = vs;
+			meteorNode.transform.localScale = successHit ? vs : new Vector3(0.2f,0.2f,0.2f);
 			yield return null;
 		}
+		towTruckShaking = false;
+		towTruck.transform.position = towTruckInitialPos;
 		meteorNode.Destroy();
 		gameObject.SetActive(false);
 	}
 
-	public void PerfectHit()
+	public void Explode(float force, float upwardsModifier, bool successHit)
 	{
-		StartCoroutine(FadeOut());
+		StartCoroutine(ExplosionRoutine(force, upwardsModifier, successHit));
 	}
 }

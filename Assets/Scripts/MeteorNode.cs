@@ -8,6 +8,8 @@ public class MeteorNode : MonoBehaviour
 {
     public GameObject meteorWhole;
     public Rigidbody[] meteorPieces;
+    public Rigidbody wholeRigid;
+    public LensFlare flare;
     private MeshRenderer wholeMesh;
     private MeshRenderer[] piecesMesh;
     private Material wholeMat;
@@ -25,9 +27,11 @@ public class MeteorNode : MonoBehaviour
         {
             piecesMesh[i] = meteorPieces[i].transform.gameObject.GetComponent<MeshRenderer>();
         }
-        
+
         val = 0;
         SetState(false);
+        
+        StartCoroutine(FlareUp());
     }
 
     void SetState(bool state)
@@ -45,14 +49,32 @@ public class MeteorNode : MonoBehaviour
         val = value;
     }
 
-    public void Explode(Vector3 expVec)
+    IEnumerator FlareUp()
     {
         meteorWhole.SetActive(false);
-        SetState(true);
+        flare.fadeSpeed = 5f;
+        flare.enabled = true;
+        yield return new WaitForSeconds(0.2f);
+        meteorWhole.SetActive(true);
+        flare.enabled = false;
+    }
+
+    public void Explode(Vector3 expVec, float force, float upwardsModifier, bool success)
+    {
         Vector3 explosionPosition = meteorWhole.transform.position + expVec;
-        foreach (Rigidbody piece in meteorPieces)
+
+        if (success)
         {
-            piece.AddExplosionForce(2.0f, explosionPosition, 5.0f, 0f, ForceMode.Impulse);
+            meteorWhole.SetActive(false);
+            SetState(true);
+            foreach (Rigidbody piece in meteorPieces)
+            {
+                piece.AddExplosionForce(force, explosionPosition, 5.0f, upwardsModifier, ForceMode.Impulse);
+            }
+        }
+        else
+        {
+            wholeRigid.AddExplosionForce(force, explosionPosition, 5.0f, upwardsModifier, ForceMode.Impulse);
         }
     }
 

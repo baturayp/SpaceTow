@@ -6,16 +6,16 @@ Flare:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: New Flare
+  m_Name: MeteorFlare
   m_FlareTexture: {fileID: 2800000, guid: 13e87c048dd582a4c91ffec80156a782, type: 3}
   m_TextureLayout: 2
   m_Elements:
   - m_ImageIndex: 0
     m_Position: 0
-    m_Size: 1
-    m_Color: {r: 1, g: 1, b: 1, a: 0}
+    m_Size: 7
+    m_Color: {r: 1, g: 0.9562472, b: 0.7216981, a: 0}
     m_UseLightColor: 1
     m_Rotate: 1
     m_Zoom: 1
     m_Fade: 1
-  m_UseFog: 1
+  m_UseFog: 0
