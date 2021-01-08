@@ -6,6 +6,7 @@ public class MusicNode : MonoBehaviour
 {
 	[NonSerialized] public float beat;
 	[NonSerialized] public int meteorPos;
+	[NonSerialized] public bool isObstacle;
 	[NonSerialized] public bool paused;
 	[NonSerialized] public int trackNumber;
 	private GameObject towTruck;
@@ -22,7 +23,7 @@ public class MusicNode : MonoBehaviour
 	private float aCos;
 	private float metStartX, metStartY, metStartZ, metEndZ;
 	private float expX, expY;
-	private float initYMultiplier = 5f;
+	private float initYMultiplier = 4f;
 
 
 	public void Initialize(float meteorStartLineZ, float meteorFinishLineZ, float targetBeat, MeteorNode meteor, int trackNumber)
@@ -32,9 +33,10 @@ public class MusicNode : MonoBehaviour
 		this.trackNumber = trackNumber;
 		aCos = Mathf.Cos(targetBeat);
 		paused = false;
+		
 		towTruck = GameObject.FindGameObjectWithTag("towtruck");
 		towTruckInitialPos = towTruck.transform.position;
-
+		
 		//make meteor appear at a predefined random point
 		meteorPos = UnityEngine.Random.Range(1,12);
 		metStartZ = meteorStartLineZ;
@@ -47,19 +49,31 @@ public class MusicNode : MonoBehaviour
 		expY = 0 - explosionYOffset[meteorPos];
 		explotionVector = new Vector3(expX, expY, 0);
 
-		meteorNode.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+		meteorNode.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 		float initPos = metStartX * (1 + ((beat - Conductor.songposition) * initYMultiplier));
 		meteorNode.transform.localPosition = new Vector3(initPos , metStartY, metStartZ);
 
 		//reset rotation
 		transform.Rotate(0, 0, 0);
+
+		//overwrite variables if its an obstacle
+		if (trackNumber > 1) 
+		{
+			isObstacle = true;
+			meteorPos = UnityEngine.Random.Range(1,3);
+			metStartX = trackNumber > 2 ? 0.2f : -0.2f;
+			expX = trackNumber > 2 ? -0.2f : 0.2f;
+			explotionVector = new Vector3(expX, 0, 0);
+			float initPosNew = metStartX * (1 + ((beat - Conductor.songposition) * initYMultiplier));
+			meteorNode.transform.localPosition = new Vector3(initPosNew , metStartY, metStartZ);
+		}
 	}
 
 	void Update()
 	{
 		if (Conductor.pauseTimeStamp > 0f) return; //resume not managed
 
-		if (towTruckShaking)
+		if (towTruckShaking && !isObstacle)
 		{
 			towTruck.transform.position = towTruckInitialPos + UnityEngine.Random.insideUnitSphere * 0.01f;
 		}
@@ -67,30 +81,33 @@ public class MusicNode : MonoBehaviour
 		//avoid transforming when paused
 		if (paused) return;
 		
-		//remove itself when out of the screen (remove line)
-		if (meteorNode.transform.localPosition.z < 0f)
+		//missed the punch
+		if (Conductor.songposition > beat + Conductor.hitOffset)
 		{
-			paused = true;
 			Explode(10f, 2f, false);
 		}
 
-		//meteor position
-		meteorNode.transform.localPosition = new Vector3(metStartX * (1 + ((beat - Conductor.songposition) * initYMultiplier)), metStartY, metStartZ + (metEndZ - metStartZ) * (1f - ((beat) - Conductor.songposition) / (Conductor.appearTime)));;
-
+		//main meteor transform
+		//meteorNode.transform.localPosition = new Vector3(metStartX * (1 + ((beat - Conductor.songposition) * initYMultiplier)), metStartY, metStartZ + (metEndZ - metStartZ) * (1f - ((beat) - Conductor.songposition) / (Conductor.appearTime)));
+		
+		meteorNode.transform.localPosition = new Vector3(Mathf.Lerp(metStartX, metStartX * initYMultiplier, (beat - Conductor.songposition) / (Conductor.appearTime)), 
+														metStartY, 
+														Mathf.LerpUnclamped(metEndZ, metStartZ, (beat - Conductor.songposition) / (Conductor.appearTime)));
+		
 		//meteor rotate itself around
 		meteorNode.transform.Rotate(aCos,aCos,aCos, Space.Self);
 
-		//scale down meteors as they get closer
-		if (Conductor.songposition > beat - 2f && Conductor.songposition < beat - 0.8f)
+		//scale up meteors as they get closer
+		if (Conductor.songposition > beat - 1f && Conductor.songposition < beat - 0.5f)
 		{
-			float ls = (beat - Conductor.songposition) / 4f;
+			float ls = 0.1f / (beat - Conductor.songposition);
 			meteorNode.transform.localScale = new Vector3(ls, ls, ls);
 		}
 
 		//make meteors glow
-		if (Conductor.songposition > beat - 0.25f)
+		if (Conductor.songposition > beat - Conductor.hitOffset && !isObstacle)
 		{
-			meteorNode.SetMaterial(1f * (1f - ((beat) - Conductor.songposition) / 0.35f));
+			meteorNode.SetMaterial(1f * (1f - ((beat) - Conductor.songposition) / Conductor.hitOffset));
 		}
 	}
 

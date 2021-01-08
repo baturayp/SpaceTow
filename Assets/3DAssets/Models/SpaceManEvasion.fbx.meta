@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8f1389b330d12aa40809ce6fe08d5863
+guid: dd3c3ed257215b45184bfe33c9d2395f
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
@@ -70,8 +70,20 @@ ModelImporter:
       74: 2894939528942019766
     second: Armature|E-Punch1-R
   - first:
-      74: -5595204001836973541
-    second: Armature|F-Kick1-L
+      74: 8837801776050999352
+    second: Armature|Evasion1-L
+  - first:
+      74: -2302628300222281696
+    second: Armature|Evasion1-R
+  - first:
+      74: -7790066851743995590
+    second: Armature|Evasion2-R
+  - first:
+      74: 4253403022255972872
+    second: Armature|Evasion2-L
+  - first:
+      74: -4345271306834037951
+    second: Armature|Evasion2-L.001
   - first:
       74: -4805123379534858383
     second: Armature|F-Kick1-M
@@ -86,7 +98,7 @@ ModelImporter:
     second: Armature|T-Pose
   externalObjects: {}
   materials:
-    materialImportMode: 1
+    materialImportMode: 2
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -95,7 +107,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    motionNodeName: <Root Transform>
+    motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
@@ -176,7 +188,7 @@ ModelImporter:
   animationType: 2
   humanoidOversampling: 1
   avatarSetup: 0
-  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

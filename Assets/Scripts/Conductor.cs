@@ -33,7 +33,7 @@ public class Conductor : MonoBehaviour
 	//z axis belongs to meteor object
 	public float meteorStartLineZ, meteorFinishLineZ;
 
-	public float hitOffset;
+	public static float hitOffset = 0.15f;
 
 	//current song position and remaining time
 	public static float songposition;
@@ -47,29 +47,28 @@ public class Conductor : MonoBehaviour
 	//keep a reference of the sound tracks
 	private SongInfo.Track[] tracks;
 	public SpaceMan spaceMan;
+	
 	private float dsptimesong;
 	private float endTime;
-
-	//buttons state
-	private bool tapped;
-
 	private int appearTimeLength;
 	public static float appearTime;
 
 	//count down canvas
 	public GameObject countDownCanvas;
 
-#if UNITY_EDITOR || UNITY_STANDALONE
-	private KeyCode[] keybindings;
-#endif
-
 	//total tracks
-	private readonly int len = 2;
+	private readonly int len = 4;
 	private Coroutine nextPunchWait;
 
 	//audio related stuff
 	public AudioSource songLayer;
 	public AudioClip punchClip;
+	
+	//touch controls
+	private Vector2 startPos;
+	private float startTime;
+	private const float maxTime = 0.5f;
+	private const  float minDistance = 0.10f;
 
 
 	IEnumerator PunchCrack(float beatTime)
@@ -83,7 +82,7 @@ public class Conductor : MonoBehaviour
 		nextPunchWait = null;
 	}
 	
-	void PlayerInputted()
+	void PlayerInputted(int track)
 	{
 		if (nextPunchWait != null) return;
 		
@@ -96,7 +95,7 @@ public class Conductor : MonoBehaviour
 
 			if (offset < hitOffset) //hitted
 			{
-				spaceMan.Punch(frontNode.trackNumber, frontNode.meteorPos, frontNode.beat);
+				spaceMan.Punch(frontNode.meteorPos, frontNode.trackNumber, frontNode.beat, true);
 				ScoreEvent?.Invoke(Rank.HIT);
 				frontNode.Explode(2.0f, 0f, true);
 				beatQueue.Dequeue();
@@ -108,14 +107,14 @@ public class Conductor : MonoBehaviour
 			else 
 			{
 				ScoreEvent?.Invoke(Rank.WASTE);
-				spaceMan.Jump(songposition + 0.2f);
+				spaceMan.Punch(frontNode.meteorPos, frontNode.trackNumber, songposition + 0.2f, false);
 				nextPunchWait = StartCoroutine(Wait(songposition + 0.4f));
 			}
 		}
 		else 
 		{
 			ScoreEvent?.Invoke(Rank.WASTE);
-			spaceMan.Jump(songposition + 0.2f);
+			spaceMan.Punch(0, 0, songposition + 0.2f, false);
 			nextPunchWait = StartCoroutine(Wait(songposition + 0.4f));
 		}
 	}
@@ -137,12 +136,6 @@ public class Conductor : MonoBehaviour
 		appearTimeLength = songInfo.appearTime.Length;
 		
 		fullNoteCounts = songInfo.TotalHitCounts();
-
-		//keyboard controls
-#if UNITY_EDITOR || UNITY_STANDALONE
-		keybindings = new KeyCode[1];
-		keybindings[0] = (KeyCode)System.Enum.Parse(typeof(KeyCode), "A");
-#endif
 
 		//listen playing ui for lost state
 		PlayingUIController.LostEvent += SongCompleted;
@@ -208,11 +201,6 @@ public class Conductor : MonoBehaviour
 			pauseTimeStamp = -1f;
 		}
 
-		//player input control
-#if UNITY_EDITOR || UNITY_STANDALONE
-		if (Input.GetKeyDown(keybindings[0])) PlayerInputted();
-#endif
-
 		//calculate songposition
 		songposition = (float)(AudioSettings.dspTime - dsptimesong - pausedTime) * songLayer.pitch - (songInfo.songOffset);
 
@@ -245,20 +233,44 @@ public class Conductor : MonoBehaviour
 			}
 		}
 
+		if (Input.touches.Length > 0)
+		{
+			Touch t = Input.GetTouch(0);
+			if (t.phase == TouchPhase.Began)
+			{
+				startPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
+				startTime = Time.time;
+			}
+			if (t.phase == TouchPhase.Ended)
+			{
+				Vector2 endPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
+				Vector2 swipe = new Vector2(endPos.x - startPos.x, endPos.y - startPos.y);
+				
+				if (swipe.magnitude < minDistance)
+				{ // Tap
+					PlayerInputted(0);
+				}
+				else if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
+				{ // Horizontal swipe
+					if (swipe.x > 0) PlayerInputted(3);
+					else PlayerInputted(2);
+				}
+			}
+		}
+
+		if (Input.GetKeyDown(KeyCode.S)) PlayerInputted(1);
+		if (Input.GetKeyDown(KeyCode.A)) PlayerInputted(0);
+		if (Input.GetKeyDown(KeyCode.LeftArrow)) PlayerInputted(2);
+		if (Input.GetKeyDown(KeyCode.RightArrow)) PlayerInputted(3);
+
 		if (beatQueue.Count != 0)
 		{
 			MusicNode currNode = beatQueue.Peek();
-			if (currNode.beat < songposition)
+			if (currNode.beat < songposition - hitOffset)
 			{
 				beatQueue.Dequeue();
 				ScoreEvent?.Invoke(Rank.MISS);
 			}
-		}
-
-		if (Input.touchCount == 1)
-		{
-			Touch touch = Input.GetTouch(0);
-			if (touch.phase == TouchPhase.Began) PlayerInputted();
 		}
 
 		//check to see if the song reaches its end
@@ -266,14 +278,6 @@ public class Conductor : MonoBehaviour
 		{
 			SongCompleted();
 		}
-
-		//press spacebar to end a song when inside unity editor
-#if UNITY_EDITOR
-		if (Input.GetKeyDown("space"))
-		{
-			SongCompleted();
-		}
-#endif
 	}
 
 	void SongCompleted()

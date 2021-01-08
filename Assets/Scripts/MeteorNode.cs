@@ -15,22 +15,24 @@ public class MeteorNode : MonoBehaviour
     private Material wholeMat;
     private float val;
     private int len;
+    private bool isObstacle;
 
-    public void Initialize()
+    public void Initialize(bool isObstacle)
     {
+        //check if it's a obstacle
+        this.isObstacle |= isObstacle;
+        if (isObstacle) return;
+
         len = meteorPieces.Length;
         wholeMesh = meteorWhole.GetComponent<MeshRenderer>();
         wholeMat = wholeMesh.material;
         piecesMesh = new MeshRenderer[len];
-        
         for (int i = 0; i < len; i++)
         {
             piecesMesh[i] = meteorPieces[i].transform.gameObject.GetComponent<MeshRenderer>();
         }
-
         val = 0;
         SetState(false);
-        
         StartCoroutine(FlareUp());
     }
 
@@ -61,20 +63,27 @@ public class MeteorNode : MonoBehaviour
 
     public void Explode(Vector3 expVec, float force, float upwardsModifier, bool success)
     {
-        Vector3 explosionPosition = meteorWhole.transform.position + expVec;
-
-        if (success)
+        if (isObstacle)
         {
-            meteorWhole.SetActive(false);
-            SetState(true);
-            foreach (Rigidbody piece in meteorPieces)
-            {
-                piece.AddExplosionForce(force, explosionPosition, 5.0f, upwardsModifier, ForceMode.Impulse);
-            }
+            Vector3 explosionPosition = meteorWhole.transform.position + expVec;
+            wholeRigid.AddExplosionForce(force, explosionPosition, 5.0f, upwardsModifier, ForceMode.Impulse);
         }
         else
-        {
-            wholeRigid.AddExplosionForce(force, explosionPosition, 5.0f, upwardsModifier, ForceMode.Impulse);
+            {
+            Vector3 explosionPosition = meteorWhole.transform.position + expVec;
+            if (success)
+            {
+                meteorWhole.SetActive(false);
+                SetState(true);
+                foreach (Rigidbody piece in meteorPieces)
+                {
+                    piece.AddExplosionForce(force, explosionPosition, 5.0f, upwardsModifier, ForceMode.Impulse);
+                }
+            }
+            else
+            {
+                wholeRigid.AddExplosionForce(force, explosionPosition, 5.0f, upwardsModifier, ForceMode.Impulse);
+            }
         }
     }
 

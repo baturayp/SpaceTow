@@ -5,16 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class Logic : MonoBehaviour
 {
-    private SongInfo currSong;
-    public SongCollection[] songCollections;
-	public const float MAX_SWIPE_TIME = 0.5f;
-	public const float MIN_SWIPE_DISTANCE = 0.10f;
+	private const float MAX_SWIPE_TIME = 0.5f;
+	private const float MIN_SWIPE_DISTANCE = 0.10f;
 	public static bool swipedRight = false;
 	public static bool swipedLeft = false;
 	public static bool swipedUp = false;
 	public static bool swipedDown = false;
-	Vector2 startPos;
-	float startTime;
+	private Vector2 startPos;
+	private float startTime;
 
 	public void Update()
 	{
@@ -31,6 +29,7 @@ public class Logic : MonoBehaviour
 				startPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
 				startTime = Time.time;
 			}
+
 			if (t.phase == TouchPhase.Ended)
 			{
 				if (Time.time - startTime > MAX_SWIPE_TIME) // press too long
@@ -62,14 +61,4 @@ public class Logic : MonoBehaviour
 		swipedRight = swipedRight || Input.GetKeyDown(KeyCode.RightArrow);
 		swipedLeft = swipedLeft || Input.GetKeyDown(KeyCode.LeftArrow);
 	}
-
-    public void SelectSong()
-    {
-        currSong = songCollections[0].songSets[0].song;
-        SongInfoMessenger.Instance.currentSong = currSong;
-        SongInfoMessenger.Instance.currentCollection = songCollections[0];
-        SongInfoMessenger.Instance.currSongNumber = 0;
-        SongInfoMessenger.Instance.currCollNumber = 0;
-        SceneManager.LoadSceneAsync(1);
-    }
 }

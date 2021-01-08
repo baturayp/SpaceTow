@@ -22,7 +22,7 @@ public class SongInfo : ScriptableObject
 	public Tempo[] appearTime;
 
 	[Header("Just for reference, notes populated automatically, edit them from NoteEditor")]
-	public Track[] tracks = new Track[2];
+	public Track[] tracks = new Track[4];
 	private int totalHits;
 
 	[Header("When to finish scene shows up, in seconds")]
@@ -114,6 +114,10 @@ public class SongInfo : ScriptableObject
 		tracks[0].notes = track0.ToArray();
 		var track1 = notes.Where(note => note.track == 1).ToList();
 		tracks[1].notes = track1.ToArray();
+		var track2 = notes.Where(note => note.track == 2).ToList();
+		tracks[2].notes = track2.ToArray();
+		var track3 = notes.Where(note => note.track == 3).ToList();
+		tracks[3].notes = track3.ToArray();
 	}
 
 	static Note ToAsset(JsonNote note, int BPM, int track)

@@ -16,7 +16,7 @@ public class RotatePlanetLight : MonoBehaviour
 
     void LightLoop()
     {
-        flare.enabled = flare.enabled == false ? true : false;
+        flare.enabled = !flare.enabled;
     }
     void Update()
     {
