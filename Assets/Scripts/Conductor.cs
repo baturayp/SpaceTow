@@ -66,9 +66,9 @@ public class Conductor : MonoBehaviour
 	
 	//touch controls
 	private Vector2 startPos;
-	private float startTime;
-	private const float maxTime = 0.5f;
 	private const  float minDistance = 0.10f;
+	private float avoidMoveVal;
+	private int avoidMoveTrack;
 
 
 	IEnumerator PunchCrack(float beatTime)
@@ -80,6 +80,11 @@ public class Conductor : MonoBehaviour
 	{
 		yield return new WaitUntil(() => songposition > until);
 		nextPunchWait = null;
+	}
+
+	void AvoidMove(float val, int trackNumber)
+	{
+		spaceMan.AvoidMove(val, trackNumber);
 	}
 	
 	void PlayerInputted(int track)
@@ -239,7 +244,16 @@ public class Conductor : MonoBehaviour
 			if (t.phase == TouchPhase.Began)
 			{
 				startPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
-				startTime = Time.time;
+			}
+			if (t.phase == TouchPhase.Moved)
+			{
+				Vector2 endPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
+				Vector2 swipe = new Vector2(endPos.x - startPos.x, endPos.y - startPos.y);
+				if (swipe.magnitude > minDistance && Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
+				{
+					if(swipe.x > 0) AvoidMove(swipe.x * 3, 3);
+					else AvoidMove(Mathf.Abs(swipe.x * 3), 2);
+				}
 			}
 			if (t.phase == TouchPhase.Ended)
 			{
@@ -260,8 +274,6 @@ public class Conductor : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.S)) PlayerInputted(1);
 		if (Input.GetKeyDown(KeyCode.A)) PlayerInputted(0);
-		if (Input.GetKeyDown(KeyCode.LeftArrow)) PlayerInputted(2);
-		if (Input.GetKeyDown(KeyCode.RightArrow)) PlayerInputted(3);
 
 		if (beatQueue.Count != 0)
 		{
@@ -278,9 +290,16 @@ public class Conductor : MonoBehaviour
 			{
 				if (currNode.beat <= songposition)
 				{
-					beatQueue.Dequeue();
-					ScoreEvent?.Invoke(Rank.MISS);
-					spaceMan.GotHit(currNode.trackNumber);
+					if (avoidMoveVal > 0.5 && avoidMoveTrack == currNode.trackNumber)
+					{
+						currNode.Explode(true);
+					}
+					else
+					{
+						beatQueue.Dequeue();
+						ScoreEvent?.Invoke(Rank.MISS);
+						spaceMan.GotHit(currNode.trackNumber);
+					}
 				}
 			}
 		}

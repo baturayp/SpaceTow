@@ -21,11 +21,6 @@ public class SpaceMan : MonoBehaviour
         {
             attackRoutine = StartCoroutine(AttackAnim(targetBeat, Conductor.songposition, 0.25f, animNumber, trackNumber, success));
         }
-        //obstacle avoid anim
-        else
-        {
-            attackRoutine = StartCoroutine(AvoidAnim(targetBeat, Conductor.songposition, animNumber, trackNumber));
-        }
     }
 
     public void GotHit(int trackNumber)
@@ -63,33 +58,11 @@ public class SpaceMan : MonoBehaviour
         spaceManAnim.Play("idle");
     }
 
-    IEnumerator AvoidAnim(float targetBeat, float moveStarted, int animNum, int trackNumber)
+    public void AvoidMove(float animVal, int trackNumber)
     {
         spaceManAnim.speed = 0f;
-        int aNum = animNum;
-        string animToPlay = aNum.ToString() + trackNumber.ToString();
-        
-        while (Conductor.songposition < targetBeat)
-        {
-            var animVal = Mathf.Lerp(0f, 0.66f, (Conductor.songposition - moveStarted) / (targetBeat - moveStarted));
-            spaceManAnim.Play(animToPlay, 0, animVal);
-            spaceManAnim.Update(0f);
-            yield return null;
-        }
-        
-        float elapsedTime = 0.0f;
-        while (elapsedTime < 0.1f)
-        {
-            elapsedTime += Time.deltaTime;
-            var animVal = Mathf.Lerp(0.66f, 1f, elapsedTime / 0.1f);
-            spaceManAnim.Play(animToPlay, 0, animVal);
-            spaceManAnim.Update(0f);
-            yield return null;
-        }
-
-        attackRoutine = null;
-        spaceManAnim.speed = 1f;
-        spaceManAnim.Play("idle");
+        string animToPlay = "1" + trackNumber.ToString();
+        spaceManAnim.Play(animToPlay, 0, animVal);
     }
 
     IEnumerator GotHitAnim(int trackNumber)
