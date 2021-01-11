@@ -17620,6 +17620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myRectTransform: {fileID: 1060531288}
+  flare: {fileID: 0}
 --- !u!1001 &1066514257
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22895,9 +22896,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9527a21dcf7019a4aa4881fb57bdbcb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebrisLayer: {fileID: 1178590931}
-  movementOffSet: 0
-  posY0: 0
+  startZ: 0
+  endZ: 0
+  fullScalePoint: 0
 --- !u!1001 &1189759323
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23993,9 +23994,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9527a21dcf7019a4aa4881fb57bdbcb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebrisLayer: {fileID: 1636956781}
-  movementOffSet: 0
-  posY0: 0
+  startZ: 0
+  endZ: 0
+  fullScalePoint: 0
 --- !u!1001 &1645003031
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29831,9 +29832,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9527a21dcf7019a4aa4881fb57bdbcb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebrisLayer: {fileID: 1920906975}
-  movementOffSet: 0
-  posY0: 0
+  startZ: 0
+  endZ: 0
+  fullScalePoint: 0
 --- !u!4 &1920906977
 Transform:
   m_ObjectHideFlags: 0
@@ -30179,9 +30180,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9527a21dcf7019a4aa4881fb57bdbcb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebrisLayer: {fileID: 2029298445}
-  movementOffSet: 0
-  posY0: 0
+  startZ: 0
+  endZ: 0
+  fullScalePoint: 0
 --- !u!4 &2029298447
 Transform:
   m_ObjectHideFlags: 0
