@@ -6,11 +6,8 @@ public class MusicNodePool : MonoBehaviour
 {
 	public static MusicNodePool instance;
 	public GameObject nodePrefab;
-	public GameObject[] meteorPrefab;
-	public GameObject[] obstaclePrefab;
 	public int initialAmount;
 	private List<MusicNode> nodeList;
-	public GameObject movingParts;
 
 	void Awake()
 	{
@@ -31,38 +28,20 @@ public class MusicNodePool : MonoBehaviour
 
 	public MusicNode GetNode(float startLineZ, float finishLineZ, float beat, int trackNumber)
 	{
-		//get an empty meteor or init a new one
-		MeteorNode meteor = trackNumber > 1 ? GetObstacle() : GetMeteor();
 		//check if there is an inactive instance
 		foreach (MusicNode node in nodeList)
 		{
 			if (!node.gameObject.activeInHierarchy)
 			{
-				node.Initialize(startLineZ, finishLineZ, beat, meteor, trackNumber);
+				node.Initialize(startLineZ, finishLineZ, beat, trackNumber);
 				node.gameObject.SetActive(true);
 				return node;
 			}
 		}
 		//no inactive instances, instantiate a new GetComponent
 		MusicNode musicNode = Instantiate(nodePrefab).GetComponent<MusicNode>();
-		musicNode.Initialize(startLineZ, finishLineZ, beat, meteor, trackNumber);
+		musicNode.Initialize(startLineZ, finishLineZ, beat, trackNumber);
 		nodeList.Add(musicNode);
 		return musicNode;
-	}
-
-	MeteorNode GetMeteor()
-	{
-		int randomMeteor = Random.Range(0,5);
-		//instantiate as a child of movingParts
-		MeteorNode meteorNode = Instantiate(meteorPrefab[randomMeteor], movingParts.transform).GetComponent<MeteorNode>();
-		meteorNode.Initialize(false);
-		return meteorNode;
-	}
-
-	MeteorNode GetObstacle()
-	{
-		MeteorNode meteorNode = Instantiate(obstaclePrefab[0], movingParts.transform).GetComponent<MeteorNode>();
-		meteorNode.Initialize(true);
-		return meteorNode;
 	}
 }

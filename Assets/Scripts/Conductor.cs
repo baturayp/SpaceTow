@@ -95,9 +95,9 @@ public class Conductor : MonoBehaviour
 
 			if (offset < hitOffset) //hitted
 			{
-				spaceMan.Punch(frontNode.meteorPos, frontNode.trackNumber, frontNode.beat, true);
+				spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, frontNode.beat, true);
 				ScoreEvent?.Invoke(Rank.HIT);
-				frontNode.Explode(2.0f, 0f, true);
+				frontNode.Explode(true);
 				beatQueue.Dequeue();
 				StartCoroutine(PunchCrack(frontNode.beat));
 				nextPunchWait = StartCoroutine(Wait(frontNode.beat));
@@ -107,7 +107,7 @@ public class Conductor : MonoBehaviour
 			else 
 			{
 				ScoreEvent?.Invoke(Rank.WASTE);
-				spaceMan.Punch(frontNode.meteorPos, frontNode.trackNumber, songposition + 0.2f, false);
+				spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, songposition + 0.2f, false);
 				nextPunchWait = StartCoroutine(Wait(songposition + 0.4f));
 			}
 		}
