@@ -266,10 +266,22 @@ public class Conductor : MonoBehaviour
 		if (beatQueue.Count != 0)
 		{
 			MusicNode currNode = beatQueue.Peek();
-			if (currNode.beat < songposition - hitOffset)
+			if (currNode.trackNumber < 2)
 			{
-				beatQueue.Dequeue();
-				ScoreEvent?.Invoke(Rank.MISS);
+				if (currNode.beat < songposition - hitOffset)
+				{
+					beatQueue.Dequeue();
+					ScoreEvent?.Invoke(Rank.MISS);
+				}
+			}
+			else 
+			{
+				if (currNode.beat <= songposition)
+				{
+					beatQueue.Dequeue();
+					ScoreEvent?.Invoke(Rank.MISS);
+					spaceMan.GotHit(currNode.trackNumber);
+				}
 			}
 		}
 

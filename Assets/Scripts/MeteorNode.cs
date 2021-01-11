@@ -67,10 +67,7 @@ public class MeteorNode : MonoBehaviour
 
 		transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 		float initPos = metStartX * (1 + ((beat - Conductor.songposition) * initYMultiplier));
-		transform.localPosition = new Vector3(initPos , metStartY, metStartZ);
-
-		//reset rotation
-		transform.Rotate(0, 0, 0);
+		transform.position = new Vector3(initPos , metStartY, metStartZ);
 
         //flare
         StartCoroutine(FlareUp());
@@ -103,34 +100,23 @@ public class MeteorNode : MonoBehaviour
 
     public void Explode(bool success)
     {
-        Vector3 explosionPosition = meteorWhole.transform.position + explotionVector;
-        if (success)
-        {
-            meteorWhole.SetActive(false);
-            SetState(true);
-            foreach (Rigidbody piece in meteorPieces)
-            {
-                piece.AddExplosionForce(2f, explosionPosition, 5.0f, 2f, ForceMode.Impulse);
-            }
-        }
-        else
-        {
-            wholeRigid.AddExplosionForce(10f, explosionPosition, 5.0f, 2f, ForceMode.Impulse);
-        }
+        StartCoroutine(ExplosionRoutine(success));
     }
 
     void Update()
     {
-        if (paused) return;
+        if (Conductor.pauseTimeStamp > 0f) return;
 
-        transform.localPosition = new Vector3(Mathf.Lerp(metStartX, metStartX * initYMultiplier, (beat - Conductor.songposition) / (Conductor.appearTime)), 
-														metStartY, 
-														Mathf.LerpUnclamped(metEndZ, metStartZ, (beat - Conductor.songposition) / (Conductor.appearTime)));
-		
         if (towTruckShaking)
 		{
 			towTruck.transform.position = towTruckInitial + UnityEngine.Random.insideUnitSphere * 0.01f;
 		}
+
+        if (paused) return;
+
+        transform.position = new Vector3(Mathf.Lerp(metStartX, metStartX * initYMultiplier, (beat - Conductor.songposition) / (Conductor.appearTime)), 
+														metStartY, 
+														Mathf.LerpUnclamped(metEndZ, metStartZ, (beat - Conductor.songposition) / (Conductor.appearTime)));
 
 		//meteor rotate itself around
 		transform.Rotate(aCos,aCos,aCos, Space.Self);
@@ -148,31 +134,49 @@ public class MeteorNode : MonoBehaviour
 			SetMaterial(1f * (1f - ((beat) - Conductor.songposition) / Conductor.hitOffset));
 		}
 
+        if (Conductor.songposition > beat + Conductor.hitOffset)
+		{
+			Explode(false);
+		}
     }
-    IEnumerator ExplosionRoutine(bool successHit)
+    IEnumerator ExplosionRoutine(bool success)
 	{
 		yield return new WaitUntil(() => Conductor.songposition >= beat);
 		paused = true;
-		Explode(successHit);
-		if (!successHit) towTruckShaking = true;
-		if (!successHit) Handheld.Vibrate();
-		//make meteors even smaller as they exploding
+
+		Vector3 explosionPosition = transform.position + explotionVector;
+		
+        if (success)
+        {
+            meteorWhole.SetActive(false);
+            SetState(true);
+            foreach (Rigidbody piece in meteorPieces)
+            {
+                piece.AddExplosionForce(2.0f, explosionPosition, 5.0f, 0f, ForceMode.Impulse);
+            }
+        }
+
+		if (!success)
+        {
+            Handheld.Vibrate();
+            towTruckShaking = true;
+            wholeRigid.AddExplosionForce(10f, explosionPosition, 5.0f, 2f, ForceMode.Impulse);
+        }
+        
+        //make meteors even smaller as they exploding
 		float elapsedTime = 0.0f;
-		while (elapsedTime < 0.4f)
+		
+        while (elapsedTime < 0.4f)
 		{
 			elapsedTime += Time.deltaTime;
 			float ls = Mathf.Lerp(0.2f, 0.1f, elapsedTime / 0.4f);
 			Vector3 vs = new Vector3(ls, ls, ls);
-			transform.localScale = successHit ? vs : new Vector3(0.2f,0.2f,0.2f);
+			transform.localScale = success ? vs : new Vector3(0.2f,0.2f,0.2f);
 			yield return null;
 		}
+        
         towTruckShaking = false;
 		towTruck.transform.position = towTruckInitial;
-        Destroy();
-	}
-
-    public void Destroy()
-    {
         Destroy(gameObject);
-    }
+	}
 }

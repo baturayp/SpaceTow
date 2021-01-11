@@ -8,10 +8,9 @@ public class MusicNode : MonoBehaviour
 	public GameObject[] obstaclePrefab;
 	[NonSerialized] public float beat;
 	[NonSerialized] public int objPos;
-	[NonSerialized] public bool paused;
 	[NonSerialized] public int trackNumber;
 	private GameObject towTruck;
-	private bool towTruckShaking;
+	private bool isObstacle;
 	private Vector3 towTruckInitialPos;
 	private float startLineZ, finishLineZ;
 	private MeteorNode meteorNode;
@@ -24,10 +23,16 @@ public class MusicNode : MonoBehaviour
 		this.startLineZ = startLineZ;
 		this.finishLineZ = finishLineZ;
 
-		towTruckInitialPos = new Vector3(0,0,-0.85f);
-		towTruck = GameObject.FindGameObjectWithTag("towtruck");
-
-		meteorNode = GetMeteor();
+		if (trackNumber > 1)
+		{
+			obstacleNode = GetObstacle();
+			isObstacle = true;
+		}
+		else
+		{
+			meteorNode = GetMeteor();
+			isObstacle = false;
+		}
 	}
 	
 	MeteorNode GetMeteor()
@@ -42,32 +47,16 @@ public class MusicNode : MonoBehaviour
 
 	ObstacleNode GetObstacle()
 	{
+		int randomPos = UnityEngine.Random.Range(1,3);
 		obstacleNode = Instantiate(obstaclePrefab[0]).GetComponent<ObstacleNode>();
-		//obstacleNode.Initialize();
+		obstacleNode.Initialize(startLineZ, finishLineZ, beat, randomPos, trackNumber);
+		objPos = randomPos;
 		return obstacleNode;
-	}
-
-	void Update()
-	{
-		if (Conductor.pauseTimeStamp > 0f) return; //resume not managed
-
-		if (towTruckShaking)
-		{
-			towTruck.transform.position = towTruckInitialPos + UnityEngine.Random.insideUnitSphere * 0.01f;
-		}
-
-		//avoid transforming when paused
-		if (paused) return;
-		
-		//missed the punch
-		if (Conductor.songposition > beat + Conductor.hitOffset)
-		{
-			meteorNode.Explode(false);
-		}
 	}
 
 	public void Explode(bool successHit)
 	{
-		gameObject.SetActive(false);
+		if(isObstacle) obstacleNode.Bounce(true);
+		else meteorNode.Explode(true);
 	}
 }

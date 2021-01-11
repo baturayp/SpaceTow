@@ -24,8 +24,14 @@ public class SpaceMan : MonoBehaviour
         //obstacle avoid anim
         else
         {
-            //
+            attackRoutine = StartCoroutine(AvoidAnim(targetBeat, Conductor.songposition, animNumber, trackNumber));
         }
+    }
+
+    public void GotHit(int trackNumber)
+    {
+        if (attackRoutine != null) StopCoroutine(attackRoutine);
+        attackRoutine = StartCoroutine(GotHitAnim(trackNumber));
     }
 
     IEnumerator AttackAnim(float targetBeat, float punchStarted, float backDuration, int animNum, int trackNumber, bool success)
@@ -57,15 +63,46 @@ public class SpaceMan : MonoBehaviour
         spaceManAnim.Play("idle");
     }
 
-    IEnumerator AvoidAnim(float targetBeat, float punchStarted, int animNum, int trackNumber, bool success)
+    IEnumerator AvoidAnim(float targetBeat, float moveStarted, int animNum, int trackNumber)
     {
         spaceManAnim.speed = 0f;
-        int aNum = success ? animNum : 0;
+        int aNum = animNum;
         string animToPlay = aNum.ToString() + trackNumber.ToString();
         
         while (Conductor.songposition < targetBeat)
         {
-            var animVal = Mathf.Lerp(0f, 1.0f, (Conductor.songposition - punchStarted) / (targetBeat - punchStarted));
+            var animVal = Mathf.Lerp(0f, 0.66f, (Conductor.songposition - moveStarted) / (targetBeat - moveStarted));
+            spaceManAnim.Play(animToPlay, 0, animVal);
+            spaceManAnim.Update(0f);
+            yield return null;
+        }
+        
+        float elapsedTime = 0.0f;
+        while (elapsedTime < 0.1f)
+        {
+            elapsedTime += Time.deltaTime;
+            var animVal = Mathf.Lerp(0.66f, 1f, elapsedTime / 0.1f);
+            spaceManAnim.Play(animToPlay, 0, animVal);
+            spaceManAnim.Update(0f);
+            yield return null;
+        }
+
+        attackRoutine = null;
+        spaceManAnim.speed = 1f;
+        spaceManAnim.Play("idle");
+    }
+
+    IEnumerator GotHitAnim(int trackNumber)
+    {
+        spaceManAnim.speed = 0f;
+        int aNum = 0;
+        string animToPlay = aNum.ToString() + trackNumber.ToString();
+        
+        float elapsedTime = 0.0f;
+        while (elapsedTime < 0.1f)
+        {
+            elapsedTime += Time.deltaTime;
+            var animVal = Mathf.Lerp(0f, 1f, elapsedTime / 0.1f);
             spaceManAnim.Play(animToPlay, 0, animVal);
             spaceManAnim.Update(0f);
             yield return null;
