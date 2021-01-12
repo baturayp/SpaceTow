@@ -21,12 +21,6 @@ public class SpaceMan : MonoBehaviour
 			if (attackRoutine != null) StopCoroutine(attackRoutine);
 			attackRoutine = StartCoroutine(AttackAnim(targetBeat, Conductor.songposition, 0.25f, animNumber, trackNumber, success));
 		}
-
-		else
-		{
-			if (attackRoutine != null) StopCoroutine(attackRoutine);
-			attackRoutine = StartCoroutine(AttackAnim(Conductor.songposition + 0.2f, Conductor.songposition, 0.25f, 0, 0, false));
-		}
 	}
 
 	public void Nudge()

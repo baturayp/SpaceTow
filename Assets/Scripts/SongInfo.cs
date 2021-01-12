@@ -103,7 +103,7 @@ public class SongInfo : ScriptableObject
 		List<Note> notes = new List<Note>();
 		songOffset = jsonData.offset == 0 ? 0 : (1f - ((44100f - jsonData.offset) / 44100f));
 		bpm = jsonData.BPM;
-		if (songTitle == null || songTitle == "") { songTitle = jsonData.name; }
+		if (string.IsNullOrEmpty(songTitle)) { songTitle = jsonData.name; }
 
 		foreach (JsonNote jsonNote in jsonNotes)
 		{
