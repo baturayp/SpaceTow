@@ -20,8 +20,8 @@ public class MeteorNode : MonoBehaviour
     private float beat;
 
     //different meteor target points
-    private readonly float[] meteorFinalX = {0, 0.7f, 0.7f, 0.8f, 0.9f, 0.35f, 0.45f, 0.5f, 0.5f, 0.6f, 0.5f, 0.75f};
-	private readonly float[] meteorFinalY = {0, 0.3f, 0.25f, 0.3f, 0.9f, 0.45f, 0.35f, 0.4f, 0.25f, 0.45f, 0.70f, 0.85f};
+    private readonly float[] meteorFinalX = {0, 1f, 1f, 1.1f, 1.07f, 0.57f, 0.57f, 0.7f, 0.75f, 0.83f, 0.81f, 1f};
+	private readonly float[] meteorFinalY = {0, 0.42f, 0.42f, 0.42f, 1.05f, 0.5f, 0.5f, 0.5f, 0.3f, 0.47f, 0.67f, 0.97f};
 	private readonly float[] explosionXOffset = {0, 0.1f, 0.1f, 0.2f, 0.2f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.2f};
 	private readonly float[] explosionYOffset = {0, -0.1f, 0, 0, 0.2f, 0, 0.1f, 0, 0, 0.1f, -0.1f, 0};
     private Vector3 explotionVector;
@@ -31,7 +31,7 @@ public class MeteorNode : MonoBehaviour
 	private readonly float initYMultiplier = 4f;
     private GameObject towTruck;
     private bool towTruckShaking;
-    private Vector3 towTruckInitial = new Vector3(0,0,-0.85f);
+    private Vector3 towTruckInitial = new Vector3(0,0,-0.5f);
 
     public void Initialize(float startLineZ, float finishLineZ, float targetBeat, int meteorPos, int trackNumber)
     {
@@ -66,7 +66,7 @@ public class MeteorNode : MonoBehaviour
 		explotionVector = new Vector3(expX, expY, 0);
 
 		transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-		float initPos = metStartX * (1 + ((beat - Conductor.songposition) * initYMultiplier));
+		float initPos = metStartX * initYMultiplier;
 		transform.position = new Vector3(initPos , metStartY, metStartZ);
 
         //flare
@@ -114,7 +114,7 @@ public class MeteorNode : MonoBehaviour
 
         if (paused) return;
 
-        transform.position = new Vector3(Mathf.Lerp(metStartX, metStartX * initYMultiplier, (beat - Conductor.songposition) / (Conductor.appearTime)), 
+        transform.position = new Vector3(Mathf.LerpUnclamped(metStartX, metStartX * initYMultiplier, (beat - Conductor.songposition) / (Conductor.appearTime)), 
 														metStartY, 
 														Mathf.LerpUnclamped(metEndZ, metStartZ, (beat - Conductor.songposition) / (Conductor.appearTime)));
 
@@ -134,7 +134,7 @@ public class MeteorNode : MonoBehaviour
 			SetMaterial(1f * (1f - ((beat) - Conductor.songposition) / Conductor.hitOffset));
 		}
 
-        if (Conductor.songposition > beat + Conductor.hitOffset)
+        if (Conductor.songposition > beat + 0.1f)
 		{
 			Explode(false);
 		}

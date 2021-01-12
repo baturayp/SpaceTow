@@ -7,26 +7,25 @@ public class ObstacleNode : MonoBehaviour
     public Rigidbody rigid;
     private bool paused;
     private bool explosionFired;
-    private int obsPos;
     private float beat;
     private float obsStartX, obsStartY, obsStartZ, obsEndZ;
     private Vector3 explotionVector;
     private float aCos;
-    private readonly float initYMultiplier = 8f;
-    public void Initialize(float startLineZ, float finishLineZ, float targetBeat, int obstaclePos, int trackNumber)
+    private readonly float initYMultiplier = 4f;
+    
+    public void Initialize(float startLineZ, float finishLineZ, float targetBeat, int trackNumber)
     {
         beat = targetBeat;
         paused = false;
         explosionFired = false;
-        obsPos = obstaclePos;
         obsStartZ = startLineZ;
 		obsEndZ = finishLineZ;
 		obsStartX = trackNumber > 2 ? -0.25f : 0.25f;
 		obsStartY = 0.3f;
 		explotionVector = new Vector3(0, -0.3f, 0);
-        aCos = Mathf.Cos(targetBeat);
+		aCos = Mathf.Cos(targetBeat);
 
-        float initPos = obsStartX * (1 + ((beat - Conductor.songposition) * initYMultiplier));
+		float initPos = obsStartX * initYMultiplier;
 		transform.position = new Vector3(initPos , obsStartY, obsStartZ);
     }
 
@@ -38,9 +37,9 @@ public class ObstacleNode : MonoBehaviour
 
         if (paused) return;
 
-        transform.position = new Vector3(Mathf.Lerp(obsStartX, obsStartX * initYMultiplier, (beat - Conductor.songposition) / (Conductor.appearTime)), 
+        transform.position = new Vector3(Mathf.Lerp(obsStartX, obsStartX * initYMultiplier, (beat - Conductor.songposition) / Conductor.appearTime), 
 														obsStartY, 
-														Mathf.LerpUnclamped(obsEndZ, obsStartZ, (beat - Conductor.songposition) / (Conductor.appearTime)));
+														Mathf.LerpUnclamped(obsEndZ, obsStartZ, (beat - Conductor.songposition) / Conductor.appearTime));
 
         if (Conductor.songposition > beat && !explosionFired)
 		{
@@ -48,6 +47,7 @@ public class ObstacleNode : MonoBehaviour
 			Bounce(false);
 		}
     }
+    
     public void Bounce(bool success)
     {
         StartCoroutine(BounceRoutine(success));
@@ -60,7 +60,7 @@ public class ObstacleNode : MonoBehaviour
 		
         if (success)
         {
-            yield return new WaitUntil(() => Conductor.songposition >= beat + 0.2f);
+            yield return new WaitUntil(() => Conductor.songposition >= beat + 0.1f);
             paused = true;
             Vector3 explosionPosition = transform.position + explotionVector;
             rigid.AddExplosionForce(10f, explosionPosition, 5.0f, 2f, ForceMode.Impulse);

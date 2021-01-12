@@ -33,7 +33,7 @@ public class Conductor : MonoBehaviour
 	//z axis belongs to meteor object
 	public float meteorStartLineZ, meteorFinishLineZ;
 
-	public static float hitOffset = 0.15f;
+	public static float hitOffset = 0.25f;
 
 	//current song position and remaining time
 	public static float songposition;
@@ -52,6 +52,7 @@ public class Conductor : MonoBehaviour
 	private float endTime;
 	private int appearTimeLength;
 	public static float appearTime;
+	public static int nextTrack;
 
 	//count down canvas
 	public GameObject countDownCanvas;
@@ -67,8 +68,8 @@ public class Conductor : MonoBehaviour
 	//touch controls
 	private Vector2 startPos;
 	private const  float minDistance = 0.10f;
-	private float avoidMoveVal;
-	private int avoidMoveTrack;
+	private int avoidMoveVal;
+	private float avoidMoveWait;
 
 
 	IEnumerator PunchCrack(float beatTime)
@@ -82,9 +83,11 @@ public class Conductor : MonoBehaviour
 		nextPunchWait = null;
 	}
 
-	void AvoidMove(float val, int trackNumber)
+	void AvoidMove(int trackNumber)
 	{
-		spaceMan.AvoidMove(val, trackNumber);
+		if (trackNumber != avoidMoveVal) spaceMan.AvoidMove(trackNumber, songposition);
+		avoidMoveVal = trackNumber;
+		avoidMoveWait = songposition + 0.5f;
 	}
 	
 	void PlayerInputted(int track)
@@ -96,31 +99,45 @@ public class Conductor : MonoBehaviour
 			//peek the node in the queue
 			MusicNode frontNode = beatQueue.Peek();
 
-			float offset = Mathf.Abs(frontNode.beat - songposition);
+			if (frontNode.trackNumber > 1)
+			{
+				spaceMan.Nudge();
+				return;
+			}
+
+			avoidMoveWait = 0;
+
+			float offset = frontNode.beat - songposition;
 
 			if (offset < hitOffset) //hitted
 			{
 				spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, frontNode.beat, true);
 				ScoreEvent?.Invoke(Rank.HIT);
-				frontNode.Explode(true);
+				frontNode.Score(true);
 				beatQueue.Dequeue();
 				StartCoroutine(PunchCrack(frontNode.beat));
 				nextPunchWait = StartCoroutine(Wait(frontNode.beat));
 			}
 
-			//wasted (empty) hit
-			else 
+			else if (offset < hitOffset * 2)
 			{
 				ScoreEvent?.Invoke(Rank.WASTE);
-				spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, songposition + 0.2f, false);
-				nextPunchWait = StartCoroutine(Wait(songposition + 0.4f));
+				spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, songposition + 0.15f, false);
+				nextPunchWait = StartCoroutine(Wait(songposition + 0.15f));
+			}
+
+			else
+			{
+				ScoreEvent?.Invoke(Rank.WASTE);
+				spaceMan.Punch(3, frontNode.trackNumber, songposition + 0.2f, false);
+				nextPunchWait = StartCoroutine(Wait(songposition + 0.2f));
 			}
 		}
 		else 
 		{
 			ScoreEvent?.Invoke(Rank.WASTE);
 			spaceMan.Punch(0, 0, songposition + 0.2f, false);
-			nextPunchWait = StartCoroutine(Wait(songposition + 0.4f));
+			nextPunchWait = StartCoroutine(Wait(songposition + 0.2f));
 		}
 	}
 
@@ -238,61 +255,29 @@ public class Conductor : MonoBehaviour
 			}
 		}
 
-		if (Input.touches.Length > 0)
-		{
-			Touch t = Input.GetTouch(0);
-			if (t.phase == TouchPhase.Began)
-			{
-				startPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
-			}
-			if (t.phase == TouchPhase.Moved)
-			{
-				Vector2 endPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
-				Vector2 swipe = new Vector2(endPos.x - startPos.x, endPos.y - startPos.y);
-				if (swipe.magnitude > minDistance && Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
-				{
-					if(swipe.x > 0) AvoidMove(swipe.x * 3, 3);
-					else AvoidMove(Mathf.Abs(swipe.x * 3), 2);
-				}
-			}
-			if (t.phase == TouchPhase.Ended)
-			{
-				Vector2 endPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
-				Vector2 swipe = new Vector2(endPos.x - startPos.x, endPos.y - startPos.y);
-				
-				if (swipe.magnitude < minDistance)
-				{ // Tap
-					PlayerInputted(0);
-				}
-				else if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
-				{ // Horizontal swipe
-					if (swipe.x > 0) PlayerInputted(3);
-					else PlayerInputted(2);
-				}
-			}
-		}
-
-		if (Input.GetKeyDown(KeyCode.S)) PlayerInputted(1);
-		if (Input.GetKeyDown(KeyCode.A)) PlayerInputted(0);
-
 		if (beatQueue.Count != 0)
 		{
 			MusicNode currNode = beatQueue.Peek();
+			nextTrack = currNode.trackNumber;
+
 			if (currNode.trackNumber < 2)
 			{
-				if (currNode.beat < songposition - hitOffset)
+				if (currNode.beat < songposition)
 				{
 					beatQueue.Dequeue();
 					ScoreEvent?.Invoke(Rank.MISS);
 				}
 			}
-			else 
+
+			else
 			{
-				if (currNode.beat <= songposition)
+				if (currNode.beat < songposition)
 				{
-					if (avoidMoveVal > 0.5 && avoidMoveTrack == currNode.trackNumber)
+					if (avoidMoveVal == currNode.trackNumber)
 					{
-						currNode.Explode(true);
+						currNode.Score(true);
+						ScoreEvent?.Invoke(Rank.HIT);
+						beatQueue.Dequeue();
 					}
 					else
 					{
@@ -302,6 +287,30 @@ public class Conductor : MonoBehaviour
 					}
 				}
 			}
+		}
+		else nextTrack = -1;
+
+		//touch controls
+		if (Input.touches.Length > 0)
+		{
+			Touch t = Input.GetTouch(0);
+
+			if (t.phase == TouchPhase.Began && nextTrack < 2)
+			{
+				PlayerInputted(0);
+			}
+
+			if (t.phase == TouchPhase.Moved && nextTrack > 1)
+			{
+				if (t.deltaPosition.x > 10) AvoidMove(3);
+				if (t.deltaPosition.x < -10) AvoidMove(2);
+			}
+		}
+
+		//reset player position within 0.5 seconds
+		if (songposition > avoidMoveWait)
+		{
+			avoidMoveVal = 0;
 		}
 
 		//check to see if the song reaches its end

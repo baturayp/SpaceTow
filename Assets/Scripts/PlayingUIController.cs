@@ -125,9 +125,10 @@ public class PlayingUIController : MonoBehaviour
 		SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
 	}
 
-	public void HomeButtonOnClick()
+	public void HomeButtonOnClick(int scene)
 	{
-		StartCoroutine(ScreenFadeIn(false, true));
+		//StartCoroutine(ScreenFadeIn(false, true));
+		SceneManager.LoadSceneAsync(scene);
 	}
 
 

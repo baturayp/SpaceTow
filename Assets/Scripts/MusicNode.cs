@@ -34,7 +34,12 @@ public class MusicNode : MonoBehaviour
 			isObstacle = false;
 		}
 	}
-	
+
+	void Update()
+	{
+		if (Conductor.songposition > beat + 2f) gameObject.SetActive(false);
+	}
+
 	MeteorNode GetMeteor()
 	{
 		int randomPos = UnityEngine.Random.Range(1,12);
@@ -48,13 +53,15 @@ public class MusicNode : MonoBehaviour
 	ObstacleNode GetObstacle()
 	{
 		int randomPos = UnityEngine.Random.Range(1,3);
-		obstacleNode = Instantiate(obstaclePrefab[0]).GetComponent<ObstacleNode>();
-		obstacleNode.Initialize(startLineZ, finishLineZ, beat, randomPos, trackNumber);
+		int len = obstaclePrefab.Length;
+		int random = UnityEngine.Random.Range(0, len);
+		obstacleNode = Instantiate(obstaclePrefab[random]).GetComponent<ObstacleNode>();
+		obstacleNode.Initialize(startLineZ, finishLineZ, beat, trackNumber);
 		objPos = randomPos;
 		return obstacleNode;
 	}
 
-	public void Explode(bool successHit)
+	public void Score(bool successHit)
 	{
 		if(isObstacle) obstacleNode.Bounce(true);
 		else meteorNode.Explode(true);
