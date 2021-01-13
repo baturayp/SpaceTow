@@ -4,173 +4,228 @@ using UnityEngine;
 
 public class SpaceMan : MonoBehaviour
 {
-	public Animator spaceManAnim;
-	private Coroutine attackRoutine;
-	private int avoidPos;
+	public Animator spaceMan;
+	private Coroutine routine;
 
 	//animation frame values
 	private readonly float[] attackStart = { 0.16f, 0.2f };
 	private readonly float[] attackSuccess = { 0.4f, 0.6f };
 	private readonly float[] attackFailed = { 0.8f, 1f };
 
+	//successful punch animation
 	public void Punch(int animNumber, int trackNumber, float targetBeat, bool success)
 	{
-		//meteor punch anim
-		if (trackNumber < 2)
-		{
-			if (attackRoutine != null) StopCoroutine(attackRoutine);
-			attackRoutine = StartCoroutine(AttackAnim(targetBeat, Conductor.songposition, 0.25f, animNumber, trackNumber, success));
-		}
+		if (routine != null) StopCoroutine(routine);
+		routine = StartCoroutine(PunchAnim(targetBeat, Conductor.songposition, 0.20f, animNumber, trackNumber, success));
 	}
 
+	//delayed punch
+	public void DelayedPunch(int animNumber, int trackNumber)
+	{
+		if (routine != null) StopCoroutine(routine);
+		routine = StartCoroutine(DelayedPunchAnim(animNumber, trackNumber));
+	}
+
+	//when obstacles present play nudge animation
 	public void Nudge()
 	{
-		if (attackRoutine != null) return;
-		attackRoutine = StartCoroutine(NudgeAnim());
+		if (routine != null) return;
+		routine = StartCoroutine(NudgeAnim());
 	}
 
+	public void Empty()
+	{
+		if (routine != null) return;
+		routine = StartCoroutine(EmptyAnim());
+	}
+
+	//target is too far, don't play full punch clip
+	public void IsTooFar(int trackNumber)
+	{
+		if (routine != null) return;
+		routine = StartCoroutine(TooFarAnim(trackNumber));
+	}
+
+	//an obstacle got hit on spaceman, considering character's position
 	public void GotHit(int trackNumber)
 	{
-		if (attackRoutine != null) StopCoroutine(attackRoutine);
-		if (avoidPos != trackNumber && avoidPos != 0) attackRoutine = StartCoroutine(GotHitSideAnim(trackNumber == 2 ? 3 : 2));
-		else attackRoutine = StartCoroutine(GotHitCenterAnim(trackNumber));
+		if (routine != null) StopCoroutine(routine);
+		if (Conductor.avoidPos != 0) routine = StartCoroutine(GotHitSideAnim(trackNumber == 2 ? 3 : 2));
+		else routine = StartCoroutine(GotHitCenterAnim(trackNumber));
 	}
 
-	IEnumerator AttackAnim(float targetBeat, float punchStarted, float backDuration, int animNum, int trackNumber, bool success)
+	//take avoid position
+	public void Avoid(int trackNumber, float songposition)
 	{
-		spaceManAnim.speed = 0f;
+		if (routine != null) StopCoroutine(routine);
+		routine = StartCoroutine(AvoidAnim(trackNumber, songposition));
+	}
+
+	IEnumerator PunchAnim(float targetBeat, float punchStarted, float backDuration, int animNum, int trackNumber, bool success)
+	{
+		spaceMan.speed = 0f;
 		string animToPlay = animNum.ToString() + trackNumber.ToString();
 		while (Conductor.songposition < targetBeat)
 		{
 			var animVal = Mathf.Lerp(attackStart[0], attackStart[1], (Conductor.songposition - punchStarted) / (targetBeat - punchStarted));
-			spaceManAnim.Play(animToPlay, 0, animVal);
-			spaceManAnim.Update(0f);
+			spaceMan.Play(animToPlay, 0, animVal);
+			spaceMan.Update(0f);
 			yield return null;
 		}
-
-		spaceManAnim.Play(animToPlay, 0, attackStart[1]);
 
 		float elapsedTime = 0.0f;
 		while (elapsedTime < backDuration)
 		{
 			elapsedTime += Time.deltaTime;
 			var animVal = Mathf.Lerp(success ? attackSuccess[0] : attackFailed[0], success ? attackSuccess[1] : attackFailed[1], elapsedTime / backDuration);
-			spaceManAnim.Play(animToPlay, 0, animVal);
-			spaceManAnim.Update(0f);
+			spaceMan.Play(animToPlay, 0, animVal);
+			spaceMan.Update(0f);
 			yield return null;
 		}
-		attackRoutine = null;
-		avoidPos = 0;
-		spaceManAnim.speed = 1f;
-		spaceManAnim.Play("idle");
+		routine = null;
+		spaceMan.speed = 1f;
+		spaceMan.Play("idle");
 	}
 
-	public void AvoidMove(int trackNumber, float songposition)
+	IEnumerator DelayedPunchAnim(float animNum, int trackNumber)
 	{
-		if (attackRoutine != null) StopCoroutine(attackRoutine);
-		attackRoutine = StartCoroutine(AvoidAnim(trackNumber, songposition));
+		spaceMan.speed = 0f;
+		string animToPlay = animNum.ToString() + trackNumber.ToString();
+		spaceMan.Play(animToPlay, 0, attackSuccess[0]);
+		spaceMan.Update(0f);
+
+		float elapsedTime = 0.0f;
+		while (elapsedTime < 0.2f)
+		{
+			elapsedTime += Time.deltaTime;
+			var animVal = Mathf.SmoothStep(attackSuccess[0], attackSuccess[1], elapsedTime / 0.2f);
+			spaceMan.Play(animToPlay, 0, animVal);
+			spaceMan.Update(0f);
+			yield return null;
+		}
+		routine = null;
+		spaceMan.speed = 1f;
+		spaceMan.Play("idle");
 	}
 
 	IEnumerator NudgeAnim()
 	{
-		spaceManAnim.speed = 0f;
+		spaceMan.speed = 0f;
 		float elapsedTime = 0.0f;
-		while (elapsedTime < 0.05f)
+		while (elapsedTime < 0.2f)
 		{
 			elapsedTime += Time.deltaTime;
-			var animVal = Mathf.Lerp(0.6f, 0.55f, elapsedTime / 0.05f);
-			spaceManAnim.Play("00", 0, animVal);
-			spaceManAnim.Update(0f);
+			var animVal = Mathf.SmoothStep(0.6f, 0.55f, Mathf.PingPong(elapsedTime * 5, 1f));
+			spaceMan.Play("00", 0, animVal);
+			spaceMan.Update(0f);
 			yield return null;
 		}
 		elapsedTime = 0.0f;
-		while (elapsedTime < 0.05f)
+		routine = null;
+		spaceMan.speed = 1f;
+		spaceMan.Play("idle");
+	}
+
+	IEnumerator TooFarAnim(int trackNumber)
+	{
+		spaceMan.speed = 0f;
+		string animToPlay = "10" + trackNumber.ToString();
+		float elapsedTime = 0.0f;
+		while (elapsedTime < 0.4f)
 		{
 			elapsedTime += Time.deltaTime;
-			var animVal = Mathf.Lerp(0.55f, 0.6f, elapsedTime / 0.05f);
-			spaceManAnim.Play("00", 0, animVal);
-			spaceManAnim.Update(0f);
+			var animVal = Mathf.SmoothStep(0.0f, 0.14f, Mathf.PingPong(elapsedTime * 5, 1f));
+			spaceMan.Play(animToPlay, 0, animVal);
+			spaceMan.Update(0f);
 			yield return null;
 		}
-		attackRoutine = null;
+		routine = null;
+		spaceMan.speed = 1f;
+		spaceMan.Play("idle");
+	}
+
+	IEnumerator EmptyAnim()
+	{
+		spaceMan.speed = 1f;
+		spaceMan.Play("idle");
+		spaceMan.SetBool("tpose", true);
+		yield return new WaitForSeconds(0.05f);
+		spaceMan.SetBool("tpose", false);
+		routine = null;
 	}
 
 	IEnumerator AvoidAnim(int trackNumber, float songpos)
 	{
-		spaceManAnim.speed = 0f;
+		spaceMan.speed = 0f;
 		string animToPlay = "2" + trackNumber.ToString();
 		float elapsedTime = 0.0f;
-		while (elapsedTime < 0.1f)
+		while (elapsedTime < 0.15f)
 		{
 			elapsedTime += Time.deltaTime;
-			var animVal = Mathf.Lerp(0f, 0.6f, elapsedTime / 0.1f);
-			spaceManAnim.Play(animToPlay, 0, animVal);
-			spaceManAnim.Update(0f);
+			var animVal = Mathf.SmoothStep(0f, 0.6f, elapsedTime / 0.15f);
+			spaceMan.Play(animToPlay, 0, animVal);
+			spaceMan.Update(0f);
 			yield return null;
 		}
-		avoidPos = trackNumber;
-		yield return new WaitUntil(() => Conductor.songposition > songpos + 0.5f);
+		yield return new WaitUntil(() => Conductor.songposition > Conductor.avoidMoveWait);
 		elapsedTime = 0.0f;
-		while (elapsedTime < 0.1f)
+		while (elapsedTime < 0.15f)
 		{
 			elapsedTime += Time.deltaTime;
-			var animVal = Mathf.Lerp(0.6f, 1.0f, elapsedTime / 0.1f);
-			spaceManAnim.Play(animToPlay, 0, animVal);
-			spaceManAnim.Update(0f);
+			var animVal = Mathf.SmoothStep(0.6f, 1.0f, elapsedTime / 0.15f);
+			spaceMan.Play(animToPlay, 0, animVal);
+			spaceMan.Update(0f);
 			yield return null;
 		}
-		attackRoutine = null;
-		avoidPos = 0;
-		spaceManAnim.speed = 1f;
-		spaceManAnim.Play("idle");
+		routine = null;
+		spaceMan.speed = 1f;
+		spaceMan.Play("idle");
 	}
 
 	IEnumerator GotHitCenterAnim(int trackNumber)
 	{
-		spaceManAnim.speed = 0f;
+		spaceMan.speed = 0f;
 		int aNum = 0;
 		string animToPlay = aNum.ToString() + trackNumber.ToString();
 		float elapsedTime = 0.0f;
 		while (elapsedTime < 0.1f)
 		{
 			elapsedTime += Time.deltaTime;
-			var animVal = Mathf.Lerp(0f, 1f, elapsedTime / 0.1f);
-			spaceManAnim.Play(animToPlay, 0, animVal);
-			spaceManAnim.Update(0f);
+			var animVal = Mathf.SmoothStep(0f, 1f, elapsedTime / 0.1f);
+			spaceMan.Play(animToPlay, 0, animVal);
+			spaceMan.Update(0f);
 			yield return null;
 		}
-		attackRoutine = null;
-		avoidPos = 0;
-		spaceManAnim.speed = 1f;
-		spaceManAnim.Play("idle");
+		routine = null;
+		spaceMan.speed = 1f;
+		spaceMan.Play("idle");
 	}
 
 	IEnumerator GotHitSideAnim(int trackNumber)
 	{
-		spaceManAnim.speed = 0f;
+		spaceMan.speed = 0f;
 		int aNum = 1;
 		string animToPlay = aNum.ToString() + trackNumber.ToString();
 		float elapsedTime = 0.0f;
-		while (elapsedTime < 0.05f)
+		while (elapsedTime < 0.15f)
 		{
 			elapsedTime += Time.deltaTime;
-			var animVal = Mathf.Lerp(0.5f, 0.7f, elapsedTime / 0.05f);
-			spaceManAnim.Play(animToPlay, 0, animVal);
-			spaceManAnim.Update(0f);
+			var animVal = Mathf.SmoothStep(0.5f, 0.7f, elapsedTime / 0.15f);
+			spaceMan.Play(animToPlay, 0, animVal);
+			spaceMan.Update(0f);
 			yield return null;
 		}
 		elapsedTime = 0.0f;
 		aNum = 2;
 		animToPlay = aNum.ToString() + trackNumber.ToString();
-		while (elapsedTime < 0.05f)
+		while (elapsedTime < 0.15f)
 		{
 			elapsedTime += Time.deltaTime;
-			var animVal = Mathf.Lerp(0.4f, 0.6f, elapsedTime / 0.05f);
-			spaceManAnim.Play(animToPlay, 0, animVal);
-			spaceManAnim.Update(0f);
+			var animVal = Mathf.SmoothStep(0.4f, 0.6f, elapsedTime / 0.15f);
+			spaceMan.Play(animToPlay, 0, animVal);
+			spaceMan.Update(0f);
 			yield return null;
 		}
-		avoidPos = trackNumber;
-		attackRoutine = null;
+		routine = null;
 	}
 }

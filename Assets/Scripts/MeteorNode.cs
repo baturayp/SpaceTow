@@ -134,11 +134,12 @@ public class MeteorNode : MonoBehaviour
 			SetMaterial(1f * (1f - ((beat) - Conductor.songposition) / Conductor.hitOffset));
 		}
 
-        if (Conductor.songposition > beat + 0.1f)
+        if (Conductor.songposition > beat + 0.15f)
 		{
 			Explode(false);
 		}
     }
+    
     IEnumerator ExplosionRoutine(bool success)
 	{
 		yield return new WaitUntil(() => Conductor.songposition >= beat);
