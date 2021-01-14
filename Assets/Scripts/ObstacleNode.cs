@@ -37,7 +37,7 @@ public class ObstacleNode : MonoBehaviour
 
         if (paused) return;
 
-        transform.position = new Vector3(Mathf.Lerp(obsStartX, obsStartX * initYMultiplier, (beat - Conductor.songposition) / Conductor.appearTime), 
+        transform.position = new Vector3(Mathf.LerpUnclamped(obsStartX, obsStartX * initYMultiplier, (beat - Conductor.songposition) / Conductor.appearTime), 
 														obsStartY, 
 														Mathf.LerpUnclamped(obsEndZ, obsStartZ, (beat - Conductor.songposition) / Conductor.appearTime));
 

@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SpaceEffectMat
-  m_Shader: {fileID: 4800000, guid: 070c7dfc725762b43aeffaea371ea3c1, type: 3}
+  m_Name: Meteor 1
+  m_Shader: {fileID: 4800000, guid: 4dbf3fdbd07900cc5a0ac608a99e13cd, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -39,8 +39,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _EmmiMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 940d1f037e20d614a8fa1ad965c0d6da, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -55,33 +59,37 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SpecualarMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BloomLight1: 0.134
-    - _BloomLight2: 0.047
-    - _BloomLight3: 0.219
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _FresnelPower: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Light1: 1
-    - _Light2: 1
+    - _LightVal0: 1
+    - _LightVal1: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RotationSpeed: 1
+    - _RimIntensity: 1
     - _SmoothnessTextureChannel: 0
+    - _SpecLightVal: 3
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _BloomColor1: {r: 0.37568524, g: 0.26666668, b: 0.3882353, a: 1}
-    - _BloomColor2: {r: 0.6886792, g: 0.5564259, b: 0.23064259, a: 1}
-    - _BloomColor3: {r: 0.3323827, g: 0.31764707, b: 0.5568628, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 0.13239136, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _LightC: {r: 1, g: 0.7607844, b: 0, a: 1}
+    - _MainColor: {r: 0.5943396, g: 0.2863643, b: 0.28315237, a: 1}
+    - _RimLight: {r: 1, g: 0.91372555, b: 0.6862745, a: 1}
+    - _ShadowColor: {r: 0, g: 0.3137255, b: 0.38823533, a: 1}
   m_BuildTextureStacks: []
