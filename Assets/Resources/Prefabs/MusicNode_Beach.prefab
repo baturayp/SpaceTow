@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &529521031632119238
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1422056865429791355}
+  - component: {fileID: 6243385887790287927}
+  m_Layer: 0
+  m_Name: MusicNode_Beach
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1422056865429791355
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529521031632119238}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6243385887790287927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529521031632119238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 919e8b6ea3688270b84a49baeff5683c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meteorPrefab:
+  - {fileID: 2587658552038568427, guid: ed5d5fd859137b8228750727b80a5e0c, type: 3}
+  - {fileID: 2587658552038568427, guid: 9de851fe9007f6e12bb131c5c6eb0152, type: 3}
+  - {fileID: 2587658552038568427, guid: 8267ee1dfc1ba07938acc01113ee5272, type: 3}
+  - {fileID: 2587658552038568427, guid: 1b05ff3116ab31d28917d1f7f2ab5928, type: 3}
+  - {fileID: 2587658552038568427, guid: 7fd1f68441bcd438c93cdde2ba6ff1e0, type: 3}
+  obstaclePrefab:
+  - {fileID: 2587658552038568427, guid: 61352101fe9682bd19970116f30e4c1b, type: 3}
+  - {fileID: 2587658552038568427, guid: 6ca5f20d2e1ecc48683f9ee4b6af598b, type: 3}
+  - {fileID: 2587658552038568427, guid: 2305af74cec2d3de3b331efc8c2f3889, type: 3}

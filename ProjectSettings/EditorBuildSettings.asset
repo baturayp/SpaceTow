@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/OrangeCyan.unity
     guid: 87f09f159f351589ca33053f9ec65dad
   - enabled: 1
-    path: Assets/Scenes/GreenYellow.unity
+    path: Assets/Scenes/Beach.unity
     guid: 8c643c33979a654b6aa89a73dce2b775
   m_configObjects: {}
