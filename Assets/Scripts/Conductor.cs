@@ -33,7 +33,7 @@ public class Conductor : MonoBehaviour
 	//z axis belongs to meteor object
 	public float meteorStartLineZ, meteorFinishLineZ;
 
-	public static float hitOffset = 0.25f;
+	public static float hitOffset = 0.15f;
 	private readonly float waitOffset = 0.15f;
 	private readonly float backOffset = 0.10f;
 
@@ -66,11 +66,10 @@ public class Conductor : MonoBehaviour
 	//audio related stuff
 	public AudioSource songLayer;
 	public AudioSource effectLayer;
-	public AudioClip punchClip;
-	
-	//touch controls
-	private Vector2 startPos;
-	private const float minDistance = 0.10f;
+	public AudioClip longPunchClip;
+	public AudioClip shortPunchClip;
+	public AudioClip obstacleSuccessClip;
+	public AudioClip obstacleMissClip;
 
 	//avoid movement values
 	public static int avoidPos;
@@ -78,11 +77,18 @@ public class Conductor : MonoBehaviour
 
 
 	//play punch sound at exact time
-	void PunchEffect(float beatTime, float offset)
+	void PunchEffect(float offset)
 	{
-		effectLayer.clip = punchClip;
-		effectLayer.time = offset;
-		effectLayer.PlayScheduled(dsptimesong + pausedTime + beatTime);
+		if (offset < 0.05f)
+		{
+			effectLayer.PlayOneShot(longPunchClip);
+		}
+		else
+		{
+			//effectLayer.time = Mathf.Abs(offset);
+			//effectLayer.PlayScheduled(dsptimesong + pausedTime + beatTime);
+			effectLayer.PlayOneShot(shortPunchClip);
+		}
 	}
 
 	//wait until
@@ -130,7 +136,7 @@ public class Conductor : MonoBehaviour
 				ScoreEvent?.Invoke(Rank.HIT);
 				frontNode.Score(true);
 				beatQueue.Dequeue();
-				PunchEffect(frontNode.beat, 0);
+				PunchEffect(offset);
 				//nextPunchWait = StartCoroutine(Wait(frontNode.beat));
 			}
 
@@ -149,7 +155,7 @@ public class Conductor : MonoBehaviour
 				ScoreEvent?.Invoke(Rank.HIT);
 				frontNode.Score(true);
 				beatQueue.Dequeue();
-				PunchEffect(frontNode.beat, Mathf.Abs(offset));
+				PunchEffect(Mathf.Abs(offset));
 			}
 
 			//incoming target is too far
@@ -310,12 +316,14 @@ public class Conductor : MonoBehaviour
 						currNode.Score(true);
 						ScoreEvent?.Invoke(Rank.HIT);
 						beatQueue.Dequeue();
+						effectLayer.PlayOneShot(obstacleSuccessClip);
 					}
 					else
 					{
 						beatQueue.Dequeue();
 						ScoreEvent?.Invoke(Rank.MISS);
 						spaceMan.GotHit(currNode.trackNumber);
+						effectLayer.PlayOneShot(obstacleMissClip);
 					}
 				}
 			}
