@@ -104,7 +104,7 @@ public class Conductor : MonoBehaviour
 		if (trackNumber != avoidPos)
 		{
 			avoidPos = trackNumber;
-			spaceMan.Avoid(trackNumber, songposition);
+			spaceMan.Avoid(trackNumber);
 		}
 
 		avoidMoveWait = songposition + 0.5f;
@@ -126,7 +126,7 @@ public class Conductor : MonoBehaviour
 				return;
 			}
 
-			avoidMoveWait = 0;
+			//avoidMoveWait = 0;
 
 			float offset = frontNode.beat - songposition;
 
