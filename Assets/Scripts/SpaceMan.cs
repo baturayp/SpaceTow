@@ -5,105 +5,55 @@ using UnityEngine;
 public class SpaceMan : MonoBehaviour
 {
 	public Animator spaceMan;
-	private Coroutine routine;
-	private readonly float crossFade = 0.1f;
+	//private Coroutine routine;
+	private const float CrossFade = 0.08f;
 
-	//animation frame values
-	private readonly float[] attackStart = { 0.16f, 0.2f };
-	private readonly float[] attackSuccess = { 0.4f, 0.6f };
-	private readonly float[] attackFailed = { 0.8f, 1f };
 	private readonly int[] backPosition = { 0, 1, 1, 1, 2, 3, 3, 4, 4, 4, 4, 2 };
+	private static readonly int Success = Animator.StringToHash("success");
 
 	//successful punch animation
 	public void Punch(int animNumber, int trackNumber, float targetBeat, bool success)
 	{
-		//if (routine != null) StopCoroutine(routine);
-		//routine = StartCoroutine(PunchRoutine(targetBeat, Conductor.songposition, 0.2f, animNumber, trackNumber, success));
+		var animToPlay = animNumber.ToString() + trackNumber;
+		spaceMan.SetBool(Success, success);
+		spaceMan.CrossFadeInFixedTime(animToPlay, CrossFade, 0);
 	}
 
 	//delayed punch
 	public void DelayedPunch(int animNumber, int trackNumber)
 	{
-		//if (routine != null) StopCoroutine(routine);
-		//routine = StartCoroutine(DelayedPunchRoutine(Conductor.songposition + 0.2f, Conductor.songposition, animNumber, trackNumber));
-	}
-
-	//when obstacles present play nudge animation
-	public void Nudge()
-	{
-		//
+		var animToPlay = backPosition[animNumber].ToString() + trackNumber;
+		spaceMan.CrossFadeInFixedTime(animToPlay, CrossFade, 0);
 	}
 
 	public void Empty()
 	{
-		//
+		spaceMan.Play("E", 0);
 	}
 
 	//target is too far, don't play full punch clip
 	public void IsTooFar(int trackNumber)
 	{
-		//
+		var animToPlay = trackNumber + "F";
+		spaceMan.CrossFadeInFixedTime(animToPlay, CrossFade, 0);
 	}
 
 	//an obstacle got hit on spaceman, considering character's position
 	public void GotHit(int trackNumber)
 	{
-		//
+		var hitSide = Conductor.avoidPos == 0 ? "H" : "S";
+		var animToPlay = trackNumber + hitSide;
+		spaceMan.Play(animToPlay, 0);
 	}
 
 	//take avoid position
 	public void Avoid(int trackNumber)
 	{
-		//if (routine != null) StopCoroutine(routine);
-		routine = StartCoroutine(AvoidRoutine(trackNumber));
+		spaceMan.CrossFadeInFixedTime(trackNumber.ToString(), CrossFade, 0);
 	}
-
-	IEnumerator PunchRoutine(float targetBeat, float punchStarted, float backDuration, int animNum, int trackNumber, bool success)
+	
+	public void AvoidBack(int trackNumber)
 	{
-		string animToPlay = animNum.ToString() + trackNumber.ToString();
-		spaceMan.CrossFadeInFixedTime(animToPlay, crossFade, 0);
-		while (Conductor.songposition < targetBeat)
-		{
-			var punchTime = Mathf.Lerp(attackStart[0], attackStart[1], (Conductor.songposition - punchStarted) / (targetBeat - punchStarted));
-			spaceMan.SetFloat("punchTime", punchTime);
-			yield return null;
-		}
-		float elapsedTime = 0.0f;
-		while (elapsedTime < backDuration)
-		{
-			elapsedTime += Time.deltaTime;
-			var punchTime = Mathf.SmoothStep(success ? attackSuccess[0] : attackFailed[0], success ? attackSuccess[1] : attackFailed[1], elapsedTime / backDuration);
-			spaceMan.SetFloat("punchTime", punchTime);
-			yield return null;
-		}
-		spaceMan.SetFloat("punchTime", 0f);
-		routine = null;
-		spaceMan.Play("idle", 0);
+		spaceMan.Play(trackNumber + "B", 0);
 	}
-
-	IEnumerator DelayedPunchRoutine(float targetBeat, float punchStarted, int animNum, int trackNumber)
-	{
-		string animToPlay = backPosition[animNum].ToString() + trackNumber.ToString() + "9";
-		spaceMan.Play(animToPlay, 0);
-		while (Conductor.songposition < targetBeat)
-		{
-			var punchTime = Mathf.Lerp(0f, 1f, (Conductor.songposition - punchStarted) / (targetBeat - punchStarted));
-			spaceMan.SetFloat("punchTime", punchTime);
-			yield return null;
-		}
-		spaceMan.SetFloat("punchTime", 0f);
-		routine = null;
-		spaceMan.Play("idle", 0);
-	}
-
-	IEnumerator AvoidRoutine(int trackNumber)
-	{
-		string animToPlay = trackNumber.ToString();
-		spaceMan.CrossFadeInFixedTime(animToPlay, crossFade, 0);
-		yield return new WaitUntil(() => Conductor.avoidPos != trackNumber);
-		animToPlay = trackNumber.ToString() + "B";
-		spaceMan.CrossFadeInFixedTime(animToPlay, crossFade, 0);
-		routine = null;
-	}
-
 }

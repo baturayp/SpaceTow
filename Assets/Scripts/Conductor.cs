@@ -1,21 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Conductor : MonoBehaviour
 {
-	public enum Rank { HIT, MISS, WASTE };
-
-	//keypress action
-	public delegate void ScoreAction( Rank rank);
-	public static event ScoreAction ScoreEvent;
-
-	//song completion
-	public delegate void SongCompletedAction();
-	public static event SongCompletedAction SongCompletedEvent;
-	private float songLength;
-
 	//if the whole game is paused
 	public static bool paused = true;
 	private bool songStarted;
@@ -24,18 +12,17 @@ public class Conductor : MonoBehaviour
 	private float pausedTime;
 
 	private SongInfo songInfo;
+	private float songLength;
 
 	//song to play without selecting it from main menu
 	public SongInfo developmentSong;
 
-	public static int fullNoteCounts;
-
 	//z axis belongs to meteor object
 	public float meteorStartLineZ, meteorFinishLineZ;
 
-	public static float hitOffset = 0.15f;
-	private readonly float waitOffset = 0.15f;
-	private readonly float backOffset = 0.10f;
+	public const float HitOffset = 0.15f;
+	private const float WaitOffset = 0.15f;
+	private const float BackOffset = 0.10f;
 
 	//current song position and remaining time
 	public static float songposition;
@@ -49,18 +36,18 @@ public class Conductor : MonoBehaviour
 	//keep a reference of the sound tracks
 	private SongInfo.Track[] tracks;
 	public SpaceMan spaceMan;
-	
+	public PlayingUIController uiController;
 	private float dsptimesong;
 	private float endTime;
 	private int appearTimeLength;
 	public static float appearTime;
-	public static int nextTrack;
+	private static int _nextTrack;
 
 	//count down canvas
 	public GameObject countDownCanvas;
 
 	//total tracks
-	private readonly int len = 4;
+	private const int Len = 4;
 	private Coroutine nextPunchWait;
 
 	//audio related stuff
@@ -73,110 +60,92 @@ public class Conductor : MonoBehaviour
 
 	//avoid movement values
 	public static int avoidPos;
-	public static float avoidMoveWait;
-
+	private static float _avoidMoveWait;
 
 	//play punch sound at exact time
-	void PunchEffect(float offset)
+	private void PunchEffect(float offset)
 	{
-		if (offset < 0.05f)
-		{
-			effectLayer.PlayOneShot(longPunchClip);
-		}
-		else
-		{
-			//effectLayer.time = Mathf.Abs(offset);
-			//effectLayer.PlayScheduled(dsptimesong + pausedTime + beatTime);
-			effectLayer.PlayOneShot(shortPunchClip);
-		}
+		effectLayer.PlayOneShot(offset < 0.05f ? longPunchClip : shortPunchClip);
 	}
 
 	//wait until
-	IEnumerator Wait(float until)
+	private IEnumerator Wait(float until)
 	{
 		yield return new WaitUntil(() => songposition > until);
 		nextPunchWait = null;
 	}
 
 	//avoid from obstacles
-	void Avoid(int trackNumber)
+	private void Avoid(int trackNumber)
 	{
 		if (trackNumber != avoidPos)
 		{
 			avoidPos = trackNumber;
 			spaceMan.Avoid(trackNumber);
 		}
-
-		avoidMoveWait = songposition + 0.5f;
+		_avoidMoveWait = songposition + 0.5f;
 	}
 
-	void PlayerInputted(int track)
+	private void Inputted()
 	{
 		if (nextPunchWait != null) return;
-		
 		if (beatQueue.Count != 0)
 		{
 			//peek the node in the queue
-			MusicNode frontNode = beatQueue.Peek();
+			var frontNode = beatQueue.Peek();
 
 			//do a nudge gesture when incoming node is an obstacle
 			if (frontNode.trackNumber > 1)
 			{
-				spaceMan.Nudge();
+				spaceMan.Empty();
 				return;
 			}
-
-			//avoidMoveWait = 0;
-
-			float offset = frontNode.beat - songposition;
-
-			if (offset > 0 && offset < hitOffset) //success hit
+			var offset = frontNode.beat - songposition;
+			switch (offset > 0)
 			{
-				spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, frontNode.beat, true);
-				ScoreEvent?.Invoke(Rank.HIT);
-				frontNode.Score(true);
-				beatQueue.Dequeue();
-				PunchEffect(offset);
-				//nextPunchWait = StartCoroutine(Wait(frontNode.beat));
-			}
-
-			//incoming target is near but not inside the offset
-			else if (offset > 0 && offset < hitOffset * 1.25)
-			{
-				ScoreEvent?.Invoke(Rank.WASTE);
-				spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, songposition + waitOffset, false);
-				//nextPunchWait = StartCoroutine(Wait(songposition + waitOffset));
-			}
-
-			//delay offset
-			else if (offset < 0f && offset > 0 - backOffset)
-			{
-				spaceMan.DelayedPunch(frontNode.objPos, frontNode.trackNumber);
-				ScoreEvent?.Invoke(Rank.HIT);
-				frontNode.Score(true);
-				beatQueue.Dequeue();
-				PunchEffect(Mathf.Abs(offset));
-			}
-
-			//incoming target is too far
-			else
-			{
-				ScoreEvent?.Invoke(Rank.WASTE);
-				spaceMan.IsTooFar(frontNode.trackNumber);
-				//nextPunchWait = StartCoroutine(Wait(songposition + waitOffset));
+				//success hit
+				//incoming target is near but not inside the offset
+				case true when offset < HitOffset:
+					spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, frontNode.beat, true);
+					frontNode.Score(true);
+					beatQueue.Dequeue();
+					PunchEffect(offset);
+					//nextPunchWait = StartCoroutine(Wait(frontNode.beat));
+					break;
+				//delay offset
+				case true when offset < HitOffset * 1.25:
+					spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, songposition + WaitOffset, false);
+					//nextPunchWait = StartCoroutine(Wait(songposition + waitOffset));
+					break;
+				default:
+				{
+					if (offset < 0f && offset > 0 - BackOffset)
+					{
+						spaceMan.DelayedPunch(frontNode.objPos, frontNode.trackNumber);
+						frontNode.Score(true);
+						beatQueue.Dequeue();
+						PunchEffect(Mathf.Abs(offset));
+					}
+					//incoming target is too far
+					else
+					{
+						spaceMan.IsTooFar(frontNode.trackNumber);
+						//nextPunchWait = StartCoroutine(Wait(songposition + waitOffset));
+					}
+					break;
+				}
 			}
 		}
 
 		//no target in sight, empty attack
 		else 
 		{
-			ScoreEvent?.Invoke(Rank.WASTE);
 			spaceMan.Empty();
 			//nextPunchWait = StartCoroutine(Wait(songposition + waitOffset));
 		}
 	}
 
-	void Start()
+	private void Start()
 	{
 		//reset static variables
 		paused = true;
@@ -191,18 +160,13 @@ public class Conductor : MonoBehaviour
 
 		appearTime = 2f;
 		appearTimeLength = songInfo.appearTime.Length;
-		
-		fullNoteCounts = songInfo.TotalHitCounts();
-
-		//listen playing ui for lost state
-		PlayingUIController.LostEvent += SongCompleted;
 
 		songLength = songInfo.song.length;
 
 		//initialize arrays
-		trackNextIndices = new int[len];
+		trackNextIndices = new int[Len];
 		beatQueue = new Queue<MusicNode>();
-		for (int i = 0; i < len; i++)
+		for (var i = 0; i < Len; i++)
 		{
 			trackNextIndices[i] = 0;
 		}
@@ -222,20 +186,18 @@ public class Conductor : MonoBehaviour
 		StartCoroutine(CountDown());
 	}
 
-	void StartSong()
+	private void StartSong()
 	{
 		//get dsptime
 		dsptimesong = (float)AudioSettings.dspTime;
-
 		//play song
 		songLayer.Play();
-
 		//unpause
 		paused = false;
 		songStarted = true;
 	}
 
-	void Update()
+	private void Update()
 	{
 		//for count down
 		if (!songStarted) return;
@@ -243,12 +205,9 @@ public class Conductor : MonoBehaviour
 		//for pausing
 		if (paused)
 		{
-			if (pauseTimeStamp < 0f) //not managed
-			{
-				pauseTimeStamp = (float)AudioSettings.dspTime;
-				songLayer.Pause();
-			}
-
+			if (!(pauseTimeStamp < 0f)) return;
+			pauseTimeStamp = (float)AudioSettings.dspTime;
+			songLayer.Pause();
 			return;
 		}
 		if (pauseTimeStamp > 0f) //resume not managed
@@ -261,48 +220,43 @@ public class Conductor : MonoBehaviour
 		//calculate songposition
 		songposition = (float)(AudioSettings.dspTime - dsptimesong - pausedTime) * songLayer.pitch - (songInfo.songOffset);
 
-		for (int i = 0; i < appearTimeLength; i++)
+		for (var i = 0; i < appearTimeLength; i++)
 		{
 			if(songposition >= songInfo.appearTime[i].startTime) appearTime = songInfo.appearTime[i].offsetVal;
 		}
 
 		//check if need to instantiate new nodes
-		float beatToShow = songposition + appearTime;
+		var beatToShow = songposition + appearTime;
 
 		//loop the tracks for new MusicNodes
-		for (int i = 0; i < len; i++)
+		for (var i = 0; i < Len; i++)
 		{
-			int nextIndex = trackNextIndices[i];
-			SongInfo.Track currTrack = tracks[i];
+			var nextIndex = trackNextIndices[i];
+			var currTrack = tracks[i];
 
-			if (nextIndex < currTrack.notes.Length && currTrack.notes[nextIndex].dueTo < beatToShow)
-			{
-				SongInfo.Note currNote = currTrack.notes[nextIndex];
-
-				//get a new node
-				MusicNode musicNode = MusicNodePool.instance.GetNode(meteorStartLineZ, meteorFinishLineZ, currNote.dueTo, i);
-
-				//enqueue
-				beatQueue.Enqueue(musicNode);
-
-				//update the next index
-				trackNextIndices[i]++;
-			}
+			if (nextIndex >= currTrack.notes.Length || !(currTrack.notes[nextIndex].dueTo < beatToShow)) continue;
+			var currNote = currTrack.notes[nextIndex];
+			//get a new node
+			var musicNode = MusicNodePool.instance.GetNode(meteorStartLineZ, meteorFinishLineZ, currNote.dueTo, i);
+			//enqueue
+			beatQueue.Enqueue(musicNode);
+			//update the next index
+			trackNextIndices[i]++;
 		}
 
 		//take reference of next target and its track number
 		if (beatQueue.Count != 0)
 		{
-			MusicNode currNode = beatQueue.Peek();
-			nextTrack = currNode.trackNumber;
+			var currNode = beatQueue.Peek();
+			_nextTrack = currNode.trackNumber;
 
 			//meteors
 			if (currNode.trackNumber < 2)
 			{
-				if (currNode.beat < songposition - backOffset)
+				if (currNode.beat < songposition - BackOffset)
 				{
 					beatQueue.Dequeue();
-					ScoreEvent?.Invoke(Rank.MISS);
+					uiController.ScoreDown();
 				}
 			}
 
@@ -314,14 +268,13 @@ public class Conductor : MonoBehaviour
 					if (avoidPos == currNode.trackNumber)
 					{
 						currNode.Score(true);
-						ScoreEvent?.Invoke(Rank.HIT);
 						beatQueue.Dequeue();
 						effectLayer.PlayOneShot(obstacleSuccessClip);
 					}
 					else
 					{
 						beatQueue.Dequeue();
-						ScoreEvent?.Invoke(Rank.MISS);
+						uiController.ScoreDown();
 						spaceMan.GotHit(currNode.trackNumber);
 						effectLayer.PlayOneShot(obstacleMissClip);
 					}
@@ -330,33 +283,45 @@ public class Conductor : MonoBehaviour
 		}
 
 		//no incoming targets
-		if (beatQueue.Count == 0) nextTrack = -1;
+		if (beatQueue.Count == 0) _nextTrack = 4;
 
 		//touch controls
 		if (Input.touches.Length > 0)
 		{
-			Touch t = Input.GetTouch(0);
-
-			if (t.phase == TouchPhase.Began && nextTrack < 2)
+			var t = Input.GetTouch(0);
+			switch (t.phase)
 			{
-				PlayerInputted(0);
-			}
-
-			if (t.phase == TouchPhase.Moved && nextTrack > 1)
-			{
-				if (t.deltaPosition.x > 10) Avoid(3);
-				if (t.deltaPosition.x < -10) Avoid(2);
+				case TouchPhase.Began when _nextTrack < 2:
+					Inputted();
+					break;
+				case TouchPhase.Moved when _nextTrack > 1:
+				{
+					if (t.deltaPosition.x > 10) Avoid(3);
+					if (t.deltaPosition.x < -10) Avoid(2);
+					break;
+				}
+				case TouchPhase.Stationary when _nextTrack > 1:
+				{
+					_avoidMoveWait += 0.1f;
+					break;
+				}
+				case TouchPhase.Ended when _nextTrack > 3:
+				{
+					if (Mathf.Abs(t.deltaPosition.x) < 10) Inputted();
+					break;
+				}
 			}
 		}
 
 		if (Input.GetKeyDown(KeyCode.LeftArrow)) Avoid(2);
 		if (Input.GetKeyDown(KeyCode.RightArrow)) Avoid(3);
-		if (Input.GetKeyDown(KeyCode.Space) && nextTrack < 2) PlayerInputted(0);
+		if (Input.GetKeyDown(KeyCode.Space)) Inputted();
 
-		//reset player position within 0.5 seconds
-		if (songposition > avoidMoveWait)
+		if (songposition > _avoidMoveWait)
 		{
+			if (avoidPos != 0) spaceMan.AvoidBack(avoidPos);
 			avoidPos = 0;
+			_avoidMoveWait = 0f;
 		}
 
 		//check to see if the song reaches its end
@@ -366,25 +331,21 @@ public class Conductor : MonoBehaviour
 		}
 	}
 
-	void SongCompleted()
+	private void SongCompleted()
     {
 		songStarted = false;
-		SongCompletedEvent?.Invoke();
-	}
+    }
 
-	IEnumerator CountDown()
+	private IEnumerator CountDown()
 	{
 		//wait until audio data loaded
 		yield return new WaitUntil(() => songLayer.clip.loadState == AudioDataLoadState.Loaded);
-
 		countDownCanvas.SetActive(false);
-
 		StartSong();
 	}
 
-	void OnDestroy()
+	private void OnDestroy()
 	{
-		PlayingUIController.LostEvent -= SongCompleted;
 		songLayer.clip.UnloadAudioData();
 	}
 }

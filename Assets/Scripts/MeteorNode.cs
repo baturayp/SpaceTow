@@ -129,9 +129,9 @@ public class MeteorNode : MonoBehaviour
 		}
 
 		//make meteors glow
-		if (Conductor.songposition > beat - Conductor.hitOffset)
+		if (Conductor.songposition > beat - Conductor.HitOffset)
 		{
-			SetMaterial(1f * (1f - ((beat) - Conductor.songposition) / Conductor.hitOffset));
+			SetMaterial(1f * (1f - ((beat) - Conductor.songposition) / Conductor.HitOffset));
 		}
 
         if (Conductor.songposition > beat + 0.15f)
