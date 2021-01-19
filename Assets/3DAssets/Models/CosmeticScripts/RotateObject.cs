@@ -13,5 +13,6 @@ public class RotateObject : MonoBehaviour
         rotVal = (Time.deltaTime * rotationSpeed) %360;
 
         transform.Rotate(new Vector3 (0, rotVal, 0));
+
     }
 }
