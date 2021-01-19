@@ -13,7 +13,8 @@ public class Planet : MonoBehaviour
     {
         scaleFactor = Conductor.songposition < 60f ? 4f : (Conductor.songposition / 60f) * 4f;
         planet.transform.localScale = new Vector3(scaleFactor,scaleFactor,scaleFactor);
-        
+
+		if (clouds == null) return;
         //clouds rotation
         rot = Quaternion.Euler(0,Conductor.songposition*10,0);
         clouds.transform.rotation = rot;

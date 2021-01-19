@@ -5,19 +5,9 @@ using UnityEngine;
 public class RotatePlanetLight : MonoBehaviour
 {
     public RectTransform myRectTransform;
-    public LensFlare flare;
     private float rotVal;
     private Quaternion rot;
 
-    void Start()
-    {
-        InvokeRepeating("LightLoop", 0, 0.5f);
-    }
-
-    void LightLoop()
-    {
-        flare.enabled = !flare.enabled;
-    }
     void Update()
     {
         rotVal = (Conductor.songposition*10);

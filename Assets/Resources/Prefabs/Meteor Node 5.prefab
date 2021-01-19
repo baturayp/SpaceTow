@@ -137,7 +137,6 @@ MonoBehaviour:
   - {fileID: 3019033564955089283}
   - {fileID: 7752616382441045301}
   wholeRigid: {fileID: 5959472863018516352}
-  flare: {fileID: 7400128256301036532}
 --- !u!54 &8359096496469187543
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -170,22 +169,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!123 &7400128256301036532
-LensFlare:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6960503933667124251}
-  m_Enabled: 0
-  m_Flare: {fileID: 12100000, guid: 33d29ccf9ff3235dd802ed156cab0752, type: 2}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_Brightness: 1
-  m_FadeSpeed: 3
-  m_IgnoreLayers:
-    serializedVersion: 2
-    m_Bits: 6
-  m_Directional: 0
 --- !u!54 &8971292447363309217
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -405,10 +388,5 @@ GameObject:
 --- !u!4 &7769692181513666209 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: aba581077a706e94c949756ee3abcc9a, type: 3}
-  m_PrefabInstance: {fileID: 7807487632912226634}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6960503933667124251 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: aba581077a706e94c949756ee3abcc9a, type: 3}
   m_PrefabInstance: {fileID: 7807487632912226634}
   m_PrefabAsset: {fileID: 0}

@@ -9,7 +9,6 @@ public class MeteorNode : MonoBehaviour
     public GameObject meteorWhole;
     public Rigidbody[] meteorPieces;
     public Rigidbody wholeRigid;
-    public LensFlare flare;
     private MeshRenderer wholeMesh;
     private MeshRenderer[] piecesMesh;
     private Material wholeMat;
@@ -20,10 +19,10 @@ public class MeteorNode : MonoBehaviour
     private float beat;
 
     //different meteor target points
-    private readonly float[] meteorFinalX = {0, 1f, 1f, 1.1f, 1.07f, 0.57f, 0.57f, 0.7f, 0.75f, 0.83f, 0.81f, 1f};
-	private readonly float[] meteorFinalY = {0, 0.42f, 0.42f, 0.42f, 1.05f, 0.5f, 0.5f, 0.5f, 0.3f, 0.47f, 0.67f, 0.97f};
+    private readonly float[] meteorFinalX = {0, 1f, 1f, 1.1f, 1f, 0.57f, 0.57f, 0.7f, 0.75f, 0.83f, 0.81f, 1.07f};
+	private readonly float[] meteorFinalY = {0, 0.42f, 0.42f, 0.42f, 0.97f, 0.5f, 0.5f, 0.5f, 0.3f, 0.47f, 0.67f, 1.05f};
 	private readonly float[] explosionXOffset = {0, 0.1f, 0.1f, 0.2f, 0.2f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.2f};
-	private readonly float[] explosionYOffset = {0, -0.1f, 0, 0, 0.2f, 0, 0.1f, 0, 0, 0.1f, -0.1f, 0};
+	private readonly float[] explosionYOffset = {0, -0.1f, 0, 0, 0f, 0, 0.1f, 0, 0, 0.1f, -0.1f, 0.2f};
     private Vector3 explotionVector;
     private float aCos;
 	private float metStartX, metStartY, metStartZ, metEndZ;
@@ -68,9 +67,6 @@ public class MeteorNode : MonoBehaviour
 		transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 		float initPos = metStartX * initYMultiplier;
 		transform.position = new Vector3(initPos , metStartY, metStartZ);
-
-        //flare
-        StartCoroutine(FlareUp());
     }
 
     void SetState(bool state)
@@ -86,16 +82,6 @@ public class MeteorNode : MonoBehaviour
     {
         wholeMat.SetFloat("_FresnelPower", value);
         val = value;
-    }
-
-    IEnumerator FlareUp()
-    {
-        meteorWhole.SetActive(false);
-        flare.fadeSpeed = 5f;
-        flare.enabled = true;
-        yield return new WaitForSeconds(0.2f);
-        meteorWhole.SetActive(true);
-        flare.enabled = false;
     }
 
     public void Explode(bool success)

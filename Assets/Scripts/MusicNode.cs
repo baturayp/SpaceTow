@@ -43,6 +43,7 @@ public class MusicNode : MonoBehaviour
 	MeteorNode GetMeteor()
 	{
 		int randomPos = UnityEngine.Random.Range(1,12);
+		//int randomPos = 11;
 		int randomMeteor = UnityEngine.Random.Range(0,5);
 		meteorNode = Instantiate(meteorPrefab[randomMeteor]).GetComponent<MeteorNode>();
 		meteorNode.Initialize(startLineZ, finishLineZ, beat, randomPos, trackNumber);

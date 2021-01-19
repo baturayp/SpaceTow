@@ -21,7 +21,6 @@ public class Conductor : MonoBehaviour
 	public float meteorStartLineZ, meteorFinishLineZ;
 
 	public const float HitOffset = 0.15f;
-	private const float WaitOffset = 0.15f;
 	private const float BackOffset = 0.10f;
 
 	//current song position and remaining time
@@ -42,6 +41,7 @@ public class Conductor : MonoBehaviour
 	private int appearTimeLength;
 	public static float appearTime;
 	private static int _nextTrack;
+	private static float screenWidth;
 
 	//count down canvas
 	public GameObject countDownCanvas;
@@ -106,20 +106,27 @@ public class Conductor : MonoBehaviour
 				//success hit
 				//incoming target is near but not inside the offset
 				case true when offset < HitOffset:
-					spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, frontNode.beat, true);
+					spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, offset, true);
 					frontNode.Score(true);
 					beatQueue.Dequeue();
 					PunchEffect(offset);
-					//nextPunchWait = StartCoroutine(Wait(frontNode.beat));
+					nextPunchWait = StartCoroutine(Wait(frontNode.beat));
 					break;
 				//delay offset
 				case true when offset < HitOffset * 1.25:
-					spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, songposition + WaitOffset, false);
-					//nextPunchWait = StartCoroutine(Wait(songposition + waitOffset));
+					spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, offset, false);
+					nextPunchWait = StartCoroutine(Wait(songposition + 0.15f));
 					break;
 				default:
 				{
-					if (offset < 0f && offset > 0 - BackOffset)
+					if (offset < 0f && offset > -0.07f)
+					{
+						spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, offset, true);
+						frontNode.Score(true);
+						beatQueue.Dequeue();
+						PunchEffect(Mathf.Abs(offset));
+					}
+					else if (offset < 0f && offset > 0 - BackOffset)
 					{
 						spaceMan.DelayedPunch(frontNode.objPos, frontNode.trackNumber);
 						frontNode.Score(true);
@@ -130,7 +137,7 @@ public class Conductor : MonoBehaviour
 					else
 					{
 						spaceMan.IsTooFar(frontNode.trackNumber);
-						//nextPunchWait = StartCoroutine(Wait(songposition + waitOffset));
+						nextPunchWait = StartCoroutine(Wait(songposition + 0.15f));
 					}
 					break;
 				}
@@ -140,8 +147,9 @@ public class Conductor : MonoBehaviour
 		//no target in sight, empty attack
 		else 
 		{
+			if (avoidPos != 0) return;
 			spaceMan.Empty();
-			//nextPunchWait = StartCoroutine(Wait(songposition + waitOffset));
+			nextPunchWait = StartCoroutine(Wait(songposition + 0.15f));
 		}
 	}
 
@@ -153,6 +161,9 @@ public class Conductor : MonoBehaviour
 
 		//display countdown canvas
 		countDownCanvas.SetActive(true);
+
+		//screen width
+		screenWidth = Screen.width;
 
 		//get the song info from messenger
 		//songInfo = SongInfoMessenger.Instance.currentSong;
@@ -265,12 +276,14 @@ public class Conductor : MonoBehaviour
 			{
 				if (currNode.beat < songposition)
 				{
+					//success avoid
 					if (avoidPos == currNode.trackNumber)
 					{
 						currNode.Score(true);
 						beatQueue.Dequeue();
 						effectLayer.PlayOneShot(obstacleSuccessClip);
 					}
+					//got hit
 					else
 					{
 						beatQueue.Dequeue();
@@ -294,20 +307,15 @@ public class Conductor : MonoBehaviour
 				case TouchPhase.Began when _nextTrack < 2:
 					Inputted();
 					break;
-				case TouchPhase.Moved when _nextTrack > 1:
+				case TouchPhase.Moved:
 				{
-					if (t.deltaPosition.x > 10) Avoid(3);
-					if (t.deltaPosition.x < -10) Avoid(2);
+					if (t.deltaPosition.x > 20 && _nextTrack > 1) Avoid(3);
+					if (t.deltaPosition.x < -20 && _nextTrack > 1) Avoid(2);
 					break;
 				}
 				case TouchPhase.Stationary when _nextTrack > 1:
 				{
 					_avoidMoveWait += 0.1f;
-					break;
-				}
-				case TouchPhase.Ended when _nextTrack > 3:
-				{
-					if (Mathf.Abs(t.deltaPosition.x) < 10) Inputted();
 					break;
 				}
 			}

@@ -7,23 +7,20 @@ public class SpaceMan : MonoBehaviour
 	public Animator spaceMan;
 	//private Coroutine routine;
 	private const float CrossFade = 0.08f;
-
 	private readonly int[] backPosition = { 0, 1, 1, 1, 2, 3, 3, 4, 4, 4, 4, 2 };
-	private static readonly int Success = Animator.StringToHash("success");
 
 	//successful punch animation
-	public void Punch(int animNumber, int trackNumber, float targetBeat, bool success)
+	public void Punch(int animNumber, int trackNumber, float offset, bool success)
 	{
 		var animToPlay = animNumber.ToString() + trackNumber;
-		spaceMan.SetBool(Success, success);
 		spaceMan.CrossFadeInFixedTime(animToPlay, CrossFade, 0);
 	}
 
 	//delayed punch
 	public void DelayedPunch(int animNumber, int trackNumber)
 	{
-		var animToPlay = backPosition[animNumber].ToString() + trackNumber;
-		spaceMan.CrossFadeInFixedTime(animToPlay, CrossFade, 0);
+		var animToPlay = backPosition[animNumber].ToString() + trackNumber + "B";
+		spaceMan.CrossFadeInFixedTime(animToPlay, CrossFade, 0, 0.2f);
 	}
 
 	public void Empty()
@@ -43,7 +40,7 @@ public class SpaceMan : MonoBehaviour
 	{
 		var hitSide = Conductor.avoidPos == 0 ? "H" : "S";
 		var animToPlay = trackNumber + hitSide;
-		spaceMan.Play(animToPlay, 0);
+		spaceMan.CrossFadeInFixedTime(animToPlay, CrossFade, 0);
 	}
 
 	//take avoid position
@@ -54,6 +51,6 @@ public class SpaceMan : MonoBehaviour
 	
 	public void AvoidBack(int trackNumber)
 	{
-		spaceMan.Play(trackNumber + "B", 0);
+		spaceMan.CrossFadeInFixedTime(trackNumber + "B", CrossFade, 0);
 	}
 }
