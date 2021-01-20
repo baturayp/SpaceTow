@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9aef62dd4e9a48349bbcbd6b490457fc
+guid: 34051bb1c8829bc4185767bffa4ec666
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: GeneralMat.001
-    second: {fileID: 2100000, guid: 76cbaa0fc98dd0176a70b3495a85035e, type: 2}
+      name: SynthwaveMat
+    second: {fileID: 2100000, guid: 1a2a54f9789de2b4f9f5c901672cdf3e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

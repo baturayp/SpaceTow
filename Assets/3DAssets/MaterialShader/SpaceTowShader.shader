@@ -13,6 +13,7 @@
         _ShadowColor("Shadow Color", Color) = (0.3,0.33,0.54,1)
         _LightC ("Light Color", Color) = (0.77,0.70,0.19,1)
         _RimLight ("Rim Color", Color) = (0.77,0.70,0.19,1)
+        _Scale ("Scale", range(0,500)) = 1
 
 
     }
@@ -47,6 +48,7 @@
             uniform fixed _SpecLightVal;
             uniform fixed _RimIntensity;
             uniform fixed4 _MainColor;
+            uniform int _Scale;
 
             struct appdata
             {
@@ -73,7 +75,7 @@
                 fixed3 normal = normalize(UnityObjectToWorldNormal(v.normal));
                 
                 fixed NdotL = dot (_WorldSpaceLightPos0, normal) * _LightColor0;
-                fixed rimDot = 1- dot(WorldSpaceViewDir(v.vertex), normal) * _LightColor0;
+                fixed rimDot = 1*_Scale- dot(WorldSpaceViewDir(v.vertex), normal) * _LightColor0;
 
                 o.stylisticLight.r =  NdotL;
 
