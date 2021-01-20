@@ -17430,7 +17430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b69752e095cd01a68f91bfa12c593e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodePrefab: {fileID: 529521031632119238, guid: 6e47b922c35833ae5b8e935ad8ac4178, type: 3}
+  nodePrefab: {fileID: 529521031632119238, guid: 8987686757a00b6acbc1caf81c2936ef, type: 3}
   initialAmount: 20
 --- !u!114 &1760618929
 MonoBehaviour:
