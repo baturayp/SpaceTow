@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class Logic : MonoBehaviour
 {
@@ -13,6 +13,12 @@ public class Logic : MonoBehaviour
 	public static bool swipedDown = false;
 	private Vector2 startPos;
 	private float startTime;
+	public CinemachineVirtualCamera toxicCam, barnCam, beachCam, chapelCam;
+
+	private void Start()
+	{
+		//
+	}
 
 	public void Update()
 	{
