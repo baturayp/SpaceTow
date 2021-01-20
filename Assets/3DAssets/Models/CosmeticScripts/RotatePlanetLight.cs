@@ -6,12 +6,20 @@ public class RotatePlanetLight : MonoBehaviour
 {
     public RectTransform myRectTransform;
     private float rotVal;
-    private Quaternion rot;
+    private Vector3 rot0;
+
+    public void Start()
+    {
+        rot0 = myRectTransform.transform.rotation.eulerAngles;
+    }
 
     void Update()
     {
-        rotVal = (Conductor.songposition*10);
-        rot = Quaternion.Euler(0,0,rotVal);
-        myRectTransform.transform.rotation = rot;
+        if (Conductor.paused)
+            return;
+
+        rotVal += (Time.deltaTime)*50;
+        
+        myRectTransform.transform.rotation = Quaternion.Euler(rot0.x, rot0.y, rotVal);
     }
 }

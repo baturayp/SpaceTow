@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CircularMovMenu : MonoBehaviour
+public class CircularMovement : MonoBehaviour
 {
     public int radius = 100;
     float timeCounter = 0;
@@ -22,12 +22,11 @@ public class CircularMovMenu : MonoBehaviour
         timeCounter += Time.deltaTime*0.5f;
         rotVal = (Time.deltaTime);
 
-        float z = Mathf.Cos(timeCounter)* radius;
-        float x = 0;
-        float y = Mathf.Sin(timeCounter) * radius;
+        float x = Mathf.Cos(timeCounter)* radius;
+        float y = Mathf.Sin(timeCounter)* radius;
         //float z = 0;
 
-        transform.position = new Vector3(pos0.x + x, pos0.y + y, pos0.z + z);
+        transform.position = new Vector3(pos0.x + x, pos0.y + y, pos0.z);
         transform.Rotate(new Vector3(0, 0, -rotVal*50));
 
     }

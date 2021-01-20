@@ -5,7 +5,7 @@ using UnityEngine;
 public class Conductor : MonoBehaviour
 {
 	//if the whole game is paused
-	public static bool paused = true;
+	public static bool paused;
 	private bool songStarted;
 
 	public static float pauseTimeStamp = -1f; //negative means not managed
