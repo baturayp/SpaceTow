@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Logic : MonoBehaviour
 {
@@ -13,11 +14,27 @@ public class Logic : MonoBehaviour
 	public static bool swipedDown = false;
 	private Vector2 startPos;
 	private float startTime;
-	public CinemachineVirtualCamera toxicCam, barnCam, beachCam, chapelCam;
+
+	//stars
+	public MeshRenderer staticStars;
+	private Material starsMat;
+	private Coroutine routine;
+
+	//camera selection
+	public GameObject[] cams;
+	public Image[] uiElements;
+	private int len, cur;
+	public Color[] colors;
+	public Color[] uiColors;
+	private int lastColor;
+	private string[] scenes = { "Beach", "Station", "Chapel", "OrangeCyan", "GreenYellow" };
 
 	private void Start()
 	{
-		//
+		len = cams.Length;
+		lastColor = cur = 0;
+		starsMat = staticStars.material;
+		starsMat.SetColor("_NoiseColor", colors[0]);
 	}
 
 	public void Update()
@@ -66,5 +83,62 @@ public class Logic : MonoBehaviour
 		swipedUp = swipedUp || Input.GetKeyDown(KeyCode.UpArrow);
 		swipedRight = swipedRight || Input.GetKeyDown(KeyCode.RightArrow);
 		swipedLeft = swipedLeft || Input.GetKeyDown(KeyCode.LeftArrow);
+
+		if (swipedRight) SwipedRight();
+		if (swipedLeft) SwipedLeft();
+	}
+
+	public void SwipedRight()
+	{
+		for (int i = 0; i < len; i++) 
+			cams[i].SetActive(false);
+		cur = --cur % len;
+		if (cur < 0) cur = len - 1;
+		cams[cur].SetActive(true);
+		if (routine != null) StopCoroutine(routine);
+		routine = StartCoroutine(SetColor(cur));
+	}
+
+	public void SwipedLeft()
+	{
+		for (int i = 0; i < len; i++) 
+			cams[i].SetActive(false);
+		cur = ++cur % len;
+		cams[cur].SetActive(true);
+		if (routine != null) StopCoroutine(routine);
+		routine = StartCoroutine(SetColor(cur));
+	}
+
+	public void LevelSelect()
+	{
+		SceneManager.LoadScene(scenes[cur]);
+	}
+
+	private IEnumerator SetColor(int cur)
+	{
+		var elapsedTime = 0f;
+		while (elapsedTime < 1f)
+		{
+			elapsedTime += Time.deltaTime;
+			//set skybox color
+			var r = Color.Lerp(colors[lastColor], colors[cur], elapsedTime / 1f);
+			starsMat.SetColor("_NoiseColor", r);
+			//set ui colors
+			var u = Color.Lerp(uiColors[lastColor], uiColors[cur], elapsedTime / 1f);
+			SetUIColors(u);
+			yield return null;
+		}
+		lastColor = cur;
+		routine = null;
+	}
+
+	private void SetUIColors(Color col)
+	{
+		var length = uiElements.Length;
+		for (int i = 0; i < length; i++)
+		{
+			uiElements[i].color = col;
+		}
+		uiElements[length - 1].color = new Color(col.r, col.g, col.b, 0.4f);
 	}
 }

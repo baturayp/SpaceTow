@@ -6483,7 +6483,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myRectTransform: {fileID: 886204858}
-  flare: {fileID: 1852985014}
 --- !u!114 &886204860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7087,8 +7086,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec587248e2eddbda9a11897c60863833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 1111994107}
-  fadeInOut: {fileID: 971456902}
   pauseButton: {fileID: 1870999698}
   pauseScene: {fileID: 1597269094}
   healthBarTop: {fileID: 350325368}
@@ -12806,10 +12803,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f483958048371be69af34e4c4cc66545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  developmentSong: {fileID: 11400000, guid: c101f98a1d3b9c4d782bb24dfa0d4762, type: 2}
+  developmentSong: {fileID: 11400000, guid: e4089c29b82f4be258834d5fe815cc1d, type: 2}
   meteorStartLineZ: 20
   meteorFinishLineZ: 0
   spaceMan: {fileID: 1391152777}
+  uiController: {fileID: 1153441174}
   countDownCanvas: {fileID: 2285244178647476763}
   songLayer: {fileID: 1760618927}
   effectLayer: {fileID: 919132148728677580}

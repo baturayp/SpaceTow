@@ -6374,7 +6374,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myRectTransform: {fileID: 886204858}
-  flare: {fileID: 1852985014}
 --- !u!114 &886204860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12695,7 +12694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f483958048371be69af34e4c4cc66545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  developmentSong: {fileID: 11400000, guid: 8a02d13f06940542990b51a3ed22938a, type: 2}
+  developmentSong: {fileID: 11400000, guid: e4089c29b82f4be258834d5fe815cc1d, type: 2}
   meteorStartLineZ: 20
   meteorFinishLineZ: 0
   spaceMan: {fileID: 1391152777}

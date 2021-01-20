@@ -415,7 +415,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 1b40922e3d6301445ad2618bcb723f84, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b40922e3d6301445ad2618bcb723f84, type: 3}
       propertyPath: m_LocalPosition.x
@@ -475,104 +475,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b40922e3d6301445ad2618bcb723f84, type: 3}
-<<<<<<< Updated upstream
---- !u!1 &189789845
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 189789846}
-  - component: {fileID: 189789850}
-  - component: {fileID: 189789849}
-  - component: {fileID: 189789848}
-  m_Layer: 0
-  m_Name: Clouds
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &189789846
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 189789845}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 607345150}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &189789848
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 189789845}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &189789849
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 189789845}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 90e086223d6cd0c4a8831c9425acdcd5, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &189789850
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 189789845}
-  m_Mesh: {fileID: 1382167634749839082, guid: bdedd4a799c10cf4ca732daafd517664, type: 3}
-=======
->>>>>>> Stashed changes
 --- !u!1 &206656518
 GameObject:
   m_ObjectHideFlags: 0
@@ -5708,11 +5610,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-<<<<<<< Updated upstream
-  m_RootOrder: 13
-=======
-  m_RootOrder: 11
->>>>>>> Stashed changes
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &535793061
 GameObject:
@@ -7204,11 +7102,7 @@ Transform:
   m_LocalScale: {x: 60, y: 1, z: 25}
   m_Children: []
   m_Father: {fileID: 0}
-<<<<<<< Updated upstream
   m_RootOrder: 15
-=======
-  m_RootOrder: 13
->>>>>>> Stashed changes
   m_LocalEulerAnglesHint: {x: -267.396, y: 0, z: -176.409}
 --- !u!1 &1111994107
 GameObject:
@@ -12315,11 +12209,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-<<<<<<< Updated upstream
-  m_RootOrder: 14
-=======
-  m_RootOrder: 12
->>>>>>> Stashed changes
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1302605813
 GameObject:
@@ -12820,7 +12710,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -13309,16 +13199,6 @@ MonoBehaviour:
   meteorStartLineZ: 20
   meteorFinishLineZ: 0
   spaceMan: {fileID: 1391152777}
-<<<<<<< Updated upstream
-  uiController: {fileID: 0}
-  countDownCanvas: {fileID: 1759781536}
-  songLayer: {fileID: 1760618927}
-  effectLayer: {fileID: 1391152776}
-  longPunchClip: {fileID: 0}
-  shortPunchClip: {fileID: 0}
-  obstacleSuccessClip: {fileID: 0}
-  obstacleMissClip: {fileID: 0}
-=======
   uiController: {fileID: 1153441174}
   countDownCanvas: {fileID: 1759781536}
   songLayer: {fileID: 1760618927}
@@ -13327,7 +13207,6 @@ MonoBehaviour:
   shortPunchClip: {fileID: 8300000, guid: 048229d8e371c6c3e92780ea8bc734bf, type: 3}
   obstacleSuccessClip: {fileID: 8300000, guid: 261daaaa4a0589e21b9ce7a9e2a003b7, type: 3}
   obstacleMissClip: {fileID: 8300000, guid: 53a8c3a33763de121bfb2946a8401ba3, type: 3}
->>>>>>> Stashed changes
 --- !u!4 &1760618930
 Transform:
   m_ObjectHideFlags: 0
