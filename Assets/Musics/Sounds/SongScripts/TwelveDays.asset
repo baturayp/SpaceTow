@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   song: {fileID: 8300000, guid: 2c6a7984000d80e96819193892937651, type: 3}
   json: {fileID: 4900000, guid: 1fc2330e72863683c85d7773a7c05fb1, type: 3}
-  songTitle: Demo Song
+  songTitle: Twelve Days Of Christmas
   songOffset: 0
   bpm: 120
   appearTime:

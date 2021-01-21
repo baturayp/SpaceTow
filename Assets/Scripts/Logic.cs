@@ -26,8 +26,12 @@ public class Logic : MonoBehaviour
 	private int len, cur;
 	public Color[] colors;
 	public Color[] uiColors;
+	public Image leftButton, rightButton, songInfoFrame, songBkg, playBtn;
+	public Text songTitle, artistName;
 	private int lastColor;
-	private string[] scenes = { "Beach", "Station", "Chapel", "OrangeCyan", "GreenYellow" };
+	private readonly string[] scenes = { "Beach", "Toxic", "Station", "Chapel", "Barn" };
+	private readonly string[] tracks = { "Fright Night Twist", "Run!", "Mystica", "Twelve Days", "Born Barnstormers" };
+	private readonly string[] artists = { "Bryan Teoh", "Komiku", "Alexander Nakarada", "Alexander Nakarada", "Brian Boyko" };
 
 	private void Start()
 	{
@@ -35,6 +39,7 @@ public class Logic : MonoBehaviour
 		lastColor = cur = 0;
 		starsMat = staticStars.material;
 		starsMat.SetColor("_NoiseColor", colors[0]);
+		SetCurrent(cur);
 	}
 
 	public void Update()
@@ -90,22 +95,22 @@ public class Logic : MonoBehaviour
 
 	public void SwipedRight()
 	{
+		if (routine != null) return;
 		for (int i = 0; i < len; i++) 
 			cams[i].SetActive(false);
 		cur = --cur % len;
 		if (cur < 0) cur = len - 1;
 		cams[cur].SetActive(true);
-		if (routine != null) StopCoroutine(routine);
 		routine = StartCoroutine(SetColor(cur));
 	}
 
 	public void SwipedLeft()
 	{
+		if (routine != null) return;
 		for (int i = 0; i < len; i++) 
 			cams[i].SetActive(false);
 		cur = ++cur % len;
 		cams[cur].SetActive(true);
-		if (routine != null) StopCoroutine(routine);
 		routine = StartCoroutine(SetColor(cur));
 	}
 
@@ -114,8 +119,28 @@ public class Logic : MonoBehaviour
 		SceneManager.LoadScene(scenes[cur]);
 	}
 
+	private void SetCurrent(int cr)
+	{
+		var color = colors[cr];
+		starsMat.SetColor("_NoiseColor", color);
+		SetUIColors(uiColors[cr]);
+		for (int i = 0; i < len; i++)
+			cams[i].SetActive(false);
+		cams[cr].SetActive(true);
+		songTitle.text = tracks[cr];
+		artistName.text = "by " + artists[cr];
+		rightButton.color =
+				leftButton.color =
+				songInfoFrame.color =
+				playBtn.color =
+				new Color(uiColors[cr].r, uiColors[cr].g, uiColors[cr].b, 1f);
+		songBkg.color = new Color(uiColors[cr].r, uiColors[cr].g, uiColors[cr].b, 0.3f);
+		songTitle.color = artistName.color = new Color(1, 1, 1, 1f);
+	}
+
 	private IEnumerator SetColor(int cur)
 	{
+		StartCoroutine(SongSelectionUI());
 		var elapsedTime = 0f;
 		while (elapsedTime < 1f)
 		{
@@ -130,6 +155,46 @@ public class Logic : MonoBehaviour
 		}
 		lastColor = cur;
 		routine = null;
+	}
+
+	private IEnumerator SongSelectionUI()
+	{
+		var elapsedTime = 0f;
+		while (elapsedTime < 0.1f)
+		{
+			elapsedTime += Time.deltaTime;
+			var a = Mathf.Lerp(1f, 0f, elapsedTime / 0.1f);
+			var b = Mathf.Lerp(0.3f, 0f, elapsedTime / 0.1f);
+			rightButton.color = 
+				leftButton.color = 
+				songInfoFrame.color =
+				playBtn.color =
+				new Color(uiColors[lastColor].r, uiColors[lastColor].g, uiColors[lastColor].b, a);
+			songBkg.color = new Color(uiColors[lastColor].r, uiColors[lastColor].g, uiColors[lastColor].b, b);
+			songTitle.color = artistName.color = new Color(1, 1, 1, a);
+			yield return null;
+		}
+
+		songTitle.text = tracks[cur];
+		artistName.text = "by " + artists[cur];
+
+		yield return new WaitForSeconds(0.6f);
+
+		elapsedTime = 0f;
+		while (elapsedTime < 0.15f)
+		{
+			elapsedTime += Time.deltaTime;
+			var a = Mathf.Lerp(0f, 1f, elapsedTime / 0.15f);
+			var b = Mathf.Lerp(0f, 0.3f, elapsedTime / 0.15f);
+			rightButton.color =
+				leftButton.color =
+				songInfoFrame.color =
+				playBtn.color =
+				new Color(uiColors[cur].r, uiColors[cur].g, uiColors[cur].b, a);
+			songBkg.color = new Color(uiColors[cur].r, uiColors[cur].g, uiColors[cur].b, b);
+			songTitle.color = artistName.color = new Color(1, 1, 1, a);
+			yield return null;
+		}
 	}
 
 	private void SetUIColors(Color col)

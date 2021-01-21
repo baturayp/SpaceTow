@@ -1,0 +1,390 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c222991a60d4cdeab920d7daba3a6c3, type: 3}
+  m_Name: Twist
+  m_EditorClassIdentifier: 
+  song: {fileID: 8300000, guid: d3f3c73fcd0a522bb939d4766e95e02c, type: 3}
+  json: {fileID: 4900000, guid: d431990d2ca652f46bdfbf4466d5a84f, type: 3}
+  songTitle: Fright Night Twist
+  songOffset: 0
+  bpm: 111
+  appearTime:
+  - startTime: 1
+    offsetVal: 2
+  tracks:
+  - notes:
+    - dueTo: 8.175675
+      track: 0
+    - dueTo: 11.418919
+      track: 0
+    - dueTo: 13.648648
+      track: 0
+    - dueTo: 15.810811
+      track: 0
+    - dueTo: 17.972973
+      track: 0
+    - dueTo: 20.202703
+      track: 0
+    - dueTo: 22.364864
+      track: 0
+    - dueTo: 24.527027
+      track: 0
+    - dueTo: 25.675676
+      track: 0
+    - dueTo: 27.837837
+      track: 0
+    - dueTo: 28.918919
+      track: 0
+    - dueTo: 30
+      track: 0
+    - dueTo: 31.081081
+      track: 0
+    - dueTo: 32.162163
+      track: 0
+    - dueTo: 34.324326
+      track: 0
+    - dueTo: 36.554054
+      track: 0
+    - dueTo: 38.716217
+      track: 0
+    - dueTo: 40.91892
+      track: 0
+    - dueTo: 43.027027
+      track: 0
+    - dueTo: 45.27027
+      track: 0
+    - dueTo: 47.45946
+      track: 0
+    - dueTo: 49.675674
+      track: 0
+    - dueTo: 51.837837
+      track: 0
+    - dueTo: 54
+      track: 0
+    - dueTo: 57.243244
+      track: 0
+    - dueTo: 58.37838
+      track: 0
+    - dueTo: 60.54054
+      track: 0
+    - dueTo: 62.756756
+      track: 0
+    - dueTo: 64.91892
+      track: 0
+    - dueTo: 67.08108
+      track: 0
+    - dueTo: 73.675674
+      track: 0
+    - dueTo: 76.86487
+      track: 0
+    - dueTo: 78
+      track: 0
+    - dueTo: 78.810814
+      track: 0
+    - dueTo: 80.16216
+      track: 0
+    - dueTo: 81.78378
+      track: 0
+    - dueTo: 83.189186
+      track: 0
+    - dueTo: 84.54054
+      track: 0
+    - dueTo: 86.75676
+      track: 0
+    - dueTo: 87.567566
+      track: 0
+    - dueTo: 88.91892
+      track: 0
+    - dueTo: 89.72973
+      track: 0
+    - dueTo: 91.08108
+      track: 0
+    - dueTo: 92.21622
+      track: 0
+    - dueTo: 93.297295
+      track: 0
+    - dueTo: 97.62162
+      track: 0
+    - dueTo: 98.75676
+      track: 0
+    - dueTo: 102.86487
+      track: 0
+    - dueTo: 103.4054
+      track: 0
+    - dueTo: 106.37838
+      track: 0
+    - dueTo: 107.189186
+      track: 0
+    - dueTo: 110.75676
+      track: 0
+    - dueTo: 111.567566
+      track: 0
+    - dueTo: 113.45946
+      track: 0
+    - dueTo: 114.54054
+      track: 0
+    - dueTo: 115.62162
+      track: 0
+  - notes:
+    - dueTo: 9.256757
+      track: 1
+    - dueTo: 10.337838
+      track: 1
+    - dueTo: 12.567568
+      track: 1
+    - dueTo: 14.72973
+      track: 1
+    - dueTo: 16.891891
+      track: 1
+    - dueTo: 19.121622
+      track: 1
+    - dueTo: 21.283783
+      track: 1
+    - dueTo: 23.445946
+      track: 1
+    - dueTo: 26.756756
+      track: 1
+    - dueTo: 33.243244
+      track: 1
+    - dueTo: 35.472973
+      track: 1
+    - dueTo: 37.635136
+      track: 1
+    - dueTo: 39.837837
+      track: 1
+    - dueTo: 42
+      track: 1
+    - dueTo: 44.18919
+      track: 1
+    - dueTo: 46.37838
+      track: 1
+    - dueTo: 48.594593
+      track: 1
+    - dueTo: 50.756756
+      track: 1
+    - dueTo: 52.91892
+      track: 1
+    - dueTo: 55.08108
+      track: 1
+    - dueTo: 56.162163
+      track: 1
+    - dueTo: 59.45946
+      track: 1
+    - dueTo: 61.62162
+      track: 1
+    - dueTo: 63.837837
+      track: 1
+    - dueTo: 66
+      track: 1
+    - dueTo: 68.16216
+      track: 1
+    - dueTo: 74.75676
+      track: 1
+    - dueTo: 78.27027
+      track: 1
+    - dueTo: 81.02702
+      track: 1
+    - dueTo: 82.37838
+      track: 1
+    - dueTo: 87.02702
+      track: 1
+    - dueTo: 89.189186
+      track: 1
+    - dueTo: 94.10811
+      track: 1
+    - dueTo: 98.16216
+      track: 1
+    - dueTo: 99.297295
+      track: 1
+    - dueTo: 103.13513
+      track: 1
+    - dueTo: 106.64865
+      track: 1
+    - dueTo: 111.02702
+      track: 1
+    - dueTo: 112.91892
+      track: 1
+    - dueTo: 114
+      track: 1
+    - dueTo: 115.08108
+      track: 1
+  - notes:
+    - dueTo: 11.148648
+      track: 2
+    - dueTo: 19.932432
+      track: 2
+    - dueTo: 28.378378
+      track: 2
+    - dueTo: 31.621622
+      track: 2
+    - dueTo: 36
+      track: 2
+    - dueTo: 42.54054
+      track: 2
+    - dueTo: 45.783783
+      track: 2
+    - dueTo: 49.08108
+      track: 2
+    - dueTo: 52.37838
+      track: 2
+    - dueTo: 54.54054
+      track: 2
+    - dueTo: 56.7027
+      track: 2
+    - dueTo: 62.162163
+      track: 2
+    - dueTo: 67.62162
+      track: 2
+    - dueTo: 70.91892
+      track: 2
+    - dueTo: 73.02702
+      track: 2
+    - dueTo: 76.324326
+      track: 2
+    - dueTo: 79.35135
+      track: 2
+    - dueTo: 83.45946
+      track: 2
+    - dueTo: 85.675674
+      track: 2
+    - dueTo: 86.21622
+      track: 2
+    - dueTo: 88.10811
+      track: 2
+    - dueTo: 88.64865
+      track: 2
+    - dueTo: 90.54054
+      track: 2
+    - dueTo: 91.945946
+      track: 2
+    - dueTo: 92.75676
+      track: 2
+    - dueTo: 96
+      track: 2
+    - dueTo: 97.08108
+      track: 2
+    - dueTo: 100.37838
+      track: 2
+    - dueTo: 101.45946
+      track: 2
+    - dueTo: 102.54054
+      track: 2
+    - dueTo: 104.48649
+      track: 2
+    - dueTo: 108.810814
+      track: 2
+  - notes:
+    - dueTo: 8.986486
+      track: 3
+    - dueTo: 13.378378
+      track: 3
+    - dueTo: 15.540541
+      track: 3
+    - dueTo: 17.702703
+      track: 3
+    - dueTo: 19.391891
+      track: 3
+    - dueTo: 22.094595
+      track: 3
+    - dueTo: 24.256756
+      track: 3
+    - dueTo: 26.14865
+      track: 3
+    - dueTo: 27.297297
+      track: 3
+    - dueTo: 29.45946
+      track: 3
+    - dueTo: 30.54054
+      track: 3
+    - dueTo: 32.7027
+      track: 3
+    - dueTo: 37.08108
+      track: 3
+    - dueTo: 38.162163
+      track: 3
+    - dueTo: 40.37838
+      track: 3
+    - dueTo: 46.91892
+      track: 3
+    - dueTo: 48
+      track: 3
+    - dueTo: 53.45946
+      track: 3
+    - dueTo: 55.62162
+      track: 3
+    - dueTo: 57.783783
+      track: 3
+    - dueTo: 61.027027
+      track: 3
+    - dueTo: 63.2973
+      track: 3
+    - dueTo: 64.37838
+      track: 3
+    - dueTo: 66.75676
+      track: 3
+    - dueTo: 70.702705
+      track: 3
+    - dueTo: 71.45946
+      track: 3
+    - dueTo: 72.810814
+      track: 3
+    - dueTo: 73.35135
+      track: 3
+    - dueTo: 75.83784
+      track: 3
+    - dueTo: 77.4054
+      track: 3
+    - dueTo: 79.08108
+      track: 3
+    - dueTo: 79.62162
+      track: 3
+    - dueTo: 81.297295
+      track: 3
+    - dueTo: 82.64865
+      track: 3
+    - dueTo: 85.4054
+      track: 3
+    - dueTo: 85.945946
+      track: 3
+    - dueTo: 86.48649
+      track: 3
+    - dueTo: 87.83784
+      track: 3
+    - dueTo: 88.37838
+      track: 3
+    - dueTo: 90
+      track: 3
+    - dueTo: 91.35135
+      track: 3
+    - dueTo: 92.48649
+      track: 3
+    - dueTo: 93.02702
+      track: 3
+    - dueTo: 95.45946
+      track: 3
+    - dueTo: 96.54054
+      track: 3
+    - dueTo: 99.83784
+      track: 3
+    - dueTo: 100.91892
+      track: 3
+    - dueTo: 102
+      track: 3
+    - dueTo: 104.21622
+      track: 3
+    - dueTo: 105.02702
+      track: 3
+    - dueTo: 108.54054
+      track: 3
+    - dueTo: 109.35135
+      track: 3
+  endTime: 220

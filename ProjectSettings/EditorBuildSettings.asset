@@ -12,13 +12,13 @@ EditorBuildSettings:
     path: Assets/Scenes/Beach.unity
     guid: 8c643c33979a654b6aa89a73dce2b775
   - enabled: 1
-    path: Assets/Scenes/GreenYellow.unity
+    path: Assets/Scenes/Toxic.unity
     guid: f32d187f716cf2d1386b2c89cee898fa
   - enabled: 1
     path: Assets/Scenes/Chapel.unity
     guid: 6ebc4dd483fd68b4b86c71efcf657c74
   - enabled: 1
-    path: Assets/Scenes/OrangeCyan.unity
+    path: Assets/Scenes/Barn.unity
     guid: 87f09f159f351589ca33053f9ec65dad
   - enabled: 1
     path: Assets/Scenes/Station.unity

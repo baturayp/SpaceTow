@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c222991a60d4cdeab920d7daba3a6c3, type: 3}
-  m_Name: LastStormNoObstacle
+  m_Name: Mystica
   m_EditorClassIdentifier: 
   song: {fileID: 8300000, guid: aad11de84132f914b860f83cbfc84fd5, type: 3}
   json: {fileID: 4900000, guid: 2a6fecb5c49f1f3e7a607f8569acd91a, type: 3}
-  songTitle: Last Storm No Obstacle
+  songTitle: Mystica
   songOffset: 0
   bpm: 111
   appearTime:
@@ -387,4 +387,4 @@ MonoBehaviour:
       track: 3
     - dueTo: 109.35135
       track: 3
-  endTime: 180
+  endTime: 220
