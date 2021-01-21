@@ -19,8 +19,8 @@ public class MeteorNode : MonoBehaviour
     private float beat;
 
     //different meteor target points
-    private readonly float[] meteorFinalX = {0, 1f, 1f, 1.1f, 1f, 0.57f, 0.57f, 0.7f, 0.75f, 0.83f, 0.81f, 1.07f};
-	private readonly float[] meteorFinalY = {0, 0.42f, 0.42f, 0.42f, 0.97f, 0.5f, 0.5f, 0.5f, 0.3f, 0.47f, 0.67f, 1.05f};
+    private readonly float[] meteorFinalX = {0, 1f, 1f, 1.1f, 0.66f, 0.57f, 0.57f, 0.7f, 0.75f, 0.83f, 0.81f, 1.07f};
+	private readonly float[] meteorFinalY = {0, 0.42f, 0.42f, 0.42f, 0.70f, 0.5f, 0.5f, 0.5f, 0.3f, 0.47f, 0.67f, 1.05f};
 	private readonly float[] explosionXOffset = {0, 0.1f, 0.1f, 0.2f, 0.2f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.2f};
 	private readonly float[] explosionYOffset = {0, -0.1f, 0, 0, 0f, 0, 0.1f, 0, 0, 0.1f, -0.1f, 0.2f};
     private Vector3 explotionVector;

@@ -9,7 +9,7 @@ public class Particles : MonoBehaviour
     
     void Update()
     {
-        if (Conductor.pauseTimeStamp > 0)
+        if (Conductor.paused)
         {
             if (!paused) paused = true; ScenePaused();
         }

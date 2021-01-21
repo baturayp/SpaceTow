@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Conductor : MonoBehaviour
 {
@@ -42,9 +43,6 @@ public class Conductor : MonoBehaviour
 	public static float appearTime;
 	private static int _nextTrack;
 	private static float screenWidth;
-
-	//count down canvas
-	public GameObject countDownCanvas;
 
 	//total tracks
 	private const int Len = 4;
@@ -159,9 +157,6 @@ public class Conductor : MonoBehaviour
 		paused = true;
 		pauseTimeStamp = -1f;
 
-		//display countdown canvas
-		countDownCanvas.SetActive(true);
-
 		//screen width
 		screenWidth = Screen.width;
 
@@ -267,7 +262,7 @@ public class Conductor : MonoBehaviour
 				if (currNode.beat < songposition - BackOffset)
 				{
 					beatQueue.Dequeue();
-					uiController.ScoreDown();
+					uiController.ScoreDown(currNode.trackNumber);
 				}
 			}
 
@@ -287,7 +282,7 @@ public class Conductor : MonoBehaviour
 					else
 					{
 						beatQueue.Dequeue();
-						uiController.ScoreDown();
+						uiController.ScoreDown(currNode.trackNumber);
 						spaceMan.GotHit(currNode.trackNumber);
 						effectLayer.PlayOneShot(obstacleMissClip);
 					}
@@ -348,7 +343,7 @@ public class Conductor : MonoBehaviour
 	{
 		//wait until audio data loaded
 		yield return new WaitUntil(() => songLayer.clip.loadState == AudioDataLoadState.Loaded);
-		countDownCanvas.SetActive(false);
+		uiController.FadeDown();
 		StartSong();
 	}
 

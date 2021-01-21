@@ -9,9 +9,7 @@ public class MusicNode : MonoBehaviour
 	[NonSerialized] public float beat;
 	[NonSerialized] public int objPos;
 	[NonSerialized] public int trackNumber;
-	private GameObject towTruck;
 	private bool isObstacle;
-	private Vector3 towTruckInitialPos;
 	private float startLineZ, finishLineZ;
 	private MeteorNode meteorNode;
 	private ObstacleNode obstacleNode;

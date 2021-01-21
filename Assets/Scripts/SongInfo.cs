@@ -25,6 +25,9 @@ public class SongInfo : ScriptableObject
 	public Track[] tracks = new Track[4];
 	private int totalHits;
 
+	[Header("When meteors appears")]
+	public float startTime;
+
 	[Header("When to finish scene shows up, in seconds")]
 	public float endTime;
 
