@@ -6,12 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class Logic : MonoBehaviour
 {
-	private const float MAX_SWIPE_TIME = 0.5f;
-	private const float MIN_SWIPE_DISTANCE = 0.10f;
-	public static bool swipedRight = false;
-	public static bool swipedLeft = false;
-	public static bool swipedUp = false;
-	public static bool swipedDown = false;
+	private const float MAXSwipeTime = 0.5f;
+	private const float MINSwipeDistance = 0.10f;
 	private Vector2 startPos;
 	private float startTime;
 
@@ -32,86 +28,64 @@ public class Logic : MonoBehaviour
 	private readonly string[] scenes = { "Beach", "Toxic", "Station", "Chapel", "Barn" };
 	private readonly string[] tracks = { "Fright Night Twist", "Run!", "Mystica", "Twelve Days", "Born Barnstormers" };
 	private readonly string[] artists = { "Bryan Teoh", "Komiku", "Alexander Nakarada", "Alexander Nakarada", "Brian Boyko" };
+	private static readonly int NoiseColor = Shader.PropertyToID("_NoiseColor");
 
 	private void Start()
 	{
 		len = cams.Length;
 		lastColor = cur = 0;
 		starsMat = staticStars.material;
-		starsMat.SetColor("_NoiseColor", colors[0]);
+		starsMat.SetColor(NoiseColor, colors[0]);
 		SetCurrent(cur);
 	}
 
 	public void Update()
 	{
-		swipedRight = false;
-		swipedLeft = false;
-		swipedUp = false;
-		swipedDown = false;
-
-		if (Input.touches.Length > 0)
+		if (Input.touches.Length <= 0) return;
+		var t = Input.GetTouch(0);
+		switch (t.phase)
 		{
-			Touch t = Input.GetTouch(0);
-			if (t.phase == TouchPhase.Began)
-			{
+			case TouchPhase.Began:
 				startPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
 				startTime = Time.time;
-			}
-
-			if (t.phase == TouchPhase.Ended)
+				break;
+			case TouchPhase.Ended when Time.time - startTime > MAXSwipeTime:
+				return;
+			case TouchPhase.Ended:
 			{
-				if (Time.time - startTime > MAX_SWIPE_TIME) // press too long
+				var endPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
+				var swipe = new Vector2(endPos.x - startPos.x, endPos.y - startPos.y);
+				if (swipe.magnitude < MINSwipeDistance) // Too short swipe
 					return;
-
-				Vector2 endPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
-
-				Vector2 swipe = new Vector2(endPos.x - startPos.x, endPos.y - startPos.y);
-
-				if (swipe.magnitude < MIN_SWIPE_DISTANCE) // Too short swipe
-					return;
-
 				if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
 				{ // Horizontal swipe
-					if (swipe.x > 0) swipedRight = true;
-					else swipedLeft = true;
+					if (swipe.x > 0) SwipedRight();
+					else SwipedLeft();
 				}
-				else
-				{ // Vertical swipe
-					if (swipe.y > 0) swipedUp = true;
-					else swipedDown = true;
-				}
+				break;
 			}
 		}
-
-        //use arrows to trigger swipe
-		swipedDown = swipedDown || Input.GetKeyDown(KeyCode.DownArrow);
-		swipedUp = swipedUp || Input.GetKeyDown(KeyCode.UpArrow);
-		swipedRight = swipedRight || Input.GetKeyDown(KeyCode.RightArrow);
-		swipedLeft = swipedLeft || Input.GetKeyDown(KeyCode.LeftArrow);
-
-		if (swipedRight) SwipedRight();
-		if (swipedLeft) SwipedLeft();
 	}
 
 	public void SwipedRight()
 	{
 		if (routine != null) return;
-		for (int i = 0; i < len; i++) 
+		for (var i = 0; i < len; i++) 
 			cams[i].SetActive(false);
 		cur = --cur % len;
 		if (cur < 0) cur = len - 1;
 		cams[cur].SetActive(true);
-		routine = StartCoroutine(SetColor(cur));
+		routine = StartCoroutine(SetColor());
 	}
 
 	public void SwipedLeft()
 	{
 		if (routine != null) return;
-		for (int i = 0; i < len; i++) 
+		for (var i = 0; i < len; i++) 
 			cams[i].SetActive(false);
 		cur = ++cur % len;
 		cams[cur].SetActive(true);
-		routine = StartCoroutine(SetColor(cur));
+		routine = StartCoroutine(SetColor());
 	}
 
 	public void LevelSelect()
@@ -122,7 +96,7 @@ public class Logic : MonoBehaviour
 	private void SetCurrent(int cr)
 	{
 		var color = colors[cr];
-		starsMat.SetColor("_NoiseColor", color);
+		starsMat.SetColor(NoiseColor, color);
 		SetUIColors(uiColors[cr]);
 		for (int i = 0; i < len; i++)
 			cams[i].SetActive(false);
@@ -138,7 +112,7 @@ public class Logic : MonoBehaviour
 		songTitle.color = artistName.color = new Color(1, 1, 1, 1f);
 	}
 
-	private IEnumerator SetColor(int cur)
+	private IEnumerator SetColor()
 	{
 		StartCoroutine(SongSelectionUI());
 		var elapsedTime = 0f;
@@ -147,7 +121,7 @@ public class Logic : MonoBehaviour
 			elapsedTime += Time.deltaTime;
 			//set skybox color
 			var r = Color.Lerp(colors[lastColor], colors[cur], elapsedTime / 1f);
-			starsMat.SetColor("_NoiseColor", r);
+			starsMat.SetColor(NoiseColor, r);
 			//set ui colors
 			var u = Color.Lerp(uiColors[lastColor], uiColors[cur], elapsedTime / 1f);
 			SetUIColors(u);
@@ -200,7 +174,7 @@ public class Logic : MonoBehaviour
 	private void SetUIColors(Color col)
 	{
 		var length = uiElements.Length;
-		for (int i = 0; i < length; i++)
+		for (var i = 0; i < length; i++)
 		{
 			uiElements[i].color = col;
 		}

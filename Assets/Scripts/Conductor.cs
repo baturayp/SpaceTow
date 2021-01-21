@@ -42,7 +42,6 @@ public class Conductor : MonoBehaviour
 	private int appearTimeLength;
 	public static float appearTime;
 	private static int _nextTrack;
-	private static float screenWidth;
 
 	//total tracks
 	private const int Len = 4;
@@ -156,9 +155,6 @@ public class Conductor : MonoBehaviour
 		//reset static variables
 		paused = true;
 		pauseTimeStamp = -1f;
-
-		//screen width
-		screenWidth = Screen.width;
 
 		//get the song info from messenger
 		//songInfo = SongInfoMessenger.Instance.currentSong;

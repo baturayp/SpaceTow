@@ -48,7 +48,7 @@ public class SpaceMan : MonoBehaviour
 	{
 		spaceMan.CrossFadeInFixedTime(trackNumber.ToString(), CrossFade, 0);
 	}
-	
+
 	public void AvoidBack(int trackNumber)
 	{
 		spaceMan.CrossFadeInFixedTime(trackNumber + "B", CrossFade, 0);

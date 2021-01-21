@@ -9,18 +9,18 @@ public class MusicNodePool : MonoBehaviour
 	public int initialAmount;
 	private List<MusicNode> nodeList;
 
-	void Awake()
+	private void Awake()
 	{
 		instance = this;
 	}
 
-	void Start()
+	private void Start()
 	{
 		//create initial nodes
 		nodeList = new List<MusicNode>();
-		for (int i = 0; i < initialAmount; i++)
+		for (var i = 0; i < initialAmount; i++)
 		{
-			GameObject nodes = Instantiate(nodePrefab);
+			var nodes = Instantiate(nodePrefab);
 			nodes.SetActive(false);
 			nodeList.Add(nodes.GetComponent<MusicNode>());
 		}
@@ -29,17 +29,15 @@ public class MusicNodePool : MonoBehaviour
 	public MusicNode GetNode(float startLineZ, float finishLineZ, float beat, int trackNumber)
 	{
 		//check if there is an inactive instance
-		foreach (MusicNode node in nodeList)
+		foreach (var node in nodeList)
 		{
-			if (!node.gameObject.activeInHierarchy)
-			{
-				node.Initialize(startLineZ, finishLineZ, beat, trackNumber);
-				node.gameObject.SetActive(true);
-				return node;
-			}
+			if (node.gameObject.activeInHierarchy) continue;
+			node.Initialize(startLineZ, finishLineZ, beat, trackNumber);
+			node.gameObject.SetActive(true);
+			return node;
 		}
 		//no inactive instances, instantiate a new GetComponent
-		MusicNode musicNode = Instantiate(nodePrefab).GetComponent<MusicNode>();
+		var musicNode = Instantiate(nodePrefab).GetComponent<MusicNode>();
 		musicNode.Initialize(startLineZ, finishLineZ, beat, trackNumber);
 		nodeList.Add(musicNode);
 		return musicNode;

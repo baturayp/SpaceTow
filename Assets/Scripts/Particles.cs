@@ -6,8 +6,8 @@ public class Particles : MonoBehaviour
 {
     public ParticleSystem[] particles;
     private bool paused;
-    
-    void Update()
+
+    private void Update()
     {
         if (Conductor.paused)
         {
@@ -19,23 +19,27 @@ public class Particles : MonoBehaviour
         }
     }
 
-    void ScenePaused()
+    private void ScenePaused()
     {
-        if (paused)
+        switch (paused)
         {
-            int len = particles.Length;
-            for (int i = 0; i < len; i++)
+            case true:
             {
-                particles[i].Pause();
+                var len = particles.Length;
+                for (var i = 0; i < len; i++)
+                {
+                    particles[i].Pause();
+                }
+                break;
             }
-        }
-
-        if (!paused)
-        {
-            int len = particles.Length;
-            for (int i = 0; i < len; i++)
+            case false:
             {
-                particles[i].Play();
+                var len = particles.Length;
+                for (var i = 0; i < len; i++)
+                {
+                    particles[i].Play();
+                }
+                break;
             }
         }
     }

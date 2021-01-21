@@ -5,15 +5,14 @@ using System;
 
 public class SongInfoMessenger : MonoBehaviour
 {
-    public static SongInfoMessenger Instance = null;
+    public static SongInfoMessenger instance = null;
 
     [NonSerialized] public SongInfo currentSong;
     [NonSerialized] public int currSongNumber;
-    [NonSerialized] public int currCollNumber;
 
-    void Start()
+    private void Start()
     {
-        Instance = this;
+        instance = this;
 
         DontDestroyOnLoad(gameObject);
     }

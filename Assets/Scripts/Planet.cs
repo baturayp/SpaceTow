@@ -8,8 +8,8 @@ public class Planet : MonoBehaviour
     public GameObject clouds;
     private float scaleFactor;
     private Quaternion rot;
-    
-    void Update()
+
+    private void Update()
     {
         scaleFactor = Conductor.songposition < 60f ? 4f : (Conductor.songposition / 60f) * 4f;
         planet.transform.localScale = new Vector3(scaleFactor,scaleFactor,scaleFactor);

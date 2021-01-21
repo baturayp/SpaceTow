@@ -15,36 +15,15 @@ public class SongInfo : ScriptableObject
 
 	[HideInInspector]
 	public float songOffset;
-	[HideInInspector]
-	public float bpm;
 
 	[Header("Meteor appear offsets")]
 	public Tempo[] appearTime;
 
 	[Header("Just for reference, notes populated automatically, edit them from NoteEditor")]
 	public Track[] tracks = new Track[4];
-	private int totalHits;
-
-	[Header("When meteors appears")]
-	public float startTime;
 
 	[Header("When to finish scene shows up, in seconds")]
 	public float endTime;
-
-	//get the total hits of the song
-	public int TotalHitCounts()
-	{
-		totalHits = 0;
-		foreach (Track track in tracks)
-		{
-			foreach (Note note in track.notes)
-			{
-				totalHits += 1;
-			}
-		}
-
-		return totalHits;
-	}
 
 	[System.Serializable]
 	public class JsonData
@@ -93,22 +72,21 @@ public class SongInfo : ScriptableObject
 	// {note class}
 
 
-	public static JsonData FromJson(string json)
+	private static JsonData FromJson(string json)
 	{
-		JsonData jsonData = JsonUtility.FromJson<JsonData>(json);
+		var jsonData = JsonUtility.FromJson<JsonData>(json);
 		return jsonData;
 	}
 
 	public void OnEnable()
 	{
-		JsonData jsonData = FromJson(json.ToString());
-		List<JsonNote> jsonNotes = jsonData.notes.ToList();
-		List<Note> notes = new List<Note>();
+		var jsonData = FromJson(json.ToString());
+		var jsonNotes = jsonData.notes.ToList();
+		var notes = new List<Note>();
 		songOffset = jsonData.offset == 0 ? 0 : (1f - ((44100f - jsonData.offset) / 44100f));
-		bpm = jsonData.BPM;
 		if (string.IsNullOrEmpty(songTitle)) { songTitle = jsonData.name; }
 
-		foreach (JsonNote jsonNote in jsonNotes)
+		foreach (var jsonNote in jsonNotes)
 		{
 			notes.Add(ToAsset(jsonNote, jsonData.BPM, jsonNote.block));
 		}
@@ -123,7 +101,7 @@ public class SongInfo : ScriptableObject
 		tracks[3].notes = track3.ToArray();
 	}
 
-	static Note ToAsset(JsonNote note, int BPM, int track)
+	private static Note ToAsset(JsonNote note, int BPM, int track)
     {
 		var noteAsset = new Note
 		{

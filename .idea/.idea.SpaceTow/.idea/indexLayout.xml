@@ -10,7 +10,6 @@
       <Path>Library/PackageCache/com.unity.ide.visualstudio@2.0.5</Path>
       <Path>Library/PackageCache/com.unity.ide.vscode@1.2.3</Path>
       <Path>Library/PackageCache/com.unity.test-framework@1.1.20</Path>
-      <Path>Library/PackageCache/com.unity.textmeshpro@3.0.3</Path>
       <Path>Library/PackageCache/com.unity.timeline@1.4.6</Path>
       <Path>Packages</Path>
       <Path>ProjectSettings</Path>
@@ -21,6 +20,7 @@
       <Path>.vscode</Path>
       <Path>Library</Path>
       <Path>Logs</Path>
+      <Path>Temp</Path>
       <Path>UserSettings</Path>
       <Path>obj</Path>
     </explicitExcludes>

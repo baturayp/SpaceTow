@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MeteorNode : MonoBehaviour
 {
@@ -15,7 +14,6 @@ public class MeteorNode : MonoBehaviour
     private float val;
     private int len;
     private bool paused;
-    private int meteorPos;
     private float beat;
 
     //different meteor target points
@@ -23,22 +21,23 @@ public class MeteorNode : MonoBehaviour
 	private readonly float[] meteorFinalY = {0, 0.42f, 0.42f, 0.42f, 0.70f, 0.5f, 0.5f, 0.5f, 0.3f, 0.47f, 0.67f, 1.05f};
 	private readonly float[] explosionXOffset = {0, 0.1f, 0.1f, 0.2f, 0.2f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.2f};
 	private readonly float[] explosionYOffset = {0, -0.1f, 0, 0, 0f, 0, 0.1f, 0, 0, 0.1f, -0.1f, 0.2f};
-    private Vector3 explotionVector;
+    private Vector3 explosionVector;
     private float aCos;
 	private float metStartX, metStartY, metStartZ, metEndZ;
 	private float expX, expY;
-	private readonly float initYMultiplier = 4f;
-    private GameObject towTruck;
+	private const float InitYMultiplier = 4f;
+	private GameObject towTruck;
     private bool towTruckShaking;
-    private Vector3 towTruckInitial = new Vector3(0,0,-0.5f);
+    private readonly Vector3 towTruckInitial = new Vector3(0,0,-0.5f);
+    private static readonly int FresnelPower = Shader.PropertyToID("_FresnelPower");
 
-    public void Initialize(float startLineZ, float finishLineZ, float targetBeat, int meteorPos, int trackNumber)
+    public void Initialize(float startLineZ, float finishLineZ, float targetBeat, int meteorPs, int trackNumber)
     {
         len = meteorPieces.Length;
         wholeMesh = meteorWhole.GetComponent<MeshRenderer>();
         wholeMat = wholeMesh.material;
         piecesMesh = new MeshRenderer[len];
-        for (int i = 0; i < len; i++)
+        for (var i = 0; i < len; i++)
         {
             piecesMesh[i] = meteorPieces[i].transform.gameObject.GetComponent<MeshRenderer>();
         }
@@ -51,36 +50,36 @@ public class MeteorNode : MonoBehaviour
 		paused = false;
 
         beat = targetBeat;
-		
-		//make meteor appear at a predefined random point
-		this.meteorPos = meteorPos;
-		metStartZ = startLineZ;
+
+        //make meteor appear at a predefined random point
+        metStartZ = startLineZ;
 		metEndZ = finishLineZ;
-		metStartX = trackNumber > 0 ? 0 + meteorFinalX[meteorPos] : 0 - meteorFinalX[meteorPos];
-		metStartY = meteorFinalY[meteorPos];
+		metStartX = trackNumber > 0 ? 0 + meteorFinalX[meteorPs] : 0 - meteorFinalX[meteorPs];
+		metStartY = meteorFinalY[meteorPs];
 
-		//calculate explotion coordinates
-		expX = trackNumber > 0 ? 0 - explosionXOffset[meteorPos] : explosionXOffset[meteorPos];
-		expY = 0 - explosionYOffset[meteorPos];
-		explotionVector = new Vector3(expX, expY, 0);
+		//calculate explosion coordinates
+		expX = trackNumber > 0 ? 0 - explosionXOffset[meteorPs] : explosionXOffset[meteorPs];
+		expY = 0 - explosionYOffset[meteorPs];
+		explosionVector = new Vector3(expX, expY, 0);
 
-		transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-		float initPos = metStartX * initYMultiplier;
-		transform.position = new Vector3(initPos , metStartY, metStartZ);
+		var transform1 = transform;
+		var initPos = metStartX * InitYMultiplier;
+		transform1.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+		transform1.position = new Vector3(initPos , metStartY, metStartZ);
     }
 
-    void SetState(bool state)
+    private void SetState(bool state)
     {
-        for (int i = 0; i < len; i++)
+        for (var i = 0; i < len; i++)
         {
             meteorPieces[i].transform.gameObject.SetActive(state);
-            piecesMesh[i].material.SetFloat("_FresnelPower", val);
+            piecesMesh[i].material.SetFloat(FresnelPower, val);
         }
     }
 
-    void SetMaterial(float value)
+    private void SetMaterial(float value)
     {
-        wholeMat.SetFloat("_FresnelPower", value);
+        wholeMat.SetFloat(FresnelPower, value);
         val = value;
     }
 
@@ -89,7 +88,7 @@ public class MeteorNode : MonoBehaviour
         StartCoroutine(ExplosionRoutine(success));
     }
 
-    void Update()
+    private void Update()
     {
         if (Conductor.pauseTimeStamp > 0f) return;
 
@@ -100,7 +99,7 @@ public class MeteorNode : MonoBehaviour
 
         if (paused) return;
 
-        transform.position = new Vector3(Mathf.LerpUnclamped(metStartX, metStartX * initYMultiplier, (beat - Conductor.songposition) / (Conductor.appearTime)), 
+        transform.position = new Vector3(Mathf.LerpUnclamped(metStartX, metStartX * InitYMultiplier, (beat - Conductor.songposition) / (Conductor.appearTime)), 
 														metStartY, 
 														Mathf.LerpUnclamped(metEndZ, metStartZ, (beat - Conductor.songposition) / (Conductor.appearTime)));
 
@@ -110,7 +109,7 @@ public class MeteorNode : MonoBehaviour
         //scale up meteors as they get closer
 		if (Conductor.songposition > beat - 1f && Conductor.songposition < beat - 0.5f)
 		{
-			float ls = 0.1f / (beat - Conductor.songposition);
+			var ls = 0.1f / (beat - Conductor.songposition);
 			transform.localScale = new Vector3(ls, ls, ls);
 		}
 
@@ -125,44 +124,44 @@ public class MeteorNode : MonoBehaviour
 			Explode(false);
 		}
     }
-    
-    IEnumerator ExplosionRoutine(bool success)
+
+    private IEnumerator ExplosionRoutine(bool success)
 	{
 		yield return new WaitUntil(() => Conductor.songposition >= beat);
 		paused = true;
-
-		Vector3 explosionPosition = transform.position + explotionVector;
-		
-        if (success)
+		var explosionPosition = transform.position + explosionVector;
+		switch (success)
         {
-            meteorWhole.SetActive(false);
-            SetState(true);
-            foreach (Rigidbody piece in meteorPieces)
-            {
-                piece.AddExplosionForce(2.0f, explosionPosition, 5.0f, 0f, ForceMode.Impulse);
-            }
+	        case true:
+	        {
+		        meteorWhole.SetActive(false);
+		        SetState(true);
+		        foreach (var piece in meteorPieces)
+		        {
+			        piece.AddExplosionForce(2.0f, explosionPosition, 5.0f, 0f, ForceMode.Impulse);
+		        }
+		        break;
+	        }
+	        case false:
+		        Handheld.Vibrate();
+		        towTruckShaking = true;
+		        wholeRigid.AddExplosionForce(10f, explosionPosition, 5.0f, 2f, ForceMode.Impulse);
+		        break;
         }
 
-		if (!success)
-        {
-            Handheld.Vibrate();
-            towTruckShaking = true;
-            wholeRigid.AddExplosionForce(10f, explosionPosition, 5.0f, 2f, ForceMode.Impulse);
-        }
-        
         //make meteors even smaller as they exploding
-		float elapsedTime = 0.0f;
-		
-        while (elapsedTime < 0.4f)
+		var elapsedTime = 0.0f;
+
+		while (elapsedTime < 0.4f)
 		{
 			elapsedTime += Time.deltaTime;
-			float ls = Mathf.Lerp(0.2f, 0.1f, elapsedTime / 0.4f);
-			Vector3 vs = new Vector3(ls, ls, ls);
+			var ls = Mathf.Lerp(0.2f, 0.1f, elapsedTime / 0.4f);
+			var vs = new Vector3(ls, ls, ls);
 			transform.localScale = success ? vs : new Vector3(0.2f,0.2f,0.2f);
 			yield return null;
 		}
-        
-        towTruckShaking = false;
+
+		towTruckShaking = false;
 		towTruck.transform.position = towTruckInitial;
         Destroy(gameObject);
 	}

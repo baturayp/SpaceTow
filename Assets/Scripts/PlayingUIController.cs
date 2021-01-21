@@ -65,7 +65,7 @@ public class PlayingUIController : MonoBehaviour
 
 	private IEnumerator CountRoutine()
 	{
-		for (int i = 3; i >=1; i--)
+		for (var i = 3; i >=1; i--)
 		{
 			yield return new WaitWhile(() => Conductor.paused);
 			yield return new WaitForSeconds(1f);

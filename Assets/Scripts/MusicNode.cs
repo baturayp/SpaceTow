@@ -14,12 +14,12 @@ public class MusicNode : MonoBehaviour
 	private MeteorNode meteorNode;
 	private ObstacleNode obstacleNode;
 
-	public void Initialize(float startLineZ, float finishLineZ, float targetBeat, int trackNumber)
+	public void Initialize(float startLine, float finishLine, float targetBeat, int trackNum)
 	{
-		this.beat = targetBeat;
-		this.trackNumber = trackNumber;
-		this.startLineZ = startLineZ;
-		this.finishLineZ = finishLineZ;
+		beat = targetBeat;
+		trackNumber = trackNum;
+		startLineZ = startLine;
+		finishLineZ = finishLine;
 
 		if (trackNumber > 1)
 		{
@@ -33,27 +33,27 @@ public class MusicNode : MonoBehaviour
 		}
 	}
 
-	void Update()
+	private void Update()
 	{
 		if (Conductor.songposition > beat + 2f) gameObject.SetActive(false);
 	}
 
-	MeteorNode GetMeteor()
+	private MeteorNode GetMeteor()
 	{
-		int randomPos = UnityEngine.Random.Range(1,12);
+		var randomPos = UnityEngine.Random.Range(1,12);
 		//int randomPos = 11;
-		int randomMeteor = UnityEngine.Random.Range(0,5);
+		var randomMeteor = UnityEngine.Random.Range(0,5);
 		meteorNode = Instantiate(meteorPrefab[randomMeteor]).GetComponent<MeteorNode>();
 		meteorNode.Initialize(startLineZ, finishLineZ, beat, randomPos, trackNumber);
 		objPos = randomPos;
 		return meteorNode;
 	}
 
-	ObstacleNode GetObstacle()
+	private ObstacleNode GetObstacle()
 	{
-		int randomPos = UnityEngine.Random.Range(1,3);
-		int len = obstaclePrefab.Length;
-		int random = UnityEngine.Random.Range(0, len);
+		var randomPos = UnityEngine.Random.Range(1,3);
+		var len = obstaclePrefab.Length;
+		var random = UnityEngine.Random.Range(0, len);
 		obstacleNode = Instantiate(obstaclePrefab[random]).GetComponent<ObstacleNode>();
 		obstacleNode.Initialize(startLineZ, finishLineZ, beat, trackNumber);
 		objPos = randomPos;

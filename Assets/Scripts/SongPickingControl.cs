@@ -7,8 +7,8 @@ public class SongPickingControl : MonoBehaviour
 	public GameObject settingsButton;
 	public GameObject settingsLayer;
 	public GameObject aboutLayer;
-	public static bool settingsIsActive = false;
-	public static bool secondBoardIsActive = false;
+	private static bool _settingsIsActive = false;
+	private static bool _secondBoardIsActive = false;
 
 	[Header("Board transforms")]
 	//First Board
@@ -22,17 +22,17 @@ public class SongPickingControl : MonoBehaviour
 	private const float FlipAnimationDuration = 0.25f;
 
 	//rotation
-	private Vector3 verticalFlip = new Vector3(90f, 0f, 0f);
-	private Vector3 horizontalFlip = new Vector3(0f, 90f, 0f);
+	private readonly Vector3 verticalFlip = new Vector3(90f, 0f, 0f);
+	private readonly Vector3 horizontalFlip = new Vector3(0f, 90f, 0f);
 
 	//pivot
-	private Vector2 topEdgePivot = new Vector2(0.5f, 1f);
-	private Vector2 bottomEdgePivot = new Vector2(0.5f, 0f);
+	private readonly Vector2 topEdgePivot = new Vector2(0.5f, 1f);
+	private readonly Vector2 bottomEdgePivot = new Vector2(0.5f, 0f);
 
-	void Awake()
+	private void Awake()
 	{
 		//check if song messenger exists (if player returned from other scenes)
-		if (SongInfoMessenger.Instance != null)
+		if (SongInfoMessenger.instance != null)
 		{
 			//Placeholder. Do something here.
 		}
@@ -44,10 +44,10 @@ public class SongPickingControl : MonoBehaviour
 	}
 
 	//menu flip animations
-    IEnumerator FlipAnimCoroutine(RectTransform rectT, Vector3 start, Vector3 end, float duration, Vector2 originalPivot, Vector2 animationPivot)
+	private static IEnumerator FlipAnimCoroutine(RectTransform rectT, Vector3 start, Vector3 end, float duration, Vector2 originalPivot, Vector2 animationPivot)
 	{
 		rectT.pivot = animationPivot;
-		float i = 0f;
+		var i = 0f;
 		while (i <= 1f)
 		{
 			i += Time.deltaTime / duration;
@@ -57,9 +57,9 @@ public class SongPickingControl : MonoBehaviour
 		rectT.pivot = originalPivot;
 	}
 
-	IEnumerator AboutAnim()
+	private IEnumerator AboutAnim()
 	{
-		float elapsedTime = 0.0f;
+		var elapsedTime = 0.0f;
 		aboutLayer.SetActive(true);
 		settingsLayer.SetActive(false);
 		while (elapsedTime < 0.2f)
@@ -75,20 +75,20 @@ public class SongPickingControl : MonoBehaviour
     {
         StartCoroutine(FlipAnimCoroutine( secondBoardTransform, Vector3.zero, verticalFlip, FlipAnimationDuration, secondBoardTransform.pivot, bottomEdgePivot));
         StartCoroutine(FlipAnimCoroutine( firstBoardTransform, verticalFlip, Vector3.zero, FlipAnimationDuration, firstBoardTransform.pivot, topEdgePivot));
-		secondBoardIsActive = false;
+		_secondBoardIsActive = false;
     }
 
     public void FlipToSongFromFirst()
     {
         StartCoroutine(FlipAnimCoroutine( firstBoardTransform, Vector3.zero, verticalFlip, FlipAnimationDuration, firstBoardTransform.pivot, topEdgePivot));
         StartCoroutine(FlipAnimCoroutine( secondBoardTransform, verticalFlip, Vector3.zero, FlipAnimationDuration, secondBoardTransform.pivot, bottomEdgePivot));
-		secondBoardIsActive = true;
+		_secondBoardIsActive = true;
     }
 
     public void SettingsButtonToggle()
 	{
-		if (secondBoardIsActive) FlipToFirstFromSong();
-		else if (settingsIsActive) FlipToFirstFromSettings();
+		if (_secondBoardIsActive) FlipToFirstFromSong();
+		else if (_settingsIsActive) FlipToFirstFromSettings();
 		else FlipToSettingsFromFirst();
 	}
 
@@ -96,7 +96,7 @@ public class SongPickingControl : MonoBehaviour
 	{
 		StartCoroutine(FlipAnimCoroutine( firstBoardTransform, Vector3.zero, horizontalFlip, FlipAnimationDuration, firstBoardTransform.pivot, topEdgePivot));
 		StartCoroutine(FlipAnimCoroutine( settingsBoardTransform, horizontalFlip, Vector3.zero, FlipAnimationDuration, settingsBoardTransform.pivot, bottomEdgePivot));
-		settingsIsActive = true;
+		_settingsIsActive = true;
 		aboutLayer.SetActive(false);
 		settingsLayer.SetActive(true);
 	}
@@ -105,7 +105,7 @@ public class SongPickingControl : MonoBehaviour
 	{
 		StartCoroutine(FlipAnimCoroutine( settingsBoardTransform, Vector3.zero, horizontalFlip, FlipAnimationDuration, settingsBoardTransform.pivot, bottomEdgePivot));
 		StartCoroutine(FlipAnimCoroutine( firstBoardTransform, horizontalFlip, Vector3.zero, FlipAnimationDuration, firstBoardTransform.pivot, topEdgePivot));
-		settingsIsActive = false;
+		_settingsIsActive = false;
 	}
 
 	public void AboutToggle()
