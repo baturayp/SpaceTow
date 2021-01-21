@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ChapelGeneral
+  m_Name: GreenYellowGeneral 1
   m_Shader: {fileID: 4800000, guid: 5505ee45ba0ef904f841364043c6f363, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmmiMask:
-        m_Texture: {fileID: 2800000, guid: f2ec883c1a0e8384588c7ee236557a68, type: 3}
+        m_Texture: {fileID: 2800000, guid: ee18eb89f1319964099a0e9f49515610, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -80,6 +80,7 @@ Material:
     - _Parallax: 0.02
     - _RimAngle: -0.061
     - _RimIntensity: 1.27
+    - _Scale: 1
     - _SmoothnessTextureChannel: 0
     - _SpecLightVal: 1
     - _SpecularHighlights: 1
@@ -90,9 +91,9 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DiffuseLightC: {r: 0.77, g: 0.7, b: 0.19, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _LightC: {r: 1, g: 0.91838396, b: 0, a: 1}
+    - _LightC: {r: 0.17, g: 1, b: 0.09, a: 1}
     - _LightColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
-    - _MainColor: {r: 1, g: 1, b: 1, a: 1}
-    - _RimLight: {r: 1, g: 0.8980392, b: 0.53333336, a: 1}
-    - _ShadowColor: {r: 0.4770026, g: 0.4552332, b: 0.6226415, a: 1}
+    - _MainColor: {r: 0.73, g: 0.72, b: 0.66, a: 1}
+    - _RimLight: {r: 0.56, g: 0.58, b: 0.24, a: 1}
+    - _ShadowColor: {r: 0.33, g: 0.32, b: 0.18, a: 1}
   m_BuildTextureStacks: []
