@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1422056865429791355}
   - component: {fileID: 6243385887790287927}
   m_Layer: 0
-  m_Name: Music Node
+  m_Name: MusicNode_Station
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,4 +50,5 @@ MonoBehaviour:
   - {fileID: 2587658552038568427, guid: 1b05ff3116ab31d28917d1f7f2ab5928, type: 3}
   - {fileID: 2587658552038568427, guid: 7fd1f68441bcd438c93cdde2ba6ff1e0, type: 3}
   obstaclePrefab:
-  - {fileID: 2587658552038568427, guid: 61352101fe9682bd19970116f30e4c1b, type: 3}
+  - {fileID: 2587658552038568427, guid: 2b9f838ba260fb67cb63b0d1c7c12446, type: 3}
+  - {fileID: 2587658552038568427, guid: a27e7f302dcbb6a4ab6889f44b5ba170, type: 3}

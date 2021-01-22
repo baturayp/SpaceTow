@@ -19,13 +19,15 @@ public class Logic : MonoBehaviour
 	//camera selection
 	public GameObject[] cams;
 	public Image[] uiElements;
+	public Text[] texts;
 	private int len, cur;
 	public Color[] colors;
 	public Color[] uiColors;
 	public Image leftButton, rightButton, songInfoFrame, songBkg, playBtn;
+	public Toggle effectsToggle;
 	public Text songTitle, artistName;
 	private int lastColor;
-	private readonly string[] scenes = { "Beach", "Toxic", "Station", "Chapel", "Barn" };
+	private readonly string[] scenes = { "Beach1", "Toxic1", "Station1", "Chapel1", "Barn1" };
 	private readonly string[] tracks = { "Fright Night Twist", "Run!", "Mystica", "Twelve Days", "Born Barnstormers" };
 	private readonly string[] artists = { "Bryan Teoh", "Komiku", "Alexander Nakarada", "Alexander Nakarada", "Brian Boyko" };
 	private static readonly int NoiseColor = Shader.PropertyToID("_NoiseColor");
@@ -37,6 +39,10 @@ public class Logic : MonoBehaviour
 		starsMat = staticStars.material;
 		starsMat.SetColor(NoiseColor, colors[0]);
 		SetCurrent(cur);
+
+		//get effects pref
+		var effects = PlayerPrefs.GetInt("punchEffects", 1) == 1 ? true : false;
+		effectsToggle.isOn = effects;
 	}
 
 	public void Update()
@@ -93,6 +99,12 @@ public class Logic : MonoBehaviour
 		SceneManager.LoadScene(scenes[cur]);
 	}
 
+	public void EffectsToggle(bool tg)
+	{
+		if (tg) PlayerPrefs.SetInt("punchEffects", 1);
+		else PlayerPrefs.SetInt("punchEffects", 0);
+	}
+
 	private void SetCurrent(int cr)
 	{
 		var color = colors[cr];
@@ -109,7 +121,11 @@ public class Logic : MonoBehaviour
 				playBtn.color =
 				new Color(uiColors[cr].r, uiColors[cr].g, uiColors[cr].b, 1f);
 		songBkg.color = new Color(uiColors[cr].r, uiColors[cr].g, uiColors[cr].b, 0.3f);
-		songTitle.color = artistName.color = new Color(1, 1, 1, 1f);
+		songTitle.color = artistName.color = new Color(uiColors[cr].r, uiColors[cr].g, uiColors[cr].b, 1f);
+		foreach (var text in texts)
+		{
+			text.color = uiColors[cr];
+		}
 	}
 
 	private IEnumerator SetColor()
@@ -145,7 +161,7 @@ public class Logic : MonoBehaviour
 				playBtn.color =
 				new Color(uiColors[lastColor].r, uiColors[lastColor].g, uiColors[lastColor].b, a);
 			songBkg.color = new Color(uiColors[lastColor].r, uiColors[lastColor].g, uiColors[lastColor].b, b);
-			songTitle.color = artistName.color = new Color(1, 1, 1, a);
+			songTitle.color = artistName.color = new Color(uiColors[lastColor].r, uiColors[lastColor].g, uiColors[lastColor].b, a);
 			yield return null;
 		}
 
@@ -166,8 +182,13 @@ public class Logic : MonoBehaviour
 				playBtn.color =
 				new Color(uiColors[cur].r, uiColors[cur].g, uiColors[cur].b, a);
 			songBkg.color = new Color(uiColors[cur].r, uiColors[cur].g, uiColors[cur].b, b);
-			songTitle.color = artistName.color = new Color(1, 1, 1, a);
+			songTitle.color = artistName.color = new Color(uiColors[cur].r, uiColors[cur].g, uiColors[cur].b, a);
 			yield return null;
+		}
+		
+		foreach (var text in texts)
+		{
+			text.color = uiColors[cur];
 		}
 	}
 

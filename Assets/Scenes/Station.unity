@@ -6226,6 +6226,8 @@ MonoBehaviour:
   healthBarTop: {fileID: 350325368}
   healthBarBottom: {fileID: 1842000952}
   fadePanel: {fileID: 971456902}
+  playCam: {fileID: 0}
+  towParticles: {fileID: 0}
 --- !u!114 &1153441175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11728,7 +11730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b69752e095cd01a68f91bfa12c593e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodePrefab: {fileID: 529521031632119238, guid: 6e47b922c35833ae5b8e935ad8ac4178, type: 3}
+  nodePrefab: {fileID: 529521031632119238, guid: b36a2e6cdc95d719da757acfdf9058f9, type: 3}
   initialAmount: 20
 --- !u!114 &1760618929
 MonoBehaviour:

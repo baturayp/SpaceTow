@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c222991a60d4cdeab920d7daba3a6c3, type: 3}
+  m_Name: Tutorial
+  m_EditorClassIdentifier: 
+  song: {fileID: 8300000, guid: 51ebd297033c1af1bbba8b96f1621b39, type: 3}
+  json: {fileID: 4900000, guid: fd09b4d31fa94a3c1b5d4ea715fcaa29, type: 3}
+  songTitle: Tutorial
+  songOffset: 0
+  appearTime:
+  - startTime: 0
+    offsetVal: 2
+  tracks:
+  - notes:
+    - dueTo: 3
+      track: 0
+    - dueTo: 5
+      track: 0
+  - notes:
+    - dueTo: 4
+      track: 1
+    - dueTo: 6
+      track: 1
+  - notes:
+    - dueTo: 8
+      track: 2
+    - dueTo: 10
+      track: 2
+  - notes:
+    - dueTo: 7
+      track: 3
+    - dueTo: 9
+      track: 3
+  endTime: 220

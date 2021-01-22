@@ -59,6 +59,10 @@ public class Conductor : MonoBehaviour
 	public static int avoidPos;
 	private static float _avoidMoveWait;
 
+	//tutorial variables
+	public static bool isTutorial;
+	public static bool punchedFromTutorial, swipedFromTutorial;
+
 	//play punch sound at exact time
 	private void PunchEffect(float offset)
 	{
@@ -152,6 +156,11 @@ public class Conductor : MonoBehaviour
 
 	private void Start()
 	{
+		//check if tutorial
+
+		var tutorial = gameObject.GetComponent("Tutorial") as Tutorial;
+		if (tutorial != null) isTutorial = true;
+
 		//reset static variables
 		paused = true;
 		pauseTimeStamp = -1f;
@@ -180,9 +189,13 @@ public class Conductor : MonoBehaviour
 		//initialize audioSource
 		songLayer.clip = songInfo.song;
 
-		//load Audio data
+		//load Audio data and set sound
 		songLayer.clip.LoadAudioData();
-		songLayer.volume = 1f;
+		//if (isTutorial) songLayer.volume = 0f;
+		//else songLayer.volume = 1f;
+		var punchEffectsOn = PlayerPrefs.GetInt("punchEffects", 1);
+		if (punchEffectsOn == 0) effectLayer.volume = 0f;
+		else effectLayer.volume = 1f;
 
 		//start countdown
 		StartCoroutine(CountDown());
@@ -258,7 +271,7 @@ public class Conductor : MonoBehaviour
 				if (currNode.beat < songposition - BackOffset)
 				{
 					beatQueue.Dequeue();
-					uiController.ScoreDown(currNode.trackNumber);
+					if (!isTutorial) uiController.ScoreDown(currNode.trackNumber);
 				}
 			}
 
@@ -278,7 +291,7 @@ public class Conductor : MonoBehaviour
 					else
 					{
 						beatQueue.Dequeue();
-						uiController.ScoreDown(currNode.trackNumber);
+						if (!isTutorial) uiController.ScoreDown(currNode.trackNumber);
 						spaceMan.GotHit(currNode.trackNumber);
 						effectLayer.PlayOneShot(obstacleMissClip);
 					}
@@ -323,6 +336,19 @@ public class Conductor : MonoBehaviour
 			_avoidMoveWait = 0f;
 		}
 
+		//tutorial bits
+		if(punchedFromTutorial)
+		{
+			Inputted();
+			punchedFromTutorial = false;
+		}
+
+		if(swipedFromTutorial)
+		{
+			Avoid(3);
+			swipedFromTutorial = false;
+		}
+
 		//check to see if the song reaches its end
 		if (songposition > songLength || songposition > endTime)
 		{
@@ -339,7 +365,7 @@ public class Conductor : MonoBehaviour
 	{
 		//wait until audio data loaded
 		yield return new WaitUntil(() => songLayer.clip.loadState == AudioDataLoadState.Loaded);
-		uiController.FadeDown();
+		if (!isTutorial) uiController.FadeDown();
 		StartSong();
 	}
 

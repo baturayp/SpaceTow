@@ -508,7 +508,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a3804551c55e2ad9184af6583c5ace2d, type: 2}
+  - {fileID: 2100000, guid: bee01efe12ece2b4cbcdeb84362eaed5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6236,6 +6236,8 @@ MonoBehaviour:
   healthBarTop: {fileID: 350325368}
   healthBarBottom: {fileID: 1842000952}
   fadePanel: {fileID: 971456902}
+  playCam: {fileID: 0}
+  towParticles: {fileID: 0}
 --- !u!114 &1153441175
 MonoBehaviour:
   m_ObjectHideFlags: 0

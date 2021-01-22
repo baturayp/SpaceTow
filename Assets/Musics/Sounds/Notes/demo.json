@@ -1,0 +1,72 @@
+﻿{
+    "name": "demo",
+    "maxBlock": 4,
+    "BPM": 120,
+    "offset": 0,
+    "notes": [
+        {
+            "LPB": 8,
+            "num": 48,
+            "block": 0,
+            "type": 1,
+            "length": 0,
+            "times": 0
+        },
+        {
+            "LPB": 8,
+            "num": 64,
+            "block": 1,
+            "type": 1,
+            "length": 0,
+            "times": 0
+        },
+        {
+            "LPB": 8,
+            "num": 80,
+            "block": 0,
+            "type": 1,
+            "length": 0,
+            "times": 0
+        },
+        {
+            "LPB": 8,
+            "num": 96,
+            "block": 1,
+            "type": 1,
+            "length": 0,
+            "times": 0
+        },
+        {
+            "LPB": 8,
+            "num": 112,
+            "block": 3,
+            "type": 1,
+            "length": 0,
+            "times": 0
+        },
+        {
+            "LPB": 8,
+            "num": 128,
+            "block": 2,
+            "type": 1,
+            "length": 0,
+            "times": 0
+        },
+        {
+            "LPB": 8,
+            "num": 144,
+            "block": 3,
+            "type": 1,
+            "length": 0,
+            "times": 0
+        },
+        {
+            "LPB": 8,
+            "num": 160,
+            "block": 2,
+            "type": 1,
+            "length": 0,
+            "times": 0
+        }
+    ]
+}

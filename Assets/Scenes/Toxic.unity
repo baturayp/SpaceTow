@@ -6345,6 +6345,8 @@ MonoBehaviour:
   healthBarTop: {fileID: 350325368}
   healthBarBottom: {fileID: 1842000952}
   fadePanel: {fileID: 971456902}
+  playCam: {fileID: 0}
+  towParticles: {fileID: 0}
 --- !u!114 &1153441175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11829,7 +11831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b69752e095cd01a68f91bfa12c593e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodePrefab: {fileID: 529521031632119238, guid: 8987686757a00b6acbc1caf81c2936ef, type: 3}
+  nodePrefab: {fileID: 529521031632119238, guid: cbe2c6e1702f6cee18482c6a1f5235c0, type: 3}
   initialAmount: 20
 --- !u!114 &1760618929
 MonoBehaviour:
@@ -12776,7 +12778,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8048db8e2f4c644ccbad38d1fbc16150, type: 2}
+  - {fileID: 2100000, guid: edafed088dbd98b49898614d348951c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12862,7 +12864,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8048db8e2f4c644ccbad38d1fbc16150, type: 2}
+  - {fileID: 2100000, guid: edafed088dbd98b49898614d348951c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13120,7 +13122,7 @@ Animator:
   m_GameObject: {fileID: 919132148728677579}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: c72817be886071d4ebafb2fd7eca9775, type: 3}
-  m_Controller: {fileID: 9100000, guid: 1e468ab698bf0400086800729bf021b5, type: 2}
+  m_Controller: {fileID: 9100000, guid: 32fcfad4e627e1360bab0a26afb0e027, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1

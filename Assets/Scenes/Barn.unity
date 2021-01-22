@@ -252,7 +252,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 1b40922e3d6301445ad2618bcb723f84, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b1cfc72f9b7c6422a814ce0b29dcf219, type: 2}
+      objectReference: {fileID: 2100000, guid: 39cb53377bab6664488a66ba72b3e356, type: 2}
     - target: {fileID: 919132149155446097, guid: 1b40922e3d6301445ad2618bcb723f84, type: 3}
       propertyPath: m_Name
       value: TowTruck
@@ -6040,7 +6040,7 @@ PrefabInstance:
     - target: {fileID: 1559671990840252126, guid: c72817be886071d4ebafb2fd7eca9775, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b1cfc72f9b7c6422a814ce0b29dcf219, type: 2}
+      objectReference: {fileID: 2100000, guid: 39cb53377bab6664488a66ba72b3e356, type: 2}
     - target: {fileID: 2301691502265739275, guid: c72817be886071d4ebafb2fd7eca9775, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -14.711115
@@ -6529,6 +6529,8 @@ MonoBehaviour:
   healthBarTop: {fileID: 350325368}
   healthBarBottom: {fileID: 1842000952}
   fadePanel: {fileID: 971456902}
+  playCam: {fileID: 0}
+  towParticles: {fileID: 0}
 --- !u!114 &1153441175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6780,7 +6782,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 6
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -8259,7 +8261,7 @@ ParticleSystem:
     z:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -1
+      scalar: -30
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -11411,7 +11413,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1202873084}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 18.3}
+  m_LocalPosition: {x: 0, y: 0, z: 116}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -12119,7 +12121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b69752e095cd01a68f91bfa12c593e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodePrefab: {fileID: 529521031632119238, guid: f2ad1d4b6e8542149a6321df7ec12f28, type: 3}
+  nodePrefab: {fileID: 529521031632119238, guid: 5cb84c4bb40a61931aee9a3b1b9b1660, type: 3}
   initialAmount: 20
 --- !u!114 &1760618929
 MonoBehaviour:

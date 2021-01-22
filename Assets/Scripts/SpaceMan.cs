@@ -9,6 +9,18 @@ public class SpaceMan : MonoBehaviour
 	private const float CrossFade = 0.08f;
 	private readonly int[] backPosition = { 0, 1, 1, 1, 2, 3, 3, 4, 4, 4, 4, 2 };
 
+	private void Update()
+	{
+		if (Conductor.paused)
+		{
+			spaceMan.enabled = false;
+		}
+		else
+		{
+			spaceMan.enabled = true;
+		}
+	}
+
 	//successful punch animation
 	public void Punch(int animNumber, int trackNumber, float offset, bool success)
 	{
