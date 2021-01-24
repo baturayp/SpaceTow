@@ -541,14 +541,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1315,6 +1315,7 @@ MonoBehaviour:
   swipeIcon: {fileID: 1194360549}
   nextIcon: {fileID: 1870999698}
   fadePanel: {fileID: 987566689}
+  conductor: {fileID: 1760618929}
 --- !u!114 &1760618929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1338,6 +1339,7 @@ MonoBehaviour:
   shortPunchClip: {fileID: 8300000, guid: 048229d8e371c6c3e92780ea8bc734bf, type: 3}
   obstacleSuccessClip: {fileID: 8300000, guid: 261daaaa4a0589e21b9ce7a9e2a003b7, type: 3}
   obstacleMissClip: {fileID: 8300000, guid: 53a8c3a33763de121bfb2946a8401ba3, type: 3}
+  isTutorial: 1
 --- !u!4 &1760618930
 Transform:
   m_ObjectHideFlags: 0
@@ -1384,7 +1386,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1870999699
 MonoBehaviour:
   m_ObjectHideFlags: 0

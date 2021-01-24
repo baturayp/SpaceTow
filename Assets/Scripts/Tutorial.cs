@@ -10,23 +10,29 @@ public class Tutorial : MonoBehaviour
     public Color textColor;
     public GameObject tapIcon, swipeIcon, nextIcon;
     public Image fadePanel;
-    private bool[] messageViewed = new bool[3];
+    private bool message0, message1;
     private bool tapped, swiped;
     private Coroutine blink;
+    public Conductor conductor;
 
-    private void Start()
+    private void OnEnable()
     {
-        // var nextLevel = PlayerPrefs.GetInt("lastLevel", 0);
-        // if (nextLevel > 0)
-        // {
-        //     SceneManager.LoadScene(nextLevel);
-        // }
+        SceneManager.sceneLoaded += OnSceneLoad;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoad;
+    }
+    
+    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        StartCoroutine(StartRoutine());
     }
 
     public void OnNextButton()
     {
-        //PlayerPrefs.SetInt("lastLevel", 1);
-        SceneManager.LoadScene("MainMenu");
+        StartCoroutine(SkipRoutine());
     }
 
     private void Update()
@@ -35,17 +41,17 @@ public class Tutorial : MonoBehaviour
 
         if (Conductor.songposition > 2.95f)
         {
-            if (!messageViewed[0]) ShowMessage(0, "Single tap to punch\nwhen a meteor glows red");
+            if (!message0) ShowMessage(0, "Single tap to punch\nwhen a meteor glows red");
         }
 
-        if (Conductor.songposition > 6.95f)
+        if (Conductor.songposition > 6.8f)
         {
-            if (!messageViewed[1]) ShowMessage(1, "Swipe to avoid objects\nthat are not meteors");
+            if (!message1) ShowMessage(1, "Swipe to avoid objects\nthat are not meteors");
         }
 
         if (Conductor.songposition > 10f)
         {
-            StartCoroutine(FadeRoutine());
+            StartCoroutine(SkipRoutine());
         }
 
         if (Input.touches.Length > 0)
@@ -68,7 +74,16 @@ public class Tutorial : MonoBehaviour
 
     private void ShowMessage(int message, string text)
     {
-        messageViewed[message] = true;
+        switch (message)
+        {
+            case 0:
+                message0 = true;
+                break;
+            case 1:
+                message1 = true;
+                break;
+        }
+
         StartCoroutine(MessageRoutine(message, text));
     }
 
@@ -77,7 +92,6 @@ public class Tutorial : MonoBehaviour
         var elapsedTime = 0f;
         Conductor.paused = true;
         messageText.text = text;
-        elapsedTime = 0f;
         while (elapsedTime < 0.3f)
         {
             elapsedTime += Time.deltaTime;
@@ -86,26 +100,31 @@ public class Tutorial : MonoBehaviour
             messageText.color = c;
             yield return null;
         }
-        
-        if (message == 0) 
+
+        switch (message)
         {
-            blink = StartCoroutine(TapRoutine());
-            yield return new WaitUntil(() => tapped);
-            if (blink != null) StopCoroutine(blink);
-            tapIcon.SetActive(false);
-            Conductor.punchedFromTutorial = true;
+            case 0:
+            {
+                blink = StartCoroutine(TapRoutine());
+                yield return new WaitUntil(() => tapped);
+                if (blink != null) StopCoroutine(blink);
+                tapIcon.SetActive(false);
+                Conductor.paused = false;
+                conductor.Inputted();
+                break;
+            }
+            case 1:
+            {
+                blink = StartCoroutine(SwipeRoutine());
+                yield return new WaitUntil(() => swiped);
+                if (blink != null) StopCoroutine(blink);
+                swipeIcon.SetActive(false);
+                Conductor.paused = false;
+                conductor.Avoid(3);
+                break;
+            }
         }
-        
-        if (message == 1) 
-        {
-            blink = StartCoroutine(SwipeRoutine());
-            yield return new WaitUntil(() => swiped);
-            if (blink != null) StopCoroutine(blink);
-            swipeIcon.SetActive(false);
-            Conductor.swipedFromTutorial = true;
-        }
-        
-        Conductor.paused = false;
+
         elapsedTime = 0f;
         while (elapsedTime < 0.3f)
         {
@@ -147,8 +166,21 @@ public class Tutorial : MonoBehaviour
         yield return new WaitForSeconds(2f);
         blink = StartCoroutine(SwipeRoutine());
     }
+    
+    private IEnumerator StartRoutine()
+    {
+        var elapsedTime = 0f;
+        while (elapsedTime < 1f)
+        {
+            elapsedTime += Time.deltaTime;
+            var a = Mathf.Lerp(1f, 0f, elapsedTime / 1f);
+            fadePanel.color = new Color (0, 0, 0, a);
+            yield return null;
+        }
+        nextIcon.SetActive(true);
+    }
 
-    private IEnumerator FadeRoutine()
+    private IEnumerator SkipRoutine()
     {
         nextIcon.SetActive(false);
         var elapsedTime = 0f;
@@ -159,6 +191,6 @@ public class Tutorial : MonoBehaviour
             fadePanel.color = new Color (0, 0, 0, a);
             yield return null;
         }
-        OnNextButton();
+        SceneManager.LoadScene("MainMenu");
     }
 }

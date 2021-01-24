@@ -29,7 +29,6 @@ public class SongInfo : ScriptableObject
 	public class JsonData
 	{
 		public string name;
-		public int maxBlock;
 		public int BPM;
 		public int offset;
 		public JsonNote[] notes;
@@ -41,9 +40,6 @@ public class SongInfo : ScriptableObject
 		public int LPB;
 		public int num;
 		public int block;
-		public int type;
-		public int length;
-		public int times;
 	}
 
 	// {note class}
@@ -51,8 +47,6 @@ public class SongInfo : ScriptableObject
 	public class Note
 	{
 		public float dueTo;
-		//public int manyTimes;
-		//public float duration;
 		public int track;
 	}
 
@@ -61,7 +55,7 @@ public class SongInfo : ScriptableObject
 	{
 		public Note[] notes;
 	}
-	
+
 	// you can change tempo over time if needed
 	[System.Serializable]
 	public class Tempo
@@ -69,8 +63,6 @@ public class SongInfo : ScriptableObject
 		public float startTime;
 		public float offsetVal;
 	}
-	// {note class}
-
 
 	private static JsonData FromJson(string json)
 	{
@@ -83,7 +75,7 @@ public class SongInfo : ScriptableObject
 		var jsonData = FromJson(json.ToString());
 		var jsonNotes = jsonData.notes.ToList();
 		var notes = new List<Note>();
-		songOffset = jsonData.offset == 0 ? 0 : (1f - ((44100f - jsonData.offset) / 44100f));
+		songOffset = jsonData.offset == 0 ? 0 : 1f - (44100f - jsonData.offset) / 44100f;
 		if (string.IsNullOrEmpty(songTitle)) { songTitle = jsonData.name; }
 
 		foreach (var jsonNote in jsonNotes)
@@ -101,12 +93,12 @@ public class SongInfo : ScriptableObject
 		tracks[3].notes = track3.ToArray();
 	}
 
-	private static Note ToAsset(JsonNote note, int BPM, int track)
+	private static Note ToAsset(JsonNote note, int bpm, int track)
     {
 		var noteAsset = new Note
 		{
-			dueTo = (float)(note.num) / (note.LPB) / (BPM / 60f),
-			track = track,
+			dueTo = track >= 2 ? (float)note.num / note.LPB / (bpm / 60f) - 0.1f : (float)note.num / note.LPB / (bpm / 60f),
+			track = track
 		};
 		return noteAsset;
     }

@@ -12,18 +12,18 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/Barn1.unity
+    path: Assets/Scenes/Barn.unity
     guid: d594854da1788e725893d75820318bcc
   - enabled: 1
-    path: Assets/Scenes/Beach1.unity
+    path: Assets/Scenes/Beach.unity
     guid: a17a0551dee9cd58b89e058ecd3aedcf
   - enabled: 1
-    path: Assets/Scenes/Chapel1.unity
+    path: Assets/Scenes/Chapel.unity
     guid: 5d2827918aef31ef9abda96dddd752a1
   - enabled: 1
-    path: Assets/Scenes/Station1.unity
+    path: Assets/Scenes/Station.unity
     guid: da1b016e92a1748fca433790d214c030
   - enabled: 1
-    path: Assets/Scenes/Toxic1.unity
+    path: Assets/Scenes/Toxic.unity
     guid: 0ab832af7207aefd49cb2a37301a0865
   m_configObjects: {}

@@ -26,14 +26,14 @@ public class PlayingUIController : MonoBehaviour
 	public CinemachineVirtualCamera playCam;
 	public GameObject towParticles;
 
-	private void Start()
+	private void OnEnable()
 	{
-		StartCoroutine(CameraRoutine());
+		SceneManager.sceneLoaded += OnSceneLoad;
 	}
 
-	public void FadeDown()
+	private void OnDestroy()
 	{
-		StartCoroutine(FadeRoutine());
+		SceneManager.sceneLoaded -= OnSceneLoad;
 	}
 
 	public void ScoreDown(int track)
@@ -41,42 +41,32 @@ public class PlayingUIController : MonoBehaviour
 		if (healthScoreCoroutine != null) StopCoroutine(healthScoreCoroutine);
 		newHealthScore -= 0.05f;
 		healthScoreCoroutine = StartCoroutine(HealthBarUpdate(lastHealthScore, newHealthScore));
-		if (track < 2)
-		{
-			if (shakeCoroutine != null) return;
-			shakeCoroutine = StartCoroutine(ShakeRoutine(track));
-		}
+
+		if (track >= 2) return;
+		if (shakeCoroutine != null) return;
+		shakeCoroutine = StartCoroutine(ShakeRoutine(track));
 	}
 
-	private IEnumerator FadeRoutine()
+	private void OnSceneLoad(Scene scene, LoadSceneMode mode)
 	{
-		var elapsedTime = 0f;
-		while (elapsedTime < 2f)
-		{
-			elapsedTime += Time.deltaTime;
-			var a = Mathf.Lerp(1f, 0f, elapsedTime / 2f);
-			var c = new Color(0, 0, 0, a);
-			fadePanel.color = c;
-			yield return null;
-		}
-		pauseButton.SetActive(true);
-		StartCoroutine(CountRoutine());
-	}
-
-	private IEnumerator CountRoutine()
-	{
-		for (var i = 3; i >=1; i--)
-		{
-			yield return new WaitWhile(() => Conductor.paused);
-			yield return new WaitForSeconds(1f);
-		}
+		StartCoroutine(CameraRoutine());
 	}
 
 	private IEnumerator CameraRoutine()
 	{
-		yield return new WaitForSeconds(5f);
+		var elapsedTime = 0f;
+		while (elapsedTime < 1f)
+		{
+			elapsedTime += Time.deltaTime;
+			var a = Mathf.Lerp(1f, 0f, elapsedTime / 1f);
+			var c = new Color(0, 0, 0, a);
+			fadePanel.color = c;
+			yield return null;
+		}
+		yield return new WaitWhile(() => Conductor.nextTrack == 4);
 		playCam.Priority = 20;
-		yield return new WaitForSeconds(3f);
+		yield return new WaitForSeconds(2f);
+		pauseButton.SetActive(true);
 		towParticles.SetActive(false);
 	}
 
@@ -132,23 +122,37 @@ public class PlayingUIController : MonoBehaviour
 	private IEnumerator ShakeRoutine(int track)
 	{
 		var elapsedTime = 0.0f;
-		while (elapsedTime < 0.2)
+		while (elapsedTime < 0.1)
 		{
 			elapsedTime += Time.deltaTime;
-			var s = Mathf.SmoothStep(0f, track == 0 ? -2 : 2, elapsedTime / 0.2f);
+			var s = Mathf.SmoothStep(0f, track == 0 ? -2 : 2, elapsedTime / 0.1f);
 			playCam.m_Lens.Dutch = s;
 			yield return null;
 		}
 		elapsedTime = 0.0f;
-		while (elapsedTime < 0.2)
+		while (elapsedTime < 0.1)
 		{
 			elapsedTime += Time.deltaTime;
-			var s = Mathf.SmoothStep(track == 0 ? -2 : 2, 0f, elapsedTime / 0.2f);
+			var s = Mathf.SmoothStep(track == 0 ? -2 : 2, 0f, elapsedTime / 0.1f);
 			playCam.m_Lens.Dutch = s;
 			yield return null;
 		}
 		playCam.m_Lens.Dutch = 0f;
 		shakeCoroutine = null;
+	}
+
+	private IEnumerator HomeRoutine()
+	{
+		var elapsedTime = 0f;
+		while (elapsedTime < 0.5f)
+		{
+			elapsedTime += Time.deltaTime;
+			var a = Mathf.Lerp(1f, 0f, elapsedTime / 0.5f);
+			var c = new Color(0, 0, 0, a);
+			fadePanel.color = c;
+			yield return null;
+		}
+		SceneManager.LoadScene("MainMenu");
 	}
 
 	public void PauseButtonOnClick()
@@ -169,6 +173,6 @@ public class PlayingUIController : MonoBehaviour
 
 	public void HomeButtonOnClick(int scene)
 	{
-		SceneManager.LoadSceneAsync("MainMenu");
+		StartCoroutine(HomeRoutine());
 	}
 }

@@ -13,7 +13,7 @@ public class RotatePlanetLight : MonoBehaviour
         rot0 = myRectTransform.transform.rotation.eulerAngles;
     }
 
-    void Update()
+    private void Update()
     {
         if (Conductor.paused)
             return;

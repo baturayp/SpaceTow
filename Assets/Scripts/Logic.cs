@@ -26,11 +26,27 @@ public class Logic : MonoBehaviour
 	public Image leftButton, rightButton, songInfoFrame, songBkg, playBtn;
 	public Toggle effectsToggle;
 	public Text songTitle, artistName;
+	public Image fadeLayer;
 	private int lastColor;
-	private readonly string[] scenes = { "Beach1", "Toxic1", "Station1", "Chapel1", "Barn1" };
+	private readonly string[] scenes = { "Beach", "Toxic", "Station", "Chapel", "Barn" };
 	private readonly string[] tracks = { "Fright Night Twist", "Run!", "Mystica", "Twelve Days", "Born Barnstormers" };
 	private readonly string[] artists = { "Bryan Teoh", "Komiku", "Alexander Nakarada", "Alexander Nakarada", "Brian Boyko" };
 	private static readonly int NoiseColor = Shader.PropertyToID("_NoiseColor");
+
+	private void OnEnable()
+	{
+		SceneManager.sceneLoaded += OnSceneLoad;
+	}
+
+	private void OnDestroy()
+	{
+		SceneManager.sceneLoaded -= OnSceneLoad;
+	}
+
+	private void OnSceneLoad(Scene scene, LoadSceneMode mode)
+	{
+		StartCoroutine(FadeRoutine());
+	}
 
 	private void Start()
 	{
@@ -41,8 +57,7 @@ public class Logic : MonoBehaviour
 		SetCurrent(cur);
 
 		//get effects pref
-		var effects = PlayerPrefs.GetInt("punchEffects", 1) == 1 ? true : false;
-		effectsToggle.isOn = effects;
+		effectsToggle.isOn = PlayerPrefs.GetInt("punchEffects", 1) == 1;
 	}
 
 	public void Update()
@@ -52,14 +67,14 @@ public class Logic : MonoBehaviour
 		switch (t.phase)
 		{
 			case TouchPhase.Began:
-				startPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
+				startPos = new Vector2(t.position.x / Screen.width, t.position.y / Screen.width);
 				startTime = Time.time;
 				break;
 			case TouchPhase.Ended when Time.time - startTime > MAXSwipeTime:
 				return;
 			case TouchPhase.Ended:
 			{
-				var endPos = new Vector2(t.position.x / (float)Screen.width, t.position.y / (float)Screen.width);
+				var endPos = new Vector2(t.position.x / Screen.width, t.position.y / Screen.width);
 				var swipe = new Vector2(endPos.x - startPos.x, endPos.y - startPos.y);
 				if (swipe.magnitude < MINSwipeDistance) // Too short swipe
 					return;
@@ -96,13 +111,12 @@ public class Logic : MonoBehaviour
 
 	public void LevelSelect()
 	{
-		SceneManager.LoadScene(scenes[cur]);
+		StartCoroutine(LevelSelectRoutine());
 	}
 
 	public void EffectsToggle(bool tg)
 	{
-		if (tg) PlayerPrefs.SetInt("punchEffects", 1);
-		else PlayerPrefs.SetInt("punchEffects", 0);
+		PlayerPrefs.SetInt("punchEffects", tg ? 1 : 0);
 	}
 
 	private void SetCurrent(int cr)
@@ -185,7 +199,7 @@ public class Logic : MonoBehaviour
 			songTitle.color = artistName.color = new Color(uiColors[cur].r, uiColors[cur].g, uiColors[cur].b, a);
 			yield return null;
 		}
-		
+
 		foreach (var text in texts)
 		{
 			text.color = uiColors[cur];
@@ -200,5 +214,32 @@ public class Logic : MonoBehaviour
 			uiElements[i].color = col;
 		}
 		uiElements[length - 1].color = new Color(col.r, col.g, col.b, 0.4f);
+	}
+
+	private IEnumerator FadeRoutine()
+	{
+		var elapsedTime = 0f;
+		while (elapsedTime < 1f)
+		{
+			elapsedTime += Time.deltaTime;
+			var a = Mathf.Lerp(1f, 0f, elapsedTime / 1f);
+			var c = new Color(0, 0, 0, a);
+			fadeLayer.color = c;
+			yield return null;
+		}
+	}
+
+	private IEnumerator LevelSelectRoutine()
+	{
+		var elapsedTime = 0f;
+		while (elapsedTime < 0.5f)
+		{
+			elapsedTime += Time.deltaTime;
+			var a = Mathf.Lerp(0f, 1f, elapsedTime / 0.5f);
+			var c = new Color(0, 0, 0, a);
+			fadeLayer.color = c;
+			yield return null;
+		}
+		SceneManager.LoadScene(scenes[cur]);
 	}
 }
