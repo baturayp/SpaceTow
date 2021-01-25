@@ -27018,8 +27018,7 @@ MonoBehaviour:
   effectLayer: {fileID: 1391152776}
   longPunchClip: {fileID: 8300000, guid: 98898af425209a5ef85fdf78076022b2, type: 3}
   shortPunchClip: {fileID: 8300000, guid: 048229d8e371c6c3e92780ea8bc734bf, type: 3}
-  obstacleSuccessClip: {fileID: 8300000, guid: 261daaaa4a0589e21b9ce7a9e2a003b7, type: 3}
-  obstacleMissClip: {fileID: 8300000, guid: 53a8c3a33763de121bfb2946a8401ba3, type: 3}
+  obstacleSwoosh: {fileID: 8300000, guid: 8d1c5fcae0bd0446397eb98a68a6a325, type: 3}
   isTutorial: 0
 --- !u!4 &1760618930
 Transform:
@@ -27725,7 +27724,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1976510563}
-  m_LocalRotation: {x: 0.008422373, y: 0.9903714, z: -0.07002172, w: 0.119124144}
+  m_LocalRotation: {x: 0.008422382, y: 0.9903714, z: -0.07002172, w: 0.11912427}
   m_LocalPosition: {x: -2.3641286, y: 1.4168327, z: 9.185231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -27890,7 +27889,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2047155308}
-  m_LocalRotation: {x: 0.008422373, y: 0.9903714, z: -0.07002172, w: 0.119124144}
+  m_LocalRotation: {x: 0.008422382, y: 0.9903714, z: -0.07002172, w: 0.11912427}
   m_LocalPosition: {x: -2.3641286, y: 1.4168327, z: 9.185231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

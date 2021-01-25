@@ -97,7 +97,7 @@ public class SongInfo : ScriptableObject
     {
 		var noteAsset = new Note
 		{
-			dueTo = track >= 2 ? (float)note.num / note.LPB / (bpm / 60f) - 0.1f : (float)note.num / note.LPB / (bpm / 60f),
+			dueTo = track >= 2 ? (float)note.num / note.LPB / (bpm / 60f) + 0.1f : (float)note.num / note.LPB / (bpm / 60f),
 			track = track
 		};
 		return noteAsset;

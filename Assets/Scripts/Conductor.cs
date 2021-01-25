@@ -51,8 +51,7 @@ public class Conductor : MonoBehaviour
 	public AudioSource effectLayer;
 	public AudioClip longPunchClip;
 	public AudioClip shortPunchClip;
-	public AudioClip obstacleSuccessClip;
-	public AudioClip obstacleMissClip;
+	public AudioClip obstacleSwoosh;
 	private bool punchEffects;
 
 	//avoid movement values
@@ -82,6 +81,7 @@ public class Conductor : MonoBehaviour
 		{
 			avoidPos = trackNumber;
 			spaceMan.Avoid(trackNumber);
+			if(punchEffects) effectLayer.PlayOneShot(obstacleSwoosh);
 		}
 		_avoidMoveWait = songposition + 0.5f;
 	}
@@ -274,7 +274,7 @@ public class Conductor : MonoBehaviour
 					{
 						currNode.Score(true);
 						beatQueue.Dequeue();
-						if(punchEffects) effectLayer.PlayOneShot(obstacleSuccessClip);
+						//if(punchEffects) effectLayer.PlayOneShot(obstacleSuccessClip);
 					}
 					//got hit
 					else
@@ -282,7 +282,7 @@ public class Conductor : MonoBehaviour
 						beatQueue.Dequeue();
 						if (!isTutorial) uiController.ScoreDown(currNode.trackNumber);
 						spaceMan.GotHit(currNode.trackNumber);
-						if(punchEffects) effectLayer.PlayOneShot(obstacleMissClip);
+						//if(punchEffects) effectLayer.PlayOneShot(obstacleMissClip);
 					}
 				}
 			}

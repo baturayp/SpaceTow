@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c222991a60d4cdeab920d7daba3a6c3, type: 3}
   m_Name: BarnStormers
   m_EditorClassIdentifier: 
-  song: {fileID: 8300000, guid: 51ebd297033c1af1bbba8b96f1621b39, type: 3}
+  song: {fileID: 8300000, guid: d428d7f4c1561c39d9f50e566102cba1, type: 3}
   json: {fileID: 4900000, guid: 6fae40522095bfd37b28a63c70bcda0f, type: 3}
   songTitle: Barn Stormers
   songOffset: 0
-  bpm: 114
   appearTime:
   - startTime: 0
     offsetVal: 2
@@ -246,109 +245,109 @@ MonoBehaviour:
     - dueTo: 109.01316
       track: 1
   - notes:
-    - dueTo: 14.802631
+    - dueTo: 14.902632
       track: 2
-    - dueTo: 20.592106
+    - dueTo: 20.692104
       track: 2
-    - dueTo: 22.697369
+    - dueTo: 22.797369
       track: 2
-    - dueTo: 24.802631
+    - dueTo: 24.902632
       track: 2
-    - dueTo: 29.539474
+    - dueTo: 29.639473
       track: 2
-    - dueTo: 37.960526
+    - dueTo: 38.060528
       track: 2
-    - dueTo: 39.539474
+    - dueTo: 39.639473
       track: 2
-    - dueTo: 50.32895
+    - dueTo: 50.428947
       track: 2
-    - dueTo: 58.75
+    - dueTo: 58.85
       track: 2
-    - dueTo: 64.802635
+    - dueTo: 64.90263
       track: 2
-    - dueTo: 71.64474
+    - dueTo: 71.744736
       track: 2
-    - dueTo: 73.22369
+    - dueTo: 73.323685
       track: 2
-    - dueTo: 79.01316
+    - dueTo: 79.11316
       track: 2
-    - dueTo: 84.01316
+    - dueTo: 84.11316
       track: 2
-    - dueTo: 87.43421
+    - dueTo: 87.53421
       track: 2
-    - dueTo: 97.43421
+    - dueTo: 97.53421
       track: 2
-    - dueTo: 98.48684
+    - dueTo: 98.586845
       track: 2
-    - dueTo: 102.960526
+    - dueTo: 103.060524
       track: 2
-    - dueTo: 105.06579
+    - dueTo: 105.16579
       track: 2
   - notes:
-    - dueTo: 15.855263
+    - dueTo: 15.955263
       track: 3
-    - dueTo: 21.907894
+    - dueTo: 22.007895
       track: 3
-    - dueTo: 25.06579
+    - dueTo: 25.165789
       track: 3
-    - dueTo: 28.223684
+    - dueTo: 28.323685
       track: 3
-    - dueTo: 29.276316
+    - dueTo: 29.376316
       track: 3
-    - dueTo: 29.802631
+    - dueTo: 29.902632
       track: 3
-    - dueTo: 37.43421
+    - dueTo: 37.53421
       track: 3
-    - dueTo: 39.013157
+    - dueTo: 39.11316
       track: 3
-    - dueTo: 40.592106
+    - dueTo: 40.692104
       track: 3
-    - dueTo: 41.907894
+    - dueTo: 42.007896
       track: 3
-    - dueTo: 44.276318
+    - dueTo: 44.376316
       track: 3
-    - dueTo: 45.32895
+    - dueTo: 45.428947
       track: 3
-    - dueTo: 50.06579
+    - dueTo: 50.16579
       track: 3
-    - dueTo: 52.69737
+    - dueTo: 52.797367
       track: 3
-    - dueTo: 53.75
+    - dueTo: 53.85
       track: 3
-    - dueTo: 55.855263
+    - dueTo: 55.955265
       track: 3
-    - dueTo: 57.960526
+    - dueTo: 58.060528
       track: 3
-    - dueTo: 64.27631
+    - dueTo: 64.37631
       track: 3
-    - dueTo: 65.85526
+    - dueTo: 65.95526
       track: 3
-    - dueTo: 71.11842
+    - dueTo: 71.21842
       track: 3
-    - dueTo: 72.697365
+    - dueTo: 72.79737
       track: 3
-    - dueTo: 74.27631
+    - dueTo: 74.37631
       track: 3
-    - dueTo: 75.5921
+    - dueTo: 75.69211
       track: 3
-    - dueTo: 77.960526
+    - dueTo: 78.060524
       track: 3
-    - dueTo: 83.75
+    - dueTo: 83.85
       track: 3
-    - dueTo: 86.38158
+    - dueTo: 86.48158
       track: 3
-    - dueTo: 89.539474
+    - dueTo: 89.63947
       track: 3
-    - dueTo: 91.64474
+    - dueTo: 91.744736
       track: 3
-    - dueTo: 92.43421
+    - dueTo: 92.53421
       track: 3
-    - dueTo: 96.9079
+    - dueTo: 97.0079
       track: 3
-    - dueTo: 97.960526
+    - dueTo: 98.060524
       track: 3
-    - dueTo: 102.697365
+    - dueTo: 102.79737
       track: 3
-    - dueTo: 104.802635
+    - dueTo: 104.90263
       track: 3
   endTime: 220

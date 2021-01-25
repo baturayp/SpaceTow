@@ -29,7 +29,7 @@ public class Logic : MonoBehaviour
 	public Image fadeLayer;
 	private int lastColor;
 	private readonly string[] scenes = { "Beach", "Toxic", "Station", "Chapel", "Barn" };
-	private readonly string[] tracks = { "Fright Night Twist", "Run!", "Mystica", "Twelve Days", "Born Barnstormers" };
+	private readonly string[] tracks = { "Fright Night Twist", "Run!", "Mystica", "Twelve Days of Christmas", "Born Barnstormers" };
 	private readonly string[] artists = { "Bryan Teoh", "Komiku", "Alexander Nakarada", "Alexander Nakarada", "Brian Boyko" };
 	private static readonly int NoiseColor = Shader.PropertyToID("_NoiseColor");
 
