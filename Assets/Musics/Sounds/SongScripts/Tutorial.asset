@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c222991a60d4cdeab920d7daba3a6c3, type: 3}
   m_Name: Tutorial
   m_EditorClassIdentifier: 
-  song: {fileID: 8300000, guid: 51ebd297033c1af1bbba8b96f1621b39, type: 3}
+  song: {fileID: 8300000, guid: d428d7f4c1561c39d9f50e566102cba1, type: 3}
   json: {fileID: 4900000, guid: fd09b4d31fa94a3c1b5d4ea715fcaa29, type: 3}
   songTitle: Tutorial
   songOffset: 0
@@ -31,13 +31,13 @@ MonoBehaviour:
     - dueTo: 6
       track: 1
   - notes:
-    - dueTo: 8
+    - dueTo: 8.1
       track: 2
-    - dueTo: 10
+    - dueTo: 10.1
       track: 2
   - notes:
-    - dueTo: 7
+    - dueTo: 7.1
       track: 3
-    - dueTo: 9
+    - dueTo: 9.1
       track: 3
   endTime: 220
