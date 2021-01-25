@@ -33,7 +33,8 @@ public class ObstacleNode : MonoBehaviour
     {
         if (Conductor.pauseTimeStamp > 0f) return;
 
-        transform.Rotate(aCos,aCos,aCos, Space.Self);
+        var dt = aCos * Time.deltaTime * 100;
+        transform.Rotate(dt,dt, dt, Space.Self);
 
         if (paused) return;
 

@@ -15,12 +15,14 @@ public class PlayingUIController : MonoBehaviour
 
 	//pause scene
 	public GameObject pauseButton, pauseScene;
+	public GameObject winLayer, lostLayer;
 
 	//health bar
 	public Image healthBarTop, healthBarBottom;
 
 	//countdown elements
-	public Image fadePanel;
+	public Image fadePanel, endFadePanel;
+	private bool lostSceneShowed;
 
 	//cameras
 	public CinemachineVirtualCamera playCam;
@@ -40,6 +42,14 @@ public class PlayingUIController : MonoBehaviour
 	{
 		if (healthScoreCoroutine != null) StopCoroutine(healthScoreCoroutine);
 		newHealthScore -= 0.05f;
+		
+		//lost
+		if (newHealthScore < 0f && !lostSceneShowed)
+		{
+			ShowLostScene();
+			lostSceneShowed = true;
+		}
+		
 		healthScoreCoroutine = StartCoroutine(HealthBarUpdate(lastHealthScore, newHealthScore));
 
 		if (track >= 2) return;
@@ -153,6 +163,66 @@ public class PlayingUIController : MonoBehaviour
 			yield return null;
 		}
 		SceneManager.LoadScene("MainMenu");
+	}
+
+	private IEnumerator ShowWinRoutine()
+	{
+		var elapsedTime = 0f;
+		while (elapsedTime < 0.3f)
+		{
+			elapsedTime += Time.deltaTime;
+			var a = Mathf.Lerp(0f, 1f, elapsedTime / 0.3f);
+			var c = new Color(0, 0, 0, a);
+			endFadePanel.color = c;
+			yield return null;
+		}
+		winLayer.SetActive(true);
+		elapsedTime = 0f;
+		while (elapsedTime < 0.3f)
+		{
+			elapsedTime += Time.deltaTime;
+			var a = Mathf.Lerp(1f, 0f, elapsedTime / 0.3f);
+			var c = new Color(0, 0, 0, a);
+			endFadePanel.color = c;
+			yield return null;
+		}
+	}
+	private IEnumerator ShowLostRoutine()
+	{
+		var elapsedTime = 0f;
+		while (elapsedTime < 0.3f)
+		{
+			elapsedTime += Time.deltaTime;
+			var a = Mathf.Lerp(0f, 1f, elapsedTime / 0.3f);
+			var c = new Color(0, 0, 0, a);
+			endFadePanel.color = c;
+			yield return null;
+		}
+		lostLayer.SetActive(true);
+		elapsedTime = 0f;
+		while (elapsedTime < 0.3f)
+		{
+			elapsedTime += Time.deltaTime;
+			var a = Mathf.Lerp(1f, 0f, elapsedTime / 0.3f);
+			var c = new Color(0, 0, 0, a);
+			endFadePanel.color = c;
+			yield return null;
+		}
+	}
+
+	public void OnLastButton()
+	{
+		SceneManager.LoadScene("Redirector");
+	}
+
+	public void ShowWinScene()
+	{
+		StartCoroutine(ShowWinRoutine());
+	}
+
+	public void ShowLostScene()
+	{
+		StartCoroutine(ShowLostRoutine());
 	}
 
 	public void PauseButtonOnClick()

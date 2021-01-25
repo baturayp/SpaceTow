@@ -103,8 +103,9 @@ public class MeteorNode : MonoBehaviour
 														metStartY, 
 														Mathf.LerpUnclamped(metEndZ, metStartZ, (beat - Conductor.songposition) / (Conductor.appearTime)));
 
-		//meteor rotate itself around
-		transform.Rotate(aCos,aCos,aCos, Space.Self);
+		
+		var dt = aCos * Time.deltaTime * 100;
+		transform.Rotate(dt,dt,dt, Space.Self);
 
         //scale up meteors as they get closer
 		if (Conductor.songposition > beat - 1f && Conductor.songposition < beat - 0.5f)

@@ -335,6 +335,7 @@ public class Conductor : MonoBehaviour
 	private void SongCompleted()
     {
 		songStarted = false;
+		uiController.ShowWinScene();
     }
 
 	private IEnumerator CountDown()
