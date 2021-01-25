@@ -80,6 +80,7 @@ Material:
     - _Parallax: 0.02
     - _RimAngle: -0.061
     - _RimIntensity: 1.27
+    - _Scale: 1
     - _SmoothnessTextureChannel: 0
     - _SpecLightVal: 1
     - _SpecularHighlights: 1

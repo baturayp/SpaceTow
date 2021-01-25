@@ -105,11 +105,14 @@
                 fixed3 specularLight = clamp((i.stylisticLight.g * _LightC * specSample * _SpecLightVal), 0, 1);
                 fixed3 rimLight = clamp (i.stylisticLight.g * _RimLight * _RimIntensity * (1 - i.stylisticLight.r), 0, 1);
                 //modify
-                pixel = tex2D(_MainTex, i.uv) * _Color * pow(_FresnelPower, i.rim);
+                pixel = pow(_FresnelPower, i.rim);             
                 pixel = lerp(0, pixel, i.rim);
                 //modify
-                
-                fixed3 fres = clamp(pixel, 0, _Color);
+
+                fixed3 fres = pixel*_Color;
+                //fixed3 fres = clamp(pixel, 0, _Color);
+                //return fixed4 (fres,1);
+
                 //return fixed4 ((mainSample * _MainColor * diffuseLight) + specularLight, 1);
                 return fixed4 ((mainSample * _MainColor * diffuseLight) + specularLight + fres, 1);
             }

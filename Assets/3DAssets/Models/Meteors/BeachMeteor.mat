@@ -86,10 +86,10 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 0.23272246, b: 0, a: 1}
+    - _Color: {r: 1, g: 0, b: 0.35640025, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _LightC: {r: 1, g: 0.7607844, b: 0, a: 1}
-    - _MainColor: {r: 0.34974676, g: 0.2240566, b: 0.8962264, a: 1}
+    - _LightC: {r: 1, g: 0.80392164, b: 0, a: 1}
+    - _MainColor: {r: 0.9607844, g: 1, b: 0.8078432, a: 1}
     - _RimLight: {r: 1, g: 0.90530664, b: 0.6556604, a: 1}
-    - _ShadowColor: {r: 0.04835243, g: 0, b: 0.3882353, a: 1}
+    - _ShadowColor: {r: 0.04705883, g: 0, b: 0.38823533, a: 1}
   m_BuildTextureStacks: []
