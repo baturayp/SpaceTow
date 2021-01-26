@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 6853239219809211499}
   - component: {fileID: 8951789746574494955}
   m_Layer: 0
-  m_Name: Meteor Node 4
+  m_Name: Station Meteor Node 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -288,10 +288,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6987178282265628163, guid: 1901f42cf8304fb4d91580651745cd51, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3976e562095de684484494ea38afc257, type: 2}
     - target: {fileID: -6831103119904025925, guid: 1901f42cf8304fb4d91580651745cd51, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -5971783304187382572, guid: 1901f42cf8304fb4d91580651745cd51, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3976e562095de684484494ea38afc257, type: 2}
+    - target: {fileID: -4860632173961909885, guid: 1901f42cf8304fb4d91580651745cd51, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3976e562095de684484494ea38afc257, type: 2}
     - target: {fileID: -4184291133016695614, guid: 1901f42cf8304fb4d91580651745cd51, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -304,14 +316,30 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1536766057931261760, guid: 1901f42cf8304fb4d91580651745cd51, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3976e562095de684484494ea38afc257, type: 2}
+    - target: {fileID: -1523591463116283616, guid: 1901f42cf8304fb4d91580651745cd51, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3976e562095de684484494ea38afc257, type: 2}
     - target: {fileID: -131799446304570624, guid: 1901f42cf8304fb4d91580651745cd51, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 424799842269577035, guid: 1901f42cf8304fb4d91580651745cd51, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3976e562095de684484494ea38afc257, type: 2}
     - target: {fileID: 919132149155446097, guid: 1901f42cf8304fb4d91580651745cd51, type: 3}
       propertyPath: m_Name
       value: Meteor4
       objectReference: {fileID: 0}
+    - target: {fileID: 1027114984030776751, guid: 1901f42cf8304fb4d91580651745cd51, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3976e562095de684484494ea38afc257, type: 2}
     - target: {fileID: 1631561021804634857, guid: 1901f42cf8304fb4d91580651745cd51, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -320,6 +348,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3395972679961440342, guid: 1901f42cf8304fb4d91580651745cd51, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3976e562095de684484494ea38afc257, type: 2}
     - target: {fileID: 3678845618619817584, guid: 1901f42cf8304fb4d91580651745cd51, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -328,10 +360,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4647050432161160811, guid: 1901f42cf8304fb4d91580651745cd51, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3976e562095de684484494ea38afc257, type: 2}
     - target: {fileID: 5894593879383967706, guid: 1901f42cf8304fb4d91580651745cd51, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7741934931770692743, guid: 1901f42cf8304fb4d91580651745cd51, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3976e562095de684484494ea38afc257, type: 2}
+    - target: {fileID: 8873247346418487144, guid: 1901f42cf8304fb4d91580651745cd51, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3976e562095de684484494ea38afc257, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1901f42cf8304fb4d91580651745cd51, type: 3}
 --- !u!1 &6093389248009560694 stripped
