@@ -8,6 +8,7 @@ public class MeteorNode : MonoBehaviour
     public GameObject meteorWhole;
     public Rigidbody[] meteorPieces;
     public Rigidbody wholeRigid;
+	public GameObject explosionParticle;
     private MeshRenderer wholeMesh;
     private MeshRenderer[] piecesMesh;
     private Material wholeMat;
@@ -140,6 +141,7 @@ public class MeteorNode : MonoBehaviour
 		        foreach (var piece in meteorPieces)
 		        {
 			        piece.AddExplosionForce(2.0f, explosionPosition, 5.0f, 0f, ForceMode.Impulse);
+					explosionParticle.SetActive(true);
 		        }
 		        break;
 	        }
