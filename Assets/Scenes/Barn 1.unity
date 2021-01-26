@@ -17262,6 +17262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec587248e2eddbda9a11897c60863833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextLevel: 0
   pauseButton: {fileID: 1870999698}
   pauseScene: {fileID: 1597269094}
   winLayer: {fileID: 219758892}
@@ -28103,7 +28104,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1787440613
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28641,6 +28642,7 @@ GameObject:
   - component: {fileID: 1883713610}
   - component: {fileID: 1883713612}
   - component: {fileID: 1883713611}
+  - component: {fileID: 1883713613}
   m_Layer: 5
   m_Name: BkgTape
   m_TagString: Untagged
@@ -28705,6 +28707,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1883713609}
   m_CullTransparentMesh: 1
+--- !u!114 &1883713613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1883713609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1153441174}
+          m_TargetAssemblyTypeName: PlayingUIController, Assembly-CSharp
+          m_MethodName: RetryButtonOnClick
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1919171814
 GameObject:
   m_ObjectHideFlags: 0
@@ -29149,7 +29180,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1976510563}
-  m_LocalRotation: {x: 0.008422384, y: 0.9903714, z: -0.070021726, w: 0.11912427}
+  m_LocalRotation: {x: 0.008422374, y: 0.9903714, z: -0.070021726, w: 0.119124144}
   m_LocalPosition: {x: -2.3641286, y: 1.4168327, z: 9.185231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -29314,7 +29345,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2047155308}
-  m_LocalRotation: {x: 0.008422384, y: 0.9903714, z: -0.070021726, w: 0.11912427}
+  m_LocalRotation: {x: 0.008422374, y: 0.9903714, z: -0.070021726, w: 0.119124144}
   m_LocalPosition: {x: -2.3641286, y: 1.4168327, z: 9.185231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -29333,6 +29364,7 @@ GameObject:
   - component: {fileID: 2050616839}
   - component: {fileID: 2050616841}
   - component: {fileID: 2050616840}
+  - component: {fileID: 2050616842}
   m_Layer: 5
   m_Name: BkgTape
   m_TagString: Untagged
@@ -29397,6 +29429,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2050616838}
   m_CullTransparentMesh: 1
+--- !u!114 &2050616842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050616838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1153441174}
+          m_TargetAssemblyTypeName: PlayingUIController, Assembly-CSharp
+          m_MethodName: OnLastButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &2069010162
 GameObject:
   m_ObjectHideFlags: 0

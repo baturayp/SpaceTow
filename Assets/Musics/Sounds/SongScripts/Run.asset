@@ -16,7 +16,6 @@ MonoBehaviour:
   json: {fileID: 4900000, guid: c774519045ebbec5f9a6b4a920b611fe, type: 3}
   songTitle: Run
   songOffset: 0
-  bpm: 180
   appearTime:
   - startTime: 0
     offsetVal: 2
@@ -370,121 +369,121 @@ MonoBehaviour:
     - dueTo: 143.875
       track: 1
   - notes:
-    - dueTo: 16.041666
+    - dueTo: 16.141666
       track: 2
-    - dueTo: 18.041666
+    - dueTo: 18.141666
       track: 2
-    - dueTo: 22.708334
+    - dueTo: 22.808332
       track: 2
-    - dueTo: 24.041666
+    - dueTo: 24.141666
       track: 2
-    - dueTo: 26.708334
+    - dueTo: 26.808332
       track: 2
-    - dueTo: 28.708334
+    - dueTo: 28.808332
       track: 2
-    - dueTo: 30.708334
+    - dueTo: 30.808332
       track: 2
-    - dueTo: 33.375
+    - dueTo: 33.475
       track: 2
-    - dueTo: 34.708332
+    - dueTo: 34.808334
       track: 2
-    - dueTo: 37.375
+    - dueTo: 37.475
       track: 2
-    - dueTo: 41.375
+    - dueTo: 41.475
       track: 2
-    - dueTo: 46.708332
+    - dueTo: 46.808334
       track: 2
-    - dueTo: 60.708332
+    - dueTo: 60.808334
       track: 2
-    - dueTo: 64.041664
+    - dueTo: 64.14167
       track: 2
-    - dueTo: 66.041664
+    - dueTo: 66.14167
       track: 2
-    - dueTo: 71.375
+    - dueTo: 71.475
       track: 2
-    - dueTo: 72.041664
+    - dueTo: 72.14167
       track: 2
-    - dueTo: 74.708336
+    - dueTo: 74.808334
       track: 2
-    - dueTo: 76.708336
+    - dueTo: 76.808334
       track: 2
-    - dueTo: 80.041664
+    - dueTo: 80.14167
       track: 2
-    - dueTo: 96.041664
+    - dueTo: 96.14167
       track: 2
-    - dueTo: 98.708336
+    - dueTo: 98.808334
       track: 2
-    - dueTo: 112.041664
+    - dueTo: 112.14167
       track: 2
-    - dueTo: 116.041664
+    - dueTo: 116.14167
       track: 2
-    - dueTo: 121.375
+    - dueTo: 121.475
       track: 2
   - notes:
-    - dueTo: 17.375
+    - dueTo: 17.475
       track: 3
-    - dueTo: 18.708334
+    - dueTo: 18.808332
       track: 3
-    - dueTo: 21.375
+    - dueTo: 21.475
       track: 3
-    - dueTo: 23.375
+    - dueTo: 23.475
       track: 3
-    - dueTo: 28.041666
+    - dueTo: 28.141666
       track: 3
-    - dueTo: 29.375
+    - dueTo: 29.475
       track: 3
-    - dueTo: 32.041668
+    - dueTo: 32.141666
       track: 3
-    - dueTo: 34.041668
+    - dueTo: 34.141666
       track: 3
-    - dueTo: 36.041668
+    - dueTo: 36.141666
       track: 3
-    - dueTo: 40.041668
+    - dueTo: 40.141666
       track: 3
-    - dueTo: 42.708332
+    - dueTo: 42.808334
       track: 3
-    - dueTo: 45.375
+    - dueTo: 45.475
       track: 3
-    - dueTo: 60.041668
+    - dueTo: 60.141666
       track: 3
-    - dueTo: 61.375
+    - dueTo: 61.475
       track: 3
-    - dueTo: 62.708332
+    - dueTo: 62.808334
       track: 3
-    - dueTo: 65.375
+    - dueTo: 65.475
       track: 3
-    - dueTo: 66.708336
+    - dueTo: 66.808334
       track: 3
-    - dueTo: 69.375
+    - dueTo: 69.475
       track: 3
-    - dueTo: 70.708336
+    - dueTo: 70.808334
       track: 3
-    - dueTo: 73.375
+    - dueTo: 73.475
       track: 3
-    - dueTo: 76.041664
+    - dueTo: 76.14167
       track: 3
-    - dueTo: 77.375
+    - dueTo: 77.475
       track: 3
-    - dueTo: 85.375
+    - dueTo: 85.475
       track: 3
-    - dueTo: 90.708336
+    - dueTo: 90.808334
       track: 3
-    - dueTo: 93.375
+    - dueTo: 93.475
       track: 3
-    - dueTo: 101.375
+    - dueTo: 101.475
       track: 3
-    - dueTo: 104.041664
+    - dueTo: 104.14167
       track: 3
-    - dueTo: 105.375
+    - dueTo: 105.475
       track: 3
-    - dueTo: 109.375
+    - dueTo: 109.475
       track: 3
-    - dueTo: 111.375
+    - dueTo: 111.475
       track: 3
-    - dueTo: 114.708336
+    - dueTo: 114.808334
       track: 3
-    - dueTo: 117.375
+    - dueTo: 117.475
       track: 3
-    - dueTo: 120.041664
+    - dueTo: 120.14167
       track: 3
-  endTime: 220
+  endTime: 145

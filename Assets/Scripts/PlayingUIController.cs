@@ -12,6 +12,8 @@ public class PlayingUIController : MonoBehaviour
 	private float newHealthScore = 1f;
 	private Coroutine healthScoreCoroutine;
 	private Coroutine shakeCoroutine;
+	// song number for every level
+	public int nextLevel;
 
 	//pause scene
 	public GameObject pauseButton, pauseScene;
@@ -177,6 +179,10 @@ public class PlayingUIController : MonoBehaviour
 			yield return null;
 		}
 		winLayer.SetActive(true);
+		
+		var lastLevel = PlayerPrefs.GetInt("lastLevel", 1);
+		if (lastLevel < nextLevel) PlayerPrefs.SetInt("lastLevel", nextLevel);
+
 		elapsedTime = 0f;
 		while (elapsedTime < 0.3f)
 		{

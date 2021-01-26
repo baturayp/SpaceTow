@@ -5,10 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class Redirector : MonoBehaviour
 {
-    private readonly string[] scenes = { "Tutorial", "Beach", "Toxic", "Station", "Chapel", "Barn" };
+    private readonly string[] scenes = { "Tutorial", "Chapel", "Beach", "Barn", "Toxic", "Station" };
 
     private void Start()
     {
-        //var lastLevel = PlayerPrefs.GetInt("lastLevel", 0);
+        var lastLevel = PlayerPrefs.GetInt("lastLevel", 0);
+        if (lastLevel < 5) SceneManager.LoadScene(scenes[lastLevel]);
+        else SceneManager.LoadScene("MainMenu");
     }
 }

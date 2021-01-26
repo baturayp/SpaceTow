@@ -191,6 +191,15 @@ public class Tutorial : MonoBehaviour
             fadePanel.color = new Color (0, 0, 0, a);
             yield return null;
         }
-        SceneManager.LoadScene("MainMenu");
+        var lastLevel = PlayerPrefs.GetInt("lastLevel");
+        if (lastLevel == 0) 
+        {
+            PlayerPrefs.SetInt("lastLevel", 1);
+            SceneManager.LoadScene("Redirector");
+        }
+        else
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 }

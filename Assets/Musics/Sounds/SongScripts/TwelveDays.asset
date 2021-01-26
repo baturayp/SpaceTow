@@ -16,7 +16,6 @@ MonoBehaviour:
   json: {fileID: 4900000, guid: 1fc2330e72863683c85d7773a7c05fb1, type: 3}
   songTitle: Twelve Days Of Christmas
   songOffset: 0
-  bpm: 120
   appearTime:
   - startTime: 0
     offsetVal: 2
@@ -138,105 +137,105 @@ MonoBehaviour:
     - dueTo: 145.6875
       track: 1
   - notes:
-    - dueTo: 6.5
+    - dueTo: 6.6
       track: 2
-    - dueTo: 8.125
+    - dueTo: 8.225
       track: 2
-    - dueTo: 11.25
+    - dueTo: 11.35
       track: 2
-    - dueTo: 16.5
+    - dueTo: 16.6
       track: 2
-    - dueTo: 19.625
+    - dueTo: 19.725
       track: 2
-    - dueTo: 22.6875
+    - dueTo: 22.7875
       track: 2
-    - dueTo: 25.875
+    - dueTo: 25.975
       track: 2
-    - dueTo: 43.0625
+    - dueTo: 43.1625
       track: 2
-    - dueTo: 44.125
+    - dueTo: 44.225
       track: 2
-    - dueTo: 52
+    - dueTo: 52.1
       track: 2
-    - dueTo: 53.5
+    - dueTo: 53.6
       track: 2
-    - dueTo: 55.125
+    - dueTo: 55.225
       track: 2
-    - dueTo: 56.625
+    - dueTo: 56.725
       track: 2
-    - dueTo: 58.75
+    - dueTo: 58.85
       track: 2
-    - dueTo: 70.75
+    - dueTo: 70.85
       track: 2
-    - dueTo: 74.375
+    - dueTo: 74.475
       track: 2
-    - dueTo: 76.9375
+    - dueTo: 77.0375
       track: 2
-    - dueTo: 77.9375
+    - dueTo: 78.0375
       track: 2
-    - dueTo: 83.25
+    - dueTo: 83.35
       track: 2
-    - dueTo: 84.8125
+    - dueTo: 84.9125
       track: 2
-    - dueTo: 86.375
+    - dueTo: 86.475
       track: 2
-    - dueTo: 87.4375
+    - dueTo: 87.5375
       track: 2
-    - dueTo: 104.0625
+    - dueTo: 104.1625
       track: 2
   - notes:
-    - dueTo: 5
+    - dueTo: 5.1
       track: 3
-    - dueTo: 9.6875
+    - dueTo: 9.7875
       track: 3
-    - dueTo: 12.8125
+    - dueTo: 12.9125
       track: 3
-    - dueTo: 15.4375
+    - dueTo: 15.5375
       track: 3
-    - dueTo: 18.5625
+    - dueTo: 18.6625
       track: 3
-    - dueTo: 21.125
+    - dueTo: 21.225
       track: 3
-    - dueTo: 24.25
+    - dueTo: 24.35
       track: 3
-    - dueTo: 27.9375
+    - dueTo: 28.0375
       track: 3
-    - dueTo: 43.625
+    - dueTo: 43.725
       track: 3
-    - dueTo: 44.6875
+    - dueTo: 44.7875
       track: 3
-    - dueTo: 49.875
+    - dueTo: 49.975
       track: 3
-    - dueTo: 51.4375
+    - dueTo: 51.5375
       track: 3
-    - dueTo: 53
+    - dueTo: 53.1
       track: 3
-    - dueTo: 54.5625
+    - dueTo: 54.6625
       track: 3
-    - dueTo: 56.125
+    - dueTo: 56.225
       track: 3
-    - dueTo: 57.6875
+    - dueTo: 57.7875
       track: 3
-    - dueTo: 69.6875
+    - dueTo: 69.7875
       track: 3
-    - dueTo: 73.8125
+    - dueTo: 73.9125
       track: 3
-    - dueTo: 74.875
+    - dueTo: 74.975
       track: 3
-    - dueTo: 76.4375
+    - dueTo: 76.5375
       track: 3
-    - dueTo: 77.4375
+    - dueTo: 77.5375
       track: 3
-    - dueTo: 82.75
+    - dueTo: 82.85
       track: 3
-    - dueTo: 84.3125
+    - dueTo: 84.4125
       track: 3
-    - dueTo: 85.875
+    - dueTo: 85.975
       track: 3
-    - dueTo: 87.9375
+    - dueTo: 88.0375
       track: 3
-    - dueTo: 103.5625
+    - dueTo: 103.6625
       track: 3
-    - dueTo: 104.625
+    - dueTo: 104.725
       track: 3
-  endTime: 220
+  endTime: 110

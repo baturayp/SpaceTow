@@ -18,20 +18,25 @@ public class Logic : MonoBehaviour
 
 	//camera selection
 	public GameObject[] cams;
+	public GameObject[] planets;
 	public Image[] uiElements;
 	public Text[] texts;
 	private int len, cur;
 	public Color[] colors;
 	public Color[] uiColors;
 	public Image leftButton, rightButton, songInfoFrame, songBkg, playBtn;
+	public Sprite playIcon, lockedIcon;
 	public Toggle effectsToggle;
 	public Text songTitle, artistName;
 	public Image fadeLayer;
+	public Animator lockAnimator;
 	private int lastColor;
-	private readonly string[] scenes = { "Beach", "Toxic", "Station", "Chapel", "Barn" };
-	private readonly string[] tracks = { "Fright Night Twist", "Run!", "Mystica", "Twelve Days", "Born Barnstormers" };
-	private readonly string[] artists = { "Bryan Teoh", "Komiku", "Alexander Nakarada", "Alexander Nakarada", "Brian Boyko" };
+	private int lastLevel;
+	private readonly string[] scenes = { "Chapel", "Beach", "Barn", "Toxic", "Station" };
+	private readonly string[] tracks = { "Twelve Days", "Fright Night Twist", "Born Barnstormers", "Run!", "Mystica" };
+	private readonly string[] artists = { "Alexander Nakarada", "Bryan Teoh", "Brian Boyko", "Komiku", "Alexander Nakarada" };
 	private static readonly int NoiseColor = Shader.PropertyToID("_NoiseColor");
+	private static readonly int MainColor = Shader.PropertyToID("_MainColor");
 
 	private void OnEnable()
 	{
@@ -51,10 +56,26 @@ public class Logic : MonoBehaviour
 	private void Start()
 	{
 		len = cams.Length;
-		lastColor = cur = 0;
+		lastLevel = PlayerPrefs.GetInt("lastLevel", 1);
+		lastColor = cur = lastLevel - 1;
 		starsMat = staticStars.material;
 		starsMat.SetColor(NoiseColor, colors[0]);
 		SetCurrent(cur);
+
+		for (int i = 0; i < 5; i++)
+		{
+			if (i > cur)
+			{
+				foreach (Transform child in planets[i].transform)
+				{
+					if (child.GetComponent<MeshRenderer>())
+					{
+						var cl = new Color (0.1f,0.1f,0.1f,1);
+						child.GetComponent<MeshRenderer>().material.SetColor(MainColor, cl);
+					}
+				}
+			}
+		}
 
 		//get effects pref
 		effectsToggle.isOn = PlayerPrefs.GetInt("punchEffects", 1) == 1;
@@ -111,7 +132,11 @@ public class Logic : MonoBehaviour
 
 	public void LevelSelect()
 	{
-		StartCoroutine(LevelSelectRoutine());
+		if (cur < lastLevel)
+		{
+			StartCoroutine(LevelSelectRoutine());
+		}
+		else lockAnimator.Play("lockIcon", 0);
 	}
 
 	public void EffectsToggle(bool tg)
@@ -181,6 +206,8 @@ public class Logic : MonoBehaviour
 
 		songTitle.text = tracks[cur];
 		artistName.text = "by " + artists[cur];
+		if (lastLevel > cur) playBtn.sprite = playIcon;
+		else playBtn.sprite = lockedIcon;
 
 		yield return new WaitForSeconds(0.6f);
 
