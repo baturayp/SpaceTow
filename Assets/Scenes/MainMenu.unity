@@ -7295,7 +7295,7 @@ RectTransform:
   m_GameObject: {fileID: 977774373}
   m_LocalRotation: {x: -0, y: 0.6044592, z: -0, w: 0.79663616}
   m_LocalPosition: {x: 0, y: 0, z: 9}
-  m_LocalScale: {x: 0.060000002, y: 0.06, z: 0.060000002}
+  m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
   m_Children:
   - {fileID: 1786466307}
   m_Father: {fileID: 1021214303}
@@ -8034,8 +8034,8 @@ MonoBehaviour:
   uiColors:
   - {r: 0.78431374, g: 0.8, b: 0.5803922, a: 1}
   - {r: 0.9339623, g: 0.3568441, b: 0.9249916, a: 1}
+  - {r: 0.34509805, g: 0.9254902, b: 0.7921569, a: 1}
   - {r: 1, g: 0.9411765, b: 0.654902, a: 1}
-  - {r: 0.34451762, g: 0.9245283, b: 0.7903297, a: 1}
   - {r: 0.9372549, g: 0.35686275, b: 0.9254902, a: 1}
   leftButton: {fileID: 1288456870}
   rightButton: {fileID: 999539102}
