@@ -7,7 +7,7 @@ public class SongPickingControl : MonoBehaviour
 	public GameObject settingsButton;
 	public GameObject settingsLayer;
 	public GameObject aboutLayer;
-	private static bool _settingsIsActive = false;
+	public static bool _settingsIsActive = false;
 	private static bool _secondBoardIsActive = false;
 
 	[Header("Board transforms")]

@@ -14,7 +14,7 @@ public class Logic : MonoBehaviour
 	//stars
 	public MeshRenderer staticStars;
 	private Material starsMat;
-	private Coroutine routine;
+	private Coroutine routine, fadeRoutine;
 
 	//camera selection
 	public GameObject[] cams;
@@ -32,6 +32,7 @@ public class Logic : MonoBehaviour
 	public Animator lockAnimator;
 	private int lastColor;
 	private int lastLevel;
+	private bool touchMoving;
 	private readonly string[] scenes = { "Chapel", "Beach", "Barn", "Toxic", "Station" };
 	private readonly string[] tracks = { "Twelve Days", "Fright Night Twist", "Born Barnstormers", "Run!", "Mystica" };
 	private readonly string[] artists = { "Alexander Nakarada", "Bryan Teoh", "Brian Boyko", "Komiku", "Alexander Nakarada" };
@@ -84,17 +85,24 @@ public class Logic : MonoBehaviour
 	public void Update()
 	{
 		if (Input.touches.Length <= 0) return;
+		if (SongPickingControl._settingsIsActive) return;
+		
 		var t = Input.GetTouch(0);
+		
 		switch (t.phase)
 		{
 			case TouchPhase.Began:
 				startPos = new Vector2(t.position.x / Screen.width, t.position.y / Screen.width);
 				startTime = Time.time;
 				break;
+			case TouchPhase.Moved:
+				touchMoving = true;
+				break;
 			case TouchPhase.Ended when Time.time - startTime > MAXSwipeTime:
 				return;
 			case TouchPhase.Ended:
 			{
+				touchMoving = false;
 				var endPos = new Vector2(t.position.x / Screen.width, t.position.y / Screen.width);
 				var swipe = new Vector2(endPos.x - startPos.x, endPos.y - startPos.y);
 				if (swipe.magnitude < MINSwipeDistance) // Too short swipe
@@ -111,32 +119,62 @@ public class Logic : MonoBehaviour
 
 	public void SwipedRight()
 	{
-		if (routine != null) return;
+		lastColor = cur;
 		for (var i = 0; i < len; i++) 
 			cams[i].SetActive(false);
 		cur = --cur % len;
 		if (cur < 0) cur = len - 1;
 		cams[cur].SetActive(true);
-		routine = StartCoroutine(SetColor());
+		
+		if (routine != null) 
+		{
+			StopCoroutine(routine);
+		}
+		routine = StartCoroutine(SetColor(lastColor, cur));
+		
+		if (fadeRoutine != null)
+		{
+			StopCoroutine(fadeRoutine);
+			fadeRoutine = StartCoroutine(UIFadeIn(cur));
+		}
+		else fadeRoutine = StartCoroutine(UIFadeOut(lastColor));
 	}
 
 	public void SwipedLeft()
 	{
-		if (routine != null) return;
+		lastColor = cur;
 		for (var i = 0; i < len; i++) 
 			cams[i].SetActive(false);
 		cur = ++cur % len;
 		cams[cur].SetActive(true);
-		routine = StartCoroutine(SetColor());
+
+		if (routine != null) 
+		{
+			StopCoroutine(routine);
+		}
+		routine = StartCoroutine(SetColor(lastColor, cur));
+		
+		if (fadeRoutine != null)
+		{
+			StopCoroutine(fadeRoutine);
+			fadeRoutine = StartCoroutine(UIFadeIn(cur));
+		}
+		else fadeRoutine = StartCoroutine(UIFadeOut(lastColor));
 	}
 
 	public void LevelSelect()
 	{
 		if (cur < lastLevel)
 		{
-			StartCoroutine(LevelSelectRoutine());
+			StartCoroutine(ButtonSelectRoutine());
 		}
 		else lockAnimator.Play("lockIcon", 0);
+	}
+
+	private IEnumerator ButtonSelectRoutine()
+	{
+		yield return new WaitForSeconds(0.07f);
+		if (!touchMoving) StartCoroutine(LevelSelectRoutine());
 	}
 
 	public void EffectsToggle(bool tg)
@@ -167,26 +205,24 @@ public class Logic : MonoBehaviour
 		}
 	}
 
-	private IEnumerator SetColor()
+	private IEnumerator SetColor(int from, int to)
 	{
-		StartCoroutine(SongSelectionUI());
 		var elapsedTime = 0f;
 		while (elapsedTime < 1f)
 		{
 			elapsedTime += Time.deltaTime;
 			//set skybox color
-			var r = Color.Lerp(colors[lastColor], colors[cur], elapsedTime / 1f);
+			var r = Color.Lerp(colors[from], colors[to], elapsedTime / 1f);
 			starsMat.SetColor(NoiseColor, r);
 			//set ui colors
-			var u = Color.Lerp(uiColors[lastColor], uiColors[cur], elapsedTime / 1f);
+			var u = Color.Lerp(uiColors[from], uiColors[to], elapsedTime / 1f);
 			SetUIColors(u);
 			yield return null;
 		}
-		lastColor = cur;
 		routine = null;
 	}
 
-	private IEnumerator SongSelectionUI()
+	private IEnumerator UIFadeOut(int from)
 	{
 		var elapsedTime = 0f;
 		while (elapsedTime < 0.1f)
@@ -198,20 +234,19 @@ public class Logic : MonoBehaviour
 				leftButton.color = 
 				songInfoFrame.color =
 				playBtn.color =
-				new Color(uiColors[lastColor].r, uiColors[lastColor].g, uiColors[lastColor].b, a);
-			songBkg.color = new Color(uiColors[lastColor].r, uiColors[lastColor].g, uiColors[lastColor].b, b);
-			songTitle.color = artistName.color = new Color(uiColors[lastColor].r, uiColors[lastColor].g, uiColors[lastColor].b, a);
+				new Color(uiColors[from].r, uiColors[from].g, uiColors[from].b, a);
+			songBkg.color = new Color(uiColors[from].r, uiColors[from].g, uiColors[from].b, b);
+			songTitle.color = artistName.color = new Color(uiColors[from].r, uiColors[from].g, uiColors[from].b, a);
 			yield return null;
 		}
+		fadeRoutine = StartCoroutine(UIFadeIn(cur));
+	}
 
-		songTitle.text = tracks[cur];
-		artistName.text = "by " + artists[cur];
-		if (lastLevel > cur) playBtn.sprite = playIcon;
-		else playBtn.sprite = lockedIcon;
-
-		yield return new WaitForSeconds(0.6f);
-
-		elapsedTime = 0f;
+	private IEnumerator UIFadeIn(int to)
+	{
+		ToTransparent();
+		yield return new WaitForEndOfFrame();
+		var elapsedTime = 0f;
 		while (elapsedTime < 0.15f)
 		{
 			elapsedTime += Time.deltaTime;
@@ -221,12 +256,27 @@ public class Logic : MonoBehaviour
 				leftButton.color =
 				songInfoFrame.color =
 				playBtn.color =
-				new Color(uiColors[cur].r, uiColors[cur].g, uiColors[cur].b, a);
-			songBkg.color = new Color(uiColors[cur].r, uiColors[cur].g, uiColors[cur].b, b);
-			songTitle.color = artistName.color = new Color(uiColors[cur].r, uiColors[cur].g, uiColors[cur].b, a);
+				new Color(uiColors[to].r, uiColors[to].g, uiColors[to].b, a);
+			songBkg.color = new Color(uiColors[to].r, uiColors[to].g, uiColors[to].b, b);
+			songTitle.color = artistName.color = new Color(uiColors[to].r, uiColors[to].g, uiColors[to].b, a);
 			yield return null;
 		}
+		fadeRoutine = null;
+	}
 
+	private void ToTransparent()
+	{
+		rightButton.color = 
+			leftButton.color = 
+			songInfoFrame.color =
+			playBtn.color =
+			new Color(uiColors[cur].r, uiColors[cur].g, uiColors[cur].b, 0);
+		songBkg.color = new Color(uiColors[cur].r, uiColors[cur].g, uiColors[cur].b, 0);
+		songTitle.color = artistName.color = new Color(uiColors[cur].r, uiColors[cur].g, uiColors[cur].b, 0);
+		songTitle.text = tracks[cur];
+		artistName.text = "by " + artists[cur];
+		if (lastLevel > cur) playBtn.sprite = playIcon;
+		else playBtn.sprite = lockedIcon;
 		foreach (var text in texts)
 		{
 			text.color = uiColors[cur];

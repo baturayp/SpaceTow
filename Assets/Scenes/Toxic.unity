@@ -7000,6 +7000,7 @@ MonoBehaviour:
   fadePanel: {fileID: 971456902}
   endFadePanel: {fileID: 1090243981}
   playCam: {fileID: 761918840}
+  dollyCart: {fileID: 1919171815}
   towParticles: {fileID: 183731177}
 --- !u!114 &1153441175
 MonoBehaviour:
@@ -18118,7 +18119,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1976510563}
-  m_LocalRotation: {x: 0.008422374, y: 0.9903714, z: -0.070021726, w: 0.119124144}
+  m_LocalRotation: {x: 0.008422384, y: 0.9903714, z: -0.070021726, w: 0.11912427}
   m_LocalPosition: {x: -2.3641286, y: 1.4168327, z: 9.185231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -18396,7 +18397,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2047155308}
-  m_LocalRotation: {x: 0.008422374, y: 0.9903714, z: -0.070021726, w: 0.119124144}
+  m_LocalRotation: {x: 0.008422384, y: 0.9903714, z: -0.070021726, w: 0.11912427}
   m_LocalPosition: {x: -2.3641286, y: 1.4168327, z: 9.185231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

@@ -28,6 +28,7 @@ public class PlayingUIController : MonoBehaviour
 
 	//cameras
 	public CinemachineVirtualCamera playCam;
+	public CinemachineDollyCart dollyCart;
 	public GameObject towParticles;
 
 	private void OnEnable()
@@ -49,6 +50,7 @@ public class PlayingUIController : MonoBehaviour
 		if (newHealthScore < 0f && !lostSceneShowed)
 		{
 			ShowLostScene();
+			Conductor.paused = true;
 			lostSceneShowed = true;
 		}
 		
@@ -75,16 +77,17 @@ public class PlayingUIController : MonoBehaviour
 			fadePanel.color = c;
 			yield return null;
 		}
+		pauseButton.SetActive(true);
 		yield return new WaitWhile(() => Conductor.nextTrack == 4);
 		playCam.Priority = 20;
 		yield return new WaitForSeconds(2f);
-		pauseButton.SetActive(true);
 		towParticles.SetActive(false);
 	}
 
 	private IEnumerator PauseFade()
 	{
 		pauseButton.SetActive(false);
+		dollyCart.m_Speed = 0f;
 		playCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 0f;
 		var elapsedTime = 0f;
 		while (elapsedTime < 0.3f)
@@ -112,6 +115,7 @@ public class PlayingUIController : MonoBehaviour
 		}
 		fadePanel.color = new Color(0, 0, 0, 0f);
 		playCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 1f;
+		dollyCart.m_Speed = 0.1f;
 		pauseButton.SetActive(true);
 		Conductor.paused = false;
 	}
@@ -159,7 +163,7 @@ public class PlayingUIController : MonoBehaviour
 		while (elapsedTime < 0.5f)
 		{
 			elapsedTime += Time.deltaTime;
-			var a = Mathf.Lerp(1f, 0f, elapsedTime / 0.5f);
+			var a = Mathf.Lerp(0f, 1f, elapsedTime / 0.5f);
 			var c = new Color(0, 0, 0, a);
 			fadePanel.color = c;
 			yield return null;

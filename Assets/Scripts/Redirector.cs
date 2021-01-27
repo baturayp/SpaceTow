@@ -9,6 +9,8 @@ public class Redirector : MonoBehaviour
 
     private void Start()
     {
-        SceneManager.LoadScene("MainMenu");
+        var lastLevel = PlayerPrefs.GetInt("lastLevel", 0);
+        if (lastLevel < 5) SceneManager.LoadScene(scenes[lastLevel]);
+        else SceneManager.LoadScene("MainMenu");
     }
 }

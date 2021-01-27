@@ -295,6 +295,7 @@ public class Conductor : MonoBehaviour
 		if (Input.touches.Length > 0)
 		{
 			var t = Input.GetTouch(0);
+			if (t.position.y > Screen.height * 0.8f) return;
 			switch (t.phase)
 			{
 				case TouchPhase.Began when nextTrack < 2:
