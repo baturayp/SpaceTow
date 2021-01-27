@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EndScreenRotate : MonoBehaviour
@@ -11,27 +9,20 @@ public class EndScreenRotate : MonoBehaviour
     int oldOrientation = 0;
     public Animator spaceman;
     public Animator bkg;
+    public bool win;
 
     // Update is called once per frame
-    void Update()
-    {
-        if (oldOrientation == 2 & Input.deviceOrientation == DeviceOrientation.LandscapeLeft | Input.deviceOrientation == DeviceOrientation.LandscapeRight)
-        {
-            orientationChange = true;
-        }
-        if (oldOrientation == 1 & Input.deviceOrientation == DeviceOrientation.Portrait)
-        {
-            orientationChange = true;
-        }
 
-        if (orientationChange == true & Input.deviceOrientation == DeviceOrientation.LandscapeLeft | Input.deviceOrientation == DeviceOrientation.LandscapeRight)
+    void Start()
+    {
+        if (Screen.orientation == ScreenOrientation.LandscapeLeft | Screen.orientation == ScreenOrientation.LandscapeRight)
         {
             bkgTape.localRotation = Quaternion.Euler(0, 0, 90);
             bkgTape.localPosition = new Vector3(225, -251.5f, 0);
-            icon1.localPosition = new Vector3(217, 0, 0);
-            if (icon2 != null)
+            icon1.localPosition = new Vector3(217, -110, 0);
+            icon2.localPosition = new Vector3(217, 110, 0);
+            if (!win)
             {
-                icon2.localPosition = new Vector3(217, 0, 0);
                 spaceman.Play("LoseLandImg", 0, 0);
                 bkg.Play("BkgAnimLose", 0, 0);
             }
@@ -44,14 +35,69 @@ public class EndScreenRotate : MonoBehaviour
             orientationChange = false;
             oldOrientation = 1;
         }
-        if (orientationChange == true & Input.deviceOrientation == DeviceOrientation.Portrait)
+
+        if (Screen.orientation == ScreenOrientation.Portrait | Screen.orientation == ScreenOrientation.PortraitUpsideDown)
         {
             bkgTape.localRotation = Quaternion.Euler(0, 0, 0);
             bkgTape.localPosition = new Vector3(0, -251.5f, 0);
-            icon1.localPosition = new Vector3(0, -246, 0);
-            if (icon2 != null)
+            icon1.localPosition = new Vector3(110, -246, 0);
+            icon2.localPosition = new Vector3(-110, -246, 0);
+            if (!win)
             {
-                icon2.localPosition = new Vector3(0, -246, 0);
+                spaceman.Play("LosePortImg", 0, 0);
+                bkg.Play("BkgAnimLose", 0, 0);
+            }
+            else
+            {
+                spaceman.Play("WinPortImg", 0, 0);
+                bkg.Play("BkgAnim", 0, 0);
+            }
+
+            orientationChange = false;
+            oldOrientation = 2;
+        }
+
+    }
+    void Update()
+    {
+        if (oldOrientation == 2 && (Screen.orientation == ScreenOrientation.LandscapeLeft | Screen.orientation == ScreenOrientation.LandscapeRight))
+        {
+            orientationChange = true;
+        }
+        if (oldOrientation == 1 && (Screen.orientation == ScreenOrientation.Portrait | Screen.orientation == ScreenOrientation.PortraitUpsideDown))
+        {
+            orientationChange = true;
+        }
+
+        if (orientationChange == true && (Screen.orientation == ScreenOrientation.LandscapeLeft | Screen.orientation == ScreenOrientation.LandscapeRight))
+        {
+            bkgTape.localRotation = Quaternion.Euler(0, 0, 90);
+            bkgTape.localPosition = new Vector3(225, -251.5f, 0);
+            icon1.localPosition = new Vector3(217, -110, 0);
+            icon2.localPosition = new Vector3(217, 110, 0);
+            if (win)
+            {
+                spaceman.Play("LoseLandImg", 0, 0);
+                bkg.Play("BkgAnimLose", 0, 0);
+            }
+            else
+            {
+                spaceman.Play("WinLandImg", 0, 0);
+                bkg.Play("BkgAnim", 0, 0);
+            }
+
+            orientationChange = false;
+            oldOrientation = 1;
+        }
+
+        if (orientationChange == true && (Screen.orientation == ScreenOrientation.Portrait | Screen.orientation == ScreenOrientation.PortraitUpsideDown))
+        {
+            bkgTape.localRotation = Quaternion.Euler(0, 0, 0);
+            bkgTape.localPosition = new Vector3(0, -251.5f, 0);
+            icon1.localPosition = new Vector3(110, -246, 0);
+            icon2.localPosition = new Vector3(-110, -246, 0);
+            if (!win)
+            {
                 spaceman.Play("LosePortImg", 0, 0);
                 bkg.Play("BkgAnimLose", 0, 0);
             }
