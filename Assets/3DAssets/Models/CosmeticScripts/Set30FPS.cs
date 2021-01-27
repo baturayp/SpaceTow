@@ -27,6 +27,15 @@ public class Set30FPS : MonoBehaviour
 		//string text = string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps);
 		string text = string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps);
 		GUI.Label(rect, text, style);
+
+		Rect rect2 = new Rect(0, 20, w, h * 2 / 100);
+		style.alignment = TextAnchor.UpperLeft;
+		style.fontSize = h * 2 / 100;
+		style.normal.textColor = new Color(0.0f, 1f, 0.0f, 1.0f);
+		float time = Conductor.songposition;
+		//string text = string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps);
+		string text2 = string.Format("Time: {0:0.0}", time);
+		GUI.Label(rect2, text2, style);
 	}
 
 	// Start is called before the first frame update
