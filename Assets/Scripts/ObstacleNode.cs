@@ -66,6 +66,7 @@ public class ObstacleNode : MonoBehaviour
         else
         {
             paused = true;
+            Handheld.Vibrate();
             var explosionPosition = transform.position + explosionVector;
             rigid.AddExplosionForce(5f, explosionPosition, 5.0f, 2f, ForceMode.Impulse);
         }
