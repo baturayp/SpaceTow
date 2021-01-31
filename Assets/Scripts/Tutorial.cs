@@ -41,12 +41,12 @@ public class Tutorial : MonoBehaviour
 
         if (Conductor.songposition > 2.95f)
         {
-            if (!message0) ShowMessage(0, "Single tap to punch\nwhen a meteor glows red");
+            if (!message0) ShowMessage(0, "single tap to punch\nwhen a meteor glows red");
         }
 
         if (Conductor.songposition > 6.8f)
         {
-            if (!message1) ShowMessage(1, "Swipe to avoid objects\nthat are not meteors");
+            if (!message1) ShowMessage(1, "swipe to avoid objects\nthat are not meteors");
         }
 
         if (Conductor.songposition > 10f)

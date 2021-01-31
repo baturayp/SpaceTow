@@ -104,7 +104,7 @@ public class MeteorNode : MonoBehaviour
 														metStartY, 
 														Mathf.LerpUnclamped(metEndZ, metStartZ, (beat - Conductor.songposition) / (Conductor.appearTime)));
 
-		
+
 		var dt = aCos * Time.deltaTime * 100;
 		transform.Rotate(dt,dt,dt, Space.Self);
 
@@ -146,7 +146,7 @@ public class MeteorNode : MonoBehaviour
 		        break;
 	        }
 	        case false:
-		        Handheld.Vibrate();
+		        if (Conductor.vibration) Vibration.Vibrate(150);
 		        towTruckShaking = true;
 		        wholeRigid.AddExplosionForce(10f, explosionPosition, 5.0f, 2f, ForceMode.Impulse);
 		        break;

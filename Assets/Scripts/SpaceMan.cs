@@ -1,14 +1,23 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpaceMan : MonoBehaviour
 {
 	public Animator spaceMan;
-	//private Coroutine routine;
-	private const float CrossFade = 0.1f;
-	private readonly int[] backPosition = { 0, 1, 1, 1, 2, 3, 3, 4, 4, 4, 4, 2 };
-	private Coroutine punchRunning;
+	private readonly int[] backPosition = { 0, 18, 18, 18, 28, 38, 38, 48, 48, 48, 48, 28 };
+	private static readonly int PunchL = Animator.StringToHash("punchL");
+	private static readonly int PunchR = Animator.StringToHash("punchR");
+	private static readonly int AnimNumber = Animator.StringToHash("punchAnim");
+	private static readonly int AvoidWait = Animator.StringToHash("avoidWait");
+	private static readonly int FarL = Animator.StringToHash("farL");
+	private static readonly int FarR = Animator.StringToHash("farR");
+	private static readonly int HitL = Animator.StringToHash("hitL");
+	private static readonly int HitR = Animator.StringToHash("hitR");
+	private static readonly int EmptyHit = Animator.StringToHash("emptyHit");
+	private static readonly int ShortAvoidL = Animator.StringToHash("shortAvoidL");
+	private static readonly int ShortAvoidR = Animator.StringToHash("shortAvoidR");
+	private static readonly int LongAvoidL = Animator.StringToHash("longAvoidL");
+	private static readonly int LongAvoidR = Animator.StringToHash("longAvoidR");
 
 	private void Update()
 	{
@@ -16,63 +25,51 @@ public class SpaceMan : MonoBehaviour
 	}
 
 	//successful punch animation
-	public void Punch(int animNumber, int trackNumber, float offset, bool success)
+	public void Punch(int animNumber, int trackNumber, bool success)
 	{
-		var animToPlay = animNumber.ToString() + trackNumber;
-		spaceMan.CrossFadeInFixedTime(animToPlay, CrossFade, 0);
-		if (punchRunning != null) StopCoroutine(punchRunning);
-		punchRunning = StartCoroutine(PunchRunning());
+		if (success) spaceMan.SetInteger(AnimNumber, animNumber);
+		else spaceMan.SetInteger(AnimNumber, animNumber * 10 + 4);
+		spaceMan.SetTrigger(trackNumber > 0 ? PunchR : PunchL);
 	}
 
 	//delayed punch
 	public void DelayedPunch(int animNumber, int trackNumber)
 	{
-		var animToPlay = backPosition[animNumber].ToString() + trackNumber + "B";
-		spaceMan.CrossFadeInFixedTime(animToPlay, CrossFade, 0, 0.2f);
-		punchRunning = StartCoroutine(PunchRunning());
-		if (punchRunning != null) StopCoroutine(punchRunning);
-		punchRunning = StartCoroutine(PunchRunning());
+		spaceMan.SetInteger(AnimNumber, backPosition[animNumber]);
+		spaceMan.SetTrigger(trackNumber > 0 ? PunchR : PunchL);
 	}
 
 	public void Empty()
 	{
-		if (punchRunning != null) return;
-		spaceMan.CrossFadeInFixedTime("E", CrossFade, 0);
+		spaceMan.SetTrigger(EmptyHit);
 	}
 
 	//target is too far, don't play full punch clip
 	public void IsTooFar(int trackNumber)
 	{
-		if (punchRunning != null) return;
-		var animToPlay = trackNumber + "F";
-		spaceMan.CrossFadeInFixedTime(animToPlay, CrossFade, 0);
+		spaceMan.SetTrigger(trackNumber > 0 ? FarR : FarL);
 	}
 
 	//an obstacle got hit on spaceman, considering character's position
 	public void GotHit(int trackNumber)
 	{
-		if (punchRunning != null) return;
-		var hitSide = Conductor.avoidPos == 0 ? "H" : "S";
-		var animToPlay = trackNumber + hitSide;
-		spaceMan.CrossFadeInFixedTime(animToPlay, CrossFade, 0);
+		spaceMan.SetTrigger(trackNumber > 2 ? HitR : HitL);
 	}
 
 	//take avoid position
 	public void Avoid(int trackNumber)
 	{
-		if (punchRunning != null) return;
-		spaceMan.CrossFadeInFixedTime(trackNumber.ToString(), CrossFade, 0);
+		spaceMan.SetBool(AvoidWait, true);
+		spaceMan.SetTrigger(trackNumber > 2 ? LongAvoidR : LongAvoidL);
+	}
+
+	public void ShortAvoid(int trackNumber)
+	{
+		spaceMan.SetTrigger(trackNumber > 2 ? ShortAvoidR : ShortAvoidL);
 	}
 
 	public void AvoidBack(int trackNumber)
 	{
-		if (punchRunning != null) return;
-		spaceMan.CrossFadeInFixedTime(trackNumber + "B", CrossFade, 0);
-	}
-
-	private IEnumerator PunchRunning()
-	{
-		yield return new WaitForSeconds(0.1f);
-		punchRunning = null;
+		spaceMan.SetBool(AvoidWait, false);
 	}
 }

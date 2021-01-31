@@ -156,6 +156,12 @@ ModelImporter:
   - first:
       74: -3499738531133308385
     second: SideHit R
+  - first:
+      74: 4849934747400197550
+    second: Armature|Evasion1-L Start
+  - first:
+      74: -978421227760883659
+    second: Armature|Evasion1-R Start
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -1490,11 +1496,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: SideHit L
+      name: Armature|Evasion1-L Start
       takeName: Armature|Evasion1-L
       internalID: 0
-      firstFrame: 4
-      lastFrame: 6
+      firstFrame: 0
+      lastFrame: 5
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1519,11 +1525,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: SideHit R
+      name: Armature|Evasion1-R Start
       takeName: Armature|Evasion1-R
       internalID: 0
-      firstFrame: 4
-      lastFrame: 6
+      firstFrame: 0
+      lastFrame: 5
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

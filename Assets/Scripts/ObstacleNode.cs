@@ -33,7 +33,7 @@ public class ObstacleNode : MonoBehaviour
     {
         if (Conductor.pauseTimeStamp > 0f) return;
 
-        var dt = aCos * Time.deltaTime * 100;
+        var dt = aCos * Time.deltaTime * 60;
         transform.Rotate(dt,dt, dt, Space.Self);
 
         if (paused) return;
@@ -66,7 +66,7 @@ public class ObstacleNode : MonoBehaviour
         else
         {
             paused = true;
-            Handheld.Vibrate();
+            if (Conductor.vibration) Vibration.Vibrate(50);
             var explosionPosition = transform.position + explosionVector;
             rigid.AddExplosionForce(5f, explosionPosition, 5.0f, 2f, ForceMode.Impulse);
         }

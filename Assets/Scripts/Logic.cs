@@ -9,7 +9,6 @@ public class Logic : MonoBehaviour
     private const float MINSwipeDistance = 0.10f;
     private Vector2 startPos;
     private float startTime;
-    private bool songChanged;
     public AudioSource loopPlayer;
 
     //stars
@@ -32,11 +31,11 @@ public class Logic : MonoBehaviour
     public Text songTitle, artistName;
     public Image fadeLayer;
     public Animator lockAnimator;
+    public GameObject toxicSmoke;
     private int lastColor;
     private int lastLevel;
-    private bool touchMoving;
     private readonly string[] scenes = { "Chapel", "Beach", "Barn", "Toxic", "Station" };
-    private readonly string[] tracks = { "Twelve Days", "Fright Night Twist", "Born Barnstormers", "Run!", "Mystica" };
+    private readonly string[] tracks = { "twelve days", "fright night twist", "born barnstormers", "run!", "mystica" };
     private readonly string[] artists = { "Alexander Nakarada", "Bryan Teoh", "Brian Boyko", "Komiku", "Alexander Nakarada" };
     private static readonly int NoiseColor = Shader.PropertyToID("_NoiseColor");
     private static readonly int MainColor = Shader.PropertyToID("_MainColor");
@@ -65,26 +64,22 @@ public class Logic : MonoBehaviour
         starsMat.SetColor(NoiseColor, colors[0]);
         loopPlayer.clip = songloops[cur];
         loopPlayer.Play();
+        if (cur > 2) toxicSmoke.SetActive(true);
         SetCurrent(cur);
 
-
-        for (int i = 0; i < 5; i++)
+        for (var i = 0; i < 5; i++)
         {
-            if (i > cur)
+            if (i <= cur) continue;
+            foreach (Transform child in planets[i].transform)
             {
-                foreach (Transform child in planets[i].transform)
-                {
-                    if (child.GetComponent<MeshRenderer>())
-                    {
-                        var cl = new Color(0.1f, 0.1f, 0.1f, 1);
-                        child.GetComponent<MeshRenderer>().material.SetColor(MainColor, cl);
-                    }
-                }
+                if (!child.GetComponent<MeshRenderer>()) continue;
+                var cl = new Color(0.1f, 0.1f, 0.1f, 1);
+                child.GetComponent<MeshRenderer>().material.SetColor(MainColor, cl);
             }
         }
 
         //get effects pref
-        effectsToggle.isOn = PlayerPrefs.GetInt("punchEffects", 1) == 1;
+        effectsToggle.isOn = PlayerPrefs.GetInt("vibration", 1) == 1;
     }
 
     public void Update()
@@ -100,14 +95,10 @@ public class Logic : MonoBehaviour
                 startPos = new Vector2(t.position.x / Screen.width, t.position.y / Screen.width);
                 startTime = Time.time;
                 break;
-            case TouchPhase.Moved:
-                touchMoving = true;
-                break;
             case TouchPhase.Ended when Time.time - startTime > MAXSwipeTime:
                 return;
             case TouchPhase.Ended:
                 {
-                    touchMoving = false;
                     var endPos = new Vector2(t.position.x / Screen.width, t.position.y / Screen.width);
                     var swipe = new Vector2(endPos.x - startPos.x, endPos.y - startPos.y);
                     if (swipe.magnitude < MINSwipeDistance) // Too short swipe
@@ -142,7 +133,7 @@ public class Logic : MonoBehaviour
         {
             StopCoroutine(songChangeRoutine);
         }
-        songChangeRoutine = StartCoroutine(SetLoop(cur, songChanged));
+        songChangeRoutine = StartCoroutine(SetLoop(cur));
 
 
         if (fadeRoutine != null)
@@ -171,7 +162,7 @@ public class Logic : MonoBehaviour
         {
             StopCoroutine(songChangeRoutine);
         }
-        songChangeRoutine = StartCoroutine(SetLoop(cur, songChanged));
+        songChangeRoutine = StartCoroutine(SetLoop(cur));
 
         if (fadeRoutine != null)
         {
@@ -183,17 +174,12 @@ public class Logic : MonoBehaviour
 
     public void LevelSelect()
     {
+        if (routine != null) return;
         if (cur < lastLevel)
         {
-            StartCoroutine(ButtonSelectRoutine());
+            StartCoroutine(LevelSelectRoutine(cur));
         }
         else lockAnimator.Play("lockIcon", 0);
-    }
-
-    private IEnumerator ButtonSelectRoutine()
-    {
-        yield return new WaitForSeconds(0.07f);
-        if (!touchMoving) StartCoroutine(LevelSelectRoutine());
     }
 
     public void EffectsToggle(bool tg)
@@ -206,7 +192,7 @@ public class Logic : MonoBehaviour
         var color = colors[cr];
         starsMat.SetColor(NoiseColor, color);
         SetUIColors(uiColors[cr]);
-        for (int i = 0; i < len; i++)
+        for (var i = 0; i < len; i++)
             cams[i].SetActive(false);
         cams[cr].SetActive(true);
         songTitle.text = tracks[cr];
@@ -241,7 +227,7 @@ public class Logic : MonoBehaviour
         routine = null;
     }
 
-    private IEnumerator SetLoop(int to, bool change)
+    private IEnumerator SetLoop(int to)
     {
         var elapsedTime = 0f;
 
@@ -252,12 +238,8 @@ public class Logic : MonoBehaviour
             yield return null;
         }
 
-        if (!change)
-        {
-            loopPlayer.clip = songloops[to];
-            loopPlayer.Play();
-            change = true;
-        }
+        loopPlayer.clip = songloops[to];
+        loopPlayer.Play();
 
         while (elapsedTime < 1f)
         {
@@ -321,8 +303,7 @@ public class Logic : MonoBehaviour
         songTitle.color = artistName.color = new Color(uiColors[cur].r, uiColors[cur].g, uiColors[cur].b, 0);
         songTitle.text = tracks[cur];
         artistName.text = "by " + artists[cur];
-        if (lastLevel > cur) playBtn.sprite = playIcon;
-        else playBtn.sprite = lockedIcon;
+        playBtn.sprite = lastLevel > cur ? playIcon : lockedIcon;
         foreach (var text in texts)
         {
             text.color = uiColors[cur];
@@ -336,7 +317,7 @@ public class Logic : MonoBehaviour
         {
             uiElements[i].color = col;
         }
-        uiElements[length - 1].color = new Color(col.r, col.g, col.b, 0.4f);
+        uiElements[length - 1].color = new Color(col.r, col.g, col.b, 0.6f);
     }
 
     private IEnumerator FadeRoutine()
@@ -352,8 +333,9 @@ public class Logic : MonoBehaviour
         }
     }
 
-    private IEnumerator LevelSelectRoutine()
+    private IEnumerator LevelSelectRoutine(int selected)
     {
+        if (selected >= lastLevel) yield break;
         var elapsedTime = 0f;
         while (elapsedTime < 0.5f)
         {
@@ -363,6 +345,6 @@ public class Logic : MonoBehaviour
             fadeLayer.color = c;
             yield return null;
         }
-        SceneManager.LoadScene(scenes[cur]);
+        SceneManager.LoadScene(scenes[selected]);
     }
 }

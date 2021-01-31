@@ -13366,7 +13366,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1976510563}
-  m_LocalRotation: {x: 0.008422374, y: 0.9903714, z: -0.070021726, w: 0.119124144}
+  m_LocalRotation: {x: 0.008422382, y: 0.9903714, z: -0.07002172, w: 0.11912427}
   m_LocalPosition: {x: -2.3641286, y: 1.4168327, z: 9.185231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -13531,7 +13531,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2047155308}
-  m_LocalRotation: {x: 0.008422374, y: 0.9903714, z: -0.070021726, w: 0.119124144}
+  m_LocalRotation: {x: 0.008422382, y: 0.9903714, z: -0.07002172, w: 0.11912427}
   m_LocalPosition: {x: -2.3641286, y: 1.4168327, z: 9.185231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -14073,10 +14073,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8992099277866354014, guid: 2640b2b9436fd2a43a4525fec9aba570, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8992099278212338214, guid: 2640b2b9436fd2a43a4525fec9aba570, type: 3}
       propertyPath: m_TargetGraphic
       value: 
       objectReference: {fileID: 1467094122}
+    - target: {fileID: 8992099278212338214, guid: 2640b2b9436fd2a43a4525fec9aba570, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8992099278212338214, guid: 2640b2b9436fd2a43a4525fec9aba570, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -14177,14 +14185,42 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1153441174}
+    - target: {fileID: 8992099279144809294, guid: 2640b2b9436fd2a43a4525fec9aba570, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8992099279257470259, guid: 2640b2b9436fd2a43a4525fec9aba570, type: 3}
       propertyPath: m_TargetGraphic
       value: 
       objectReference: {fileID: 1467094122}
     - target: {fileID: 8992099279257470259, guid: 2640b2b9436fd2a43a4525fec9aba570, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8992099279257470259, guid: 2640b2b9436fd2a43a4525fec9aba570, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8992099279257470259, guid: 2640b2b9436fd2a43a4525fec9aba570, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1153441174}
+    - target: {fileID: 8992099279257470259, guid: 2640b2b9436fd2a43a4525fec9aba570, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8992099279257470259, guid: 2640b2b9436fd2a43a4525fec9aba570, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HomeButtonOnClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8992099279257470259, guid: 2640b2b9436fd2a43a4525fec9aba570, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayingUIController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8992099279257470259, guid: 2640b2b9436fd2a43a4525fec9aba570, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2640b2b9436fd2a43a4525fec9aba570, type: 3}
 --- !u!33 &9087976345044710108

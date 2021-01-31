@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Cinemachine;
 using System;
+using GoogleMobileAds.Api;
 
 public class PlayingUIController : MonoBehaviour
 {
@@ -31,21 +32,87 @@ public class PlayingUIController : MonoBehaviour
 	public CinemachineDollyCart dollyCart;
 	public GameObject towParticles;
 
-	private void OnEnable()
-	{
-		SceneManager.sceneLoaded += OnSceneLoad;
-	}
+	//ads counter
+	private InterstitialAd interstitial;
+	private bool willShowAds;
+	private int closeAction;
 
 	private void OnDestroy()
 	{
-		SceneManager.sceneLoaded -= OnSceneLoad;
+		interstitial.Destroy();
+	}
+
+	private void Start()
+	{
+		var today = DateTime.Now.DayOfYear;
+		var lastDay = PlayerPrefs.GetInt("dateToday", today);
+		if (lastDay == today)
+		{
+			var adsCounter = PlayerPrefs.GetInt("adsCounterToday", 0);
+			PlayerPrefs.SetInt("adsCounterToday", adsCounter + 1);
+			if (adsCounter == 0 || adsCounter == 2 || adsCounter == 6 || adsCounter == 10)
+			{
+				willShowAds = true;
+				RequestInterstitial();
+			}
+		}
+		else
+		{
+			PlayerPrefs.SetInt("dateToday", DateTime.Now.DayOfYear);
+			PlayerPrefs.SetInt("adsCounterToday", 1);
+			willShowAds = true;
+			RequestInterstitial();
+		}
+
+		StartCoroutine(CameraRoutine());
+	}
+
+	private void RequestInterstitial()
+	{
+#if UNITY_ANDROID
+		//test ads
+		//string adUnitId = "ca-app-pub-3940256099942544/1033173712";
+        
+		//my id
+		const string adUnitId = "ca-app-pub-3940256099942544/1033173712";
+#else
+        string adUnitId = "unexpected_platform";
+#endif
+
+		// Initialize an InterstitialAd.
+		interstitial = new InterstitialAd(adUnitId);
+
+		// Called when the ad is closed.
+		interstitial.OnAdClosed += HandleOnAdClosed;
+
+		// Create an empty ad request.
+		var request = new AdRequest.Builder().Build();
+		// Load the interstitial with the request.
+		interstitial.LoadAd(request);
+	}
+
+	private void HandleOnAdClosed(object sender, EventArgs args)
+	{
+		TakeAction(closeAction);
+	}
+
+	private void ShowAds()
+	{
+		if (interstitial.IsLoaded())
+		{
+			interstitial.Show();
+		}
+		else
+		{
+			TakeAction(closeAction);
+		}
 	}
 
 	public void ScoreDown(int track)
 	{
 		if (healthScoreCoroutine != null) StopCoroutine(healthScoreCoroutine);
 		newHealthScore -= 0.05f;
-		
+
 		//lost
 		if (newHealthScore < 0f && !lostSceneShowed)
 		{
@@ -53,17 +120,12 @@ public class PlayingUIController : MonoBehaviour
 			Conductor.paused = true;
 			lostSceneShowed = true;
 		}
-		
+
 		healthScoreCoroutine = StartCoroutine(HealthBarUpdate(lastHealthScore, newHealthScore));
 
 		if (track >= 2) return;
 		if (shakeCoroutine != null) return;
 		shakeCoroutine = StartCoroutine(ShakeRoutine(track));
-	}
-
-	private void OnSceneLoad(Scene scene, LoadSceneMode mode)
-	{
-		StartCoroutine(CameraRoutine());
 	}
 
 	private IEnumerator CameraRoutine()
@@ -183,9 +245,13 @@ public class PlayingUIController : MonoBehaviour
 			yield return null;
 		}
 		winLayer.SetActive(true);
-		
+
 		var lastLevel = PlayerPrefs.GetInt("lastLevel", 1);
-		if (lastLevel < nextLevel) PlayerPrefs.SetInt("lastLevel", nextLevel);
+		if (lastLevel < nextLevel)
+		{
+			PlayerPrefs.SetInt("lastLevel", nextLevel);
+			PlayerPrefs.Save();
+		}
 
 		elapsedTime = 0f;
 		while (elapsedTime < 0.3f)
@@ -197,6 +263,7 @@ public class PlayingUIController : MonoBehaviour
 			yield return null;
 		}
 	}
+
 	private IEnumerator ShowLostRoutine()
 	{
 		var elapsedTime = 0f;
@@ -222,7 +289,9 @@ public class PlayingUIController : MonoBehaviour
 
 	public void OnLastButton()
 	{
-		SceneManager.LoadScene("Redirector");
+		closeAction = 0;
+		if (willShowAds) ShowAds();
+		else TakeAction(0);
 	}
 
 	public void ShowWinScene()
@@ -230,7 +299,7 @@ public class PlayingUIController : MonoBehaviour
 		StartCoroutine(ShowWinRoutine());
 	}
 
-	public void ShowLostScene()
+	private void ShowLostScene()
 	{
 		StartCoroutine(ShowLostRoutine());
 	}
@@ -248,11 +317,31 @@ public class PlayingUIController : MonoBehaviour
 
 	public void RetryButtonOnClick()
 	{
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		closeAction = 1;
+		if (willShowAds) ShowAds();
+		else TakeAction(1);
 	}
 
-	public void HomeButtonOnClick(int scene)
+	public void HomeButtonOnClick()
 	{
-		StartCoroutine(HomeRoutine());
+		closeAction = 2;
+		if (willShowAds) ShowAds();
+		else TakeAction(2);
+	}
+
+	private void TakeAction(int action)
+	{
+		switch (action)
+		{
+			case 0:
+				SceneManager.LoadScene("Redirector");
+				break;
+			case 1:
+				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+				break;
+			case 2:
+				StartCoroutine(HomeRoutine());
+				break;
+		}
 	}
 }

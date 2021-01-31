@@ -52,7 +52,7 @@ public class Conductor : MonoBehaviour
 	public AudioClip longPunchClip;
 	public AudioClip shortPunchClip;
 	public AudioClip obstacleSwoosh;
-	private bool punchEffects;
+	public static bool vibration;
 
 	//avoid movement values
 	public static int avoidPos;
@@ -64,7 +64,7 @@ public class Conductor : MonoBehaviour
 	//play punch sound at exact time
 	private void PunchEffect(float offset)
 	{
-		if(punchEffects) effectLayer.PlayOneShot(offset < 0.05f ? longPunchClip : shortPunchClip);
+		effectLayer.PlayOneShot(offset < 0.05f ? longPunchClip : shortPunchClip);
 	}
 
 	//wait until
@@ -81,7 +81,7 @@ public class Conductor : MonoBehaviour
 		{
 			avoidPos = trackNumber;
 			spaceMan.Avoid(trackNumber);
-			if(punchEffects) effectLayer.PlayOneShot(obstacleSwoosh);
+			effectLayer.PlayOneShot(obstacleSwoosh);
 		}
 		_avoidMoveWait = songposition + 0.5f;
 	}
@@ -106,7 +106,7 @@ public class Conductor : MonoBehaviour
 				//success hit
 				//incoming target is near but not inside the offset
 				case true when offset < HitOffset:
-					spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, offset, true);
+					spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, true);
 					frontNode.Score(true);
 					beatQueue.Dequeue();
 					PunchEffect(offset);
@@ -114,7 +114,7 @@ public class Conductor : MonoBehaviour
 					break;
 				//delay offset
 				case true when offset < HitOffset * 1.25:
-					spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, offset, false);
+					spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, false);
 					nextPunchWait = StartCoroutine(Wait(songposition + 0.15f));
 					break;
 				default:
@@ -122,7 +122,7 @@ public class Conductor : MonoBehaviour
 					switch (offset < 0f)
 					{
 						case true when offset > -0.07f:
-							spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, offset, true);
+							spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, true);
 							frontNode.Score(true);
 							beatQueue.Dequeue();
 							PunchEffect(Mathf.Abs(offset));
@@ -157,14 +157,10 @@ public class Conductor : MonoBehaviour
 		//reset static variables
 		paused = true;
 		pauseTimeStamp = -1f;
-
-		//get the song info from messenger
-		//songInfo = SongInfoMessenger.Instance.currentSong;
 		songInfo = developmentSong;
 
 		appearTime = 2f;
 		appearTimeLength = songInfo.appearTime.Length;
-
 		songLength = songInfo.song.length;
 
 		//initialize arrays
@@ -185,8 +181,8 @@ public class Conductor : MonoBehaviour
 		//load Audio data and set sound
 		songLayer.clip.LoadAudioData();
 		songLayer.volume = isTutorial ? 0f : 1f;
-		var punchEffectsSetting = PlayerPrefs.GetInt("punchEffects", 1);
-		punchEffects = punchEffectsSetting != 0;
+		var vibrationSetting = PlayerPrefs.GetInt("vibration", 1);
+		vibration = vibrationSetting != 0;
 
 		//start countdown
 		StartCoroutine(CountDown());
@@ -274,7 +270,6 @@ public class Conductor : MonoBehaviour
 					{
 						currNode.Score(true);
 						beatQueue.Dequeue();
-						//if(punchEffects) effectLayer.PlayOneShot(obstacleSuccessClip);
 					}
 					//got hit
 					else
@@ -282,7 +277,6 @@ public class Conductor : MonoBehaviour
 						beatQueue.Dequeue();
 						if (!isTutorial) uiController.ScoreDown(currNode.trackNumber);
 						spaceMan.GotHit(currNode.trackNumber);
-						//if(punchEffects) effectLayer.PlayOneShot(obstacleMissClip);
 					}
 				}
 			}
@@ -309,7 +303,7 @@ public class Conductor : MonoBehaviour
 				}
 				case TouchPhase.Stationary when nextTrack > 1:
 				{
-					_avoidMoveWait = songposition + 0.25f;
+					if (_avoidMoveWait > songposition) _avoidMoveWait = songposition + 0.125f;
 					break;
 				}
 			}
