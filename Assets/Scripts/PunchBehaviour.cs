@@ -2,34 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AvoidBehaviour : StateMachineBehaviour
+public class PunchBehaviour : StateMachineBehaviour
 {
     private static readonly int FarL = Animator.StringToHash("farL");
 	private static readonly int FarR = Animator.StringToHash("farR");
 	private static readonly int HitL = Animator.StringToHash("hitL");
 	private static readonly int HitR = Animator.StringToHash("hitR");
 	private static readonly int EmptyHit = Animator.StringToHash("emptyHit");
-    private static readonly int ShortAvoidL = Animator.StringToHash("shortAvoidL");
-	private static readonly int ShortAvoidR = Animator.StringToHash("shortAvoidR");
-	private static readonly int LongAvoidL = Animator.StringToHash("longAvoidL");
-	private static readonly int LongAvoidR = Animator.StringToHash("longAvoidR");
-    
-    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+
+    // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Conductor.avoiding = true;
+        Conductor.punching = true;
     }
 
-    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
+    // OnStateUpdate is called before OnStateUpdate is called on any state inside this state machine
     //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
     //    
     //}
 
-    //OnStateExit is called when a transition ends and the state machine finishes evaluating this state
+    // OnStateExit is called before OnStateExit is called on any state inside this state machine
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Conductor.avoidPos = 0;
+        Conductor.punching = false;
         animator.ResetTrigger(FarL);
         animator.ResetTrigger(FarR);
         animator.ResetTrigger(HitL);
@@ -37,15 +33,27 @@ public class AvoidBehaviour : StateMachineBehaviour
         animator.ResetTrigger(EmptyHit);
     }
 
-    // OnStateMove is called right after Animator.OnAnimatorMove()
+    // OnStateMove is called before OnStateMove is called on any state inside this state machine
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
-    //    // Implement code that processes and affects root motion
+    //    
     //}
 
-    // OnStateIK is called right after Animator.OnAnimatorIK()
+    // OnStateIK is called before OnStateIK is called on any state inside this state machine
     //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
+    //    
     //}
+
+    // OnStateMachineEnter is called when entering a state machine via its Entry Node
+    //override public void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
+    //{
+    //    
+    //}
+
+    // OnStateMachineExit is called when exiting a state machine via its Exit Node
+    override public void OnStateMachineExit(Animator animator, int stateMachinePathHash)
+    {
+        
+    }
 }

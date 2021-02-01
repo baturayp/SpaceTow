@@ -53,11 +53,11 @@ public class Conductor : MonoBehaviour
 	public AudioClip shortPunchClip;
 	public AudioClip obstacleSwoosh;
 	public static bool vibration;
+	public static bool punching;
 
 	//avoid movement values
 	public static int avoidPos;
-	public static bool avoiding;
-	public static bool punching;
+	private static float _avoidMoveWait;
 
 	//tutorial variables
 	public bool isTutorial;
@@ -78,24 +78,19 @@ public class Conductor : MonoBehaviour
 	//avoid from obstacles
 	public void Avoid(int trackNumber)
 	{
-		if (punching) return;
-		if (!avoiding && trackNumber != avoidPos)
+		if (trackNumber != avoidPos)
 		{
 			avoidPos = trackNumber;
 			spaceMan.Avoid(trackNumber);
 			effectLayer.PlayOneShot(obstacleSwoosh);
 		}
-		else if (trackNumber != avoidPos)
-		{
-			avoidPos = trackNumber;
-			spaceMan.ShortAvoid(trackNumber);
-			effectLayer.PlayOneShot(obstacleSwoosh);
-		}
+		_avoidMoveWait = songposition + 0.5f;
 	}
 
 	public void Inputted()
 	{
 		if (nextPunchWait != null) return;
+		avoidPos = 0;
 		if (beatQueue.Count != 0)
 		{
 			//peek the node in the queue
@@ -308,17 +303,25 @@ public class Conductor : MonoBehaviour
 					if (t.deltaPosition.x < -20 && nextTrack > 1) Avoid(2);
 					break;
 				}
-				// case TouchPhase.Stationary when nextTrack > 1:
-				// {
-				// 	if (_avoidMoveWait > songposition) _avoidMoveWait = songposition + 0.125f;
-				// 	break;
-				// }
+				case TouchPhase.Stationary when nextTrack > 1:
+				{
+					if (_avoidMoveWait > songposition) _avoidMoveWait = songposition + 0.125f;
+					break;
+				}
 			}
 		}
 
 		if (Input.GetKeyDown(KeyCode.LeftArrow)) Avoid(2);
 		if (Input.GetKeyDown(KeyCode.RightArrow)) Avoid(3);
 		if (Input.GetKeyDown(KeyCode.Space)) Inputted();
+
+		if (songposition > _avoidMoveWait)
+		{
+			if (punching) return;
+			if (avoidPos != 0) spaceMan.AvoidBack(avoidPos);
+			avoidPos = 0;
+			_avoidMoveWait = 0f;
+		}
 
 		//check to see if the song reaches its end
 		if (songposition > songLength || songposition > endTime)

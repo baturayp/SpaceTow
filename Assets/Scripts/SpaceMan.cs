@@ -4,19 +4,12 @@ using UnityEngine;
 public class SpaceMan : MonoBehaviour
 {
 	public Animator spaceMan;
-	private readonly int[] backPosition = { 0, 18, 28, 38, 48, 38, 38, 18, 28 };
-	private static readonly int PunchL = Animator.StringToHash("punchL");
-	private static readonly int PunchR = Animator.StringToHash("punchR");
-	private static readonly int AnimNumber = Animator.StringToHash("punchAnim");
+	private readonly int[] backPosition = { 0, 1, 2, 3, 4, 3, 3, 1, 2 };
 	private static readonly int FarL = Animator.StringToHash("farL");
 	private static readonly int FarR = Animator.StringToHash("farR");
 	private static readonly int HitL = Animator.StringToHash("hitL");
 	private static readonly int HitR = Animator.StringToHash("hitR");
 	private static readonly int EmptyHit = Animator.StringToHash("emptyHit");
-	private static readonly int ShortAvoidL = Animator.StringToHash("shortAvoidL");
-	private static readonly int ShortAvoidR = Animator.StringToHash("shortAvoidR");
-	private static readonly int LongAvoidL = Animator.StringToHash("longAvoidL");
-	private static readonly int LongAvoidR = Animator.StringToHash("longAvoidR");
 
 	private void Update()
 	{
@@ -26,16 +19,15 @@ public class SpaceMan : MonoBehaviour
 	//successful punch animation
 	public void Punch(int animNumber, int trackNumber, bool success)
 	{
-		if (success) spaceMan.SetInteger(AnimNumber, animNumber);
-		else spaceMan.SetInteger(AnimNumber, animNumber * 10 + 4);
-		spaceMan.SetTrigger(trackNumber > 0 ? PunchR : PunchL);
+		var animToPlay = animNumber.ToString() + trackNumber + (success ? "3" : "4");
+		spaceMan.CrossFadeInFixedTime(animToPlay, 0.05f, 0);
 	}
 
 	//delayed punch
 	public void DelayedPunch(int animNumber, int trackNumber)
 	{
-		spaceMan.SetInteger(AnimNumber, backPosition[animNumber]);
-		spaceMan.SetTrigger(trackNumber > 0 ? PunchR : PunchL);
+		var animToPlay = backPosition[animNumber].ToString() + trackNumber + "8";
+		spaceMan.CrossFadeInFixedTime(animToPlay, 0.05f, 0);
 	}
 
 	public void Empty()
@@ -58,11 +50,11 @@ public class SpaceMan : MonoBehaviour
 	//take avoid position
 	public void Avoid(int trackNumber)
 	{
-		spaceMan.SetTrigger(trackNumber > 2 ? LongAvoidR : LongAvoidL);
+		spaceMan.CrossFadeInFixedTime(trackNumber.ToString(), 0.1f, 0);
 	}
 
-	public void ShortAvoid(int trackNumber)
+	public void AvoidBack(int trackNumber)
 	{
-		spaceMan.SetTrigger(trackNumber > 2 ? ShortAvoidR : ShortAvoidL);
+		spaceMan.CrossFadeInFixedTime(trackNumber + "B", 0.1f, 0);
 	}
 }
