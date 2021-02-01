@@ -209,22 +209,24 @@ public class Conductor : MonoBehaviour
 		if (paused)
 		{
 			if (!(pauseTimeStamp < 0f)) return;
-			pauseTimeStamp = (float)AudioSettings.dspTime;
+			pauseTimeStamp = (float) AudioSettings.dspTime;
 			songLayer.Pause();
 			return;
 		}
+
 		if (pauseTimeStamp > 0f) //resume not managed
 		{
-			pausedTime += (float)AudioSettings.dspTime - pauseTimeStamp;
+			pausedTime += (float) AudioSettings.dspTime - pauseTimeStamp;
 			songLayer.Play();
 			pauseTimeStamp = -1f;
 		}
 
-		songposition = (float)(AudioSettings.dspTime - dsptimesong - pausedTime) * songLayer.pitch - (songInfo.songOffset);
+		songposition = (float) (AudioSettings.dspTime - dsptimesong - pausedTime) * songLayer.pitch -
+		               (songInfo.songOffset);
 
 		for (var i = 0; i < appearTimeLength; i++)
 		{
-			if(songposition >= songInfo.appearTime[i].startTime) appearTime = songInfo.appearTime[i].offsetVal;
+			if (songposition >= songInfo.appearTime[i].startTime) appearTime = songInfo.appearTime[i].offsetVal;
 		}
 
 		//check if need to instantiate new nodes
@@ -258,7 +260,7 @@ public class Conductor : MonoBehaviour
 				if (currNode.beat < songposition - BackOffset)
 				{
 					beatQueue.Dequeue();
-					if (!isTutorial) uiController.ScoreDown(currNode.trackNumber);
+					if (!isTutorial) uiController.ScoreDown(currNode.trackNumber, 0.05f);
 				}
 			}
 
@@ -277,7 +279,7 @@ public class Conductor : MonoBehaviour
 					else
 					{
 						beatQueue.Dequeue();
-						if (!isTutorial) uiController.ScoreDown(currNode.trackNumber);
+						if (!isTutorial) uiController.ScoreDown(currNode.trackNumber, 0.025f);
 						spaceMan.GotHit(currNode.trackNumber);
 					}
 				}
@@ -321,6 +323,12 @@ public class Conductor : MonoBehaviour
 			if (avoidPos != 0) spaceMan.AvoidBack(avoidPos);
 			avoidPos = 0;
 			_avoidMoveWait = 0f;
+		}
+
+		//player lost
+		if (uiController.lostSceneShowed)
+		{
+			songStarted = false;
 		}
 
 		//check to see if the song reaches its end

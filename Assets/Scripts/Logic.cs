@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,6 +24,7 @@ public class Logic : MonoBehaviour
     public Image[] uiElements;
     public Text[] texts;
     private int len, cur;
+    public static int currentSong;
     public Color[] colors;
     public Color[] uiColors;
     public Image leftButton, rightButton, songInfoFrame, songBkg, playBtn;
@@ -35,7 +37,7 @@ public class Logic : MonoBehaviour
     private int lastColor;
     private int lastLevel;
     private readonly string[] scenes = { "Chapel", "Beach", "Barn", "Toxic", "Station" };
-    private readonly string[] tracks = { "twelve days", "fright night twist", "born barnstormers", "run!", "mystica" };
+    private readonly string[] tracks = { "twelve days", "fright night twist", "born barnstormers", "run!", "terra mystica" };
     private readonly string[] artists = { "Alexander Nakarada", "Bryan Teoh", "Brian Boyko", "Komiku", "Alexander Nakarada" };
     private static readonly int NoiseColor = Shader.PropertyToID("_NoiseColor");
     private static readonly int MainColor = Shader.PropertyToID("_MainColor");
@@ -60,6 +62,7 @@ public class Logic : MonoBehaviour
         len = cams.Length;
         lastLevel = PlayerPrefs.GetInt("lastLevel", 1);
         lastColor = cur = lastLevel - 1;
+        currentSong = cur;
         starsMat = staticStars.material;
         starsMat.SetColor(NoiseColor, colors[0]);
         loopPlayer.clip = songloops[cur];
@@ -85,7 +88,7 @@ public class Logic : MonoBehaviour
     public void Update()
     {
         if (Input.touches.Length <= 0) return;
-        if (SongPickingControl._settingsIsActive) return;
+        if (SongPickingControl.settingsIsActive) return;
 
         var t = Input.GetTouch(0);
 
@@ -119,6 +122,7 @@ public class Logic : MonoBehaviour
         for (var i = 0; i < len; i++)
             cams[i].SetActive(false);
         cur = --cur % len;
+        currentSong = cur;
         if (cur < 0) cur = len - 1;
         cams[cur].SetActive(true);
 
@@ -150,6 +154,7 @@ public class Logic : MonoBehaviour
         for (var i = 0; i < len; i++)
             cams[i].SetActive(false);
         cur = ++cur % len;
+        currentSong = cur;
         cams[cur].SetActive(true);
 
         if (routine != null)

@@ -41,7 +41,7 @@ public class Tutorial : MonoBehaviour
 
         if (Conductor.songposition > 2.95f)
         {
-            if (!message0) ShowMessage(0, "single tap to punch\nwhen a meteor glows red");
+            if (!message0) ShowMessage(0, "single tap anywhere to punch\nwhen a meteor starts glowing");
         }
 
         if (Conductor.songposition > 6.8f)
@@ -191,15 +191,7 @@ public class Tutorial : MonoBehaviour
             fadePanel.color = new Color (0, 0, 0, a);
             yield return null;
         }
-        var lastLevel = PlayerPrefs.GetInt("lastLevel");
-        if (lastLevel == 0) 
-        {
-            PlayerPrefs.SetInt("lastLevel", 1);
-            SceneManager.LoadScene("Redirector");
-        }
-        else
-        {
-            SceneManager.LoadScene("MainMenu");
-        }
+
+        SceneManager.LoadScene("MainMenu");
     }
 }

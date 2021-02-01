@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using Cinemachine;
 using System;
 using GoogleMobileAds.Api;
+using UnityEditor;
 
 public class PlayingUIController : MonoBehaviour
 {
@@ -25,7 +26,9 @@ public class PlayingUIController : MonoBehaviour
 
 	//countdown elements
 	public Image fadePanel, endFadePanel;
-	private bool lostSceneShowed;
+	public Texture2D loadingIcon;
+
+	private readonly string[] scenes = { "Tutorial", "Chapel", "Beach", "Barn", "Toxic", "Station" };
 
 	//cameras
 	public CinemachineVirtualCamera playCam;
@@ -36,6 +39,8 @@ public class PlayingUIController : MonoBehaviour
 	private InterstitialAd interstitial;
 	private bool willShowAds;
 	private int closeAction;
+	[NonSerialized] public bool lostSceneShowed;
+	private bool loading;
 
 	private void OnDestroy()
 	{
@@ -72,7 +77,7 @@ public class PlayingUIController : MonoBehaviour
 #if UNITY_ANDROID
 		//test ads
 		//string adUnitId = "ca-app-pub-3940256099942544/1033173712";
-        
+
 		//my id
 		const string adUnitId = "ca-app-pub-3940256099942544/1033173712";
 #else
@@ -108,17 +113,16 @@ public class PlayingUIController : MonoBehaviour
 		}
 	}
 
-	public void ScoreDown(int track)
+	public void ScoreDown(int track, float amount)
 	{
 		if (healthScoreCoroutine != null) StopCoroutine(healthScoreCoroutine);
-		newHealthScore -= 0.05f;
+		newHealthScore -= amount;
 
 		//lost
 		if (newHealthScore < 0f && !lostSceneShowed)
 		{
-			//ShowLostScene();
-			//Conductor.paused = true;
-			//lostSceneShowed = true;
+			ShowLostScene();
+			lostSceneShowed = true;
 		}
 
 		healthScoreCoroutine = StartCoroutine(HealthBarUpdate(lastHealthScore, newHealthScore));
@@ -217,20 +221,6 @@ public class PlayingUIController : MonoBehaviour
 		}
 		playCam.m_Lens.Dutch = 0f;
 		shakeCoroutine = null;
-	}
-
-	private IEnumerator HomeRoutine()
-	{
-		var elapsedTime = 0f;
-		while (elapsedTime < 0.5f)
-		{
-			elapsedTime += Time.deltaTime;
-			var a = Mathf.Lerp(0f, 1f, elapsedTime / 0.5f);
-			var c = new Color(0, 0, 0, a);
-			fadePanel.color = c;
-			yield return null;
-		}
-		SceneManager.LoadScene("MainMenu");
 	}
 
 	private IEnumerator ShowWinRoutine()
@@ -334,14 +324,32 @@ public class PlayingUIController : MonoBehaviour
 		switch (action)
 		{
 			case 0:
-				SceneManager.LoadScene("Redirector");
+				StartCoroutine(LoadAsync(scenes[nextLevel]));
 				break;
 			case 1:
-				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+				StartCoroutine(LoadAsync(SceneManager.GetActiveScene().name));
 				break;
 			case 2:
-				StartCoroutine(HomeRoutine());
+				StartCoroutine(LoadAsync("MainMenu"));
 				break;
+		}
+	}
+
+	private void OnGUI ()
+	{
+		if (!loading) return;
+		GUI.BeginGroup (new Rect (Screen.width / 2 - 50, Screen.height / 2 - 50, 100, 100));
+		GUI.Box (new Rect (0,0,100,35), new GUIContent(" Loading...", loadingIcon));
+		GUI.EndGroup ();
+	}
+
+	private IEnumerator LoadAsync(string scene)
+	{
+		var asyncLoad = SceneManager.LoadSceneAsync(scene);
+		while (!asyncLoad.isDone)
+		{
+			loading = true;
+			yield return null;
 		}
 	}
 }
