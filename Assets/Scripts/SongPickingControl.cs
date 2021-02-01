@@ -7,6 +7,7 @@ public class SongPickingControl : MonoBehaviour
 	public GameObject settingsButton;
 	public GameObject settingsLayer;
 	public GameObject aboutLayer;
+	public GameObject aboutSongsLayer;
 	public static bool _settingsIsActive = false;
 	private static bool _secondBoardIsActive = false;
 
@@ -71,6 +72,20 @@ public class SongPickingControl : MonoBehaviour
 		aboutLayer.transform.localScale = new Vector3(1, 1, 1);
 	}
 
+	private IEnumerator AboutSongsAnim()
+	{
+		var elapsedTime = 0.0f;
+		aboutSongsLayer.SetActive(true);
+		settingsLayer.SetActive(false);
+		while (elapsedTime < 0.2f)
+		{
+			elapsedTime += Time.deltaTime;
+			aboutLayer.transform.localScale = new Vector3(0 + 5 * elapsedTime, 0 + 5 * elapsedTime, 1);
+			yield return null;
+		}
+		aboutLayer.transform.localScale = new Vector3(1, 1, 1);
+	}
+
     public void FlipToFirstFromSong()
     {
         StartCoroutine(FlipAnimCoroutine( secondBoardTransform, Vector3.zero, verticalFlip, FlipAnimationDuration, secondBoardTransform.pivot, bottomEdgePivot));
@@ -98,6 +113,7 @@ public class SongPickingControl : MonoBehaviour
 		StartCoroutine(FlipAnimCoroutine( settingsBoardTransform, horizontalFlip, Vector3.zero, FlipAnimationDuration, settingsBoardTransform.pivot, bottomEdgePivot));
 		_settingsIsActive = true;
 		aboutLayer.SetActive(false);
+		aboutSongsLayer.SetActive(false);
 		settingsLayer.SetActive(true);
 	}
 
@@ -108,8 +124,17 @@ public class SongPickingControl : MonoBehaviour
 		_settingsIsActive = false;
 	}
 
+	public void VisitURL(string website)
+	{
+		Application.OpenURL(website);
+	}
+
 	public void AboutToggle()
 	{
 		StartCoroutine(AboutAnim());
+	}
+	public void AboutSongsToggle()
+	{
+		StartCoroutine(AboutSongsAnim());
 	}
 }

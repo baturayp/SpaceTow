@@ -12962,7 +12962,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   developmentSong: {fileID: 11400000, guid: c101f98a1d3b9c4d782bb24dfa0d4762, type: 2}
   meteorStartLineZ: 20
-  meteorFinishLineZ: 0
+  meteorFinishLineZ: -0.5
   spaceMan: {fileID: 1391152777}
   uiController: {fileID: 1153441174}
   songLayer: {fileID: 1760618927}
@@ -13505,7 +13505,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1976510563}
-  m_LocalRotation: {x: 0.008422384, y: 0.9903714, z: -0.070021726, w: 0.11912427}
+  m_LocalRotation: {x: 0.008422374, y: 0.9903714, z: -0.070021726, w: 0.119124144}
   m_LocalPosition: {x: -2.3641286, y: 1.4168327, z: 9.185231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -13860,7 +13860,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2047155308}
-  m_LocalRotation: {x: 0.008422384, y: 0.9903714, z: -0.070021726, w: 0.11912427}
+  m_LocalRotation: {x: 0.008422374, y: 0.9903714, z: -0.070021726, w: 0.119124144}
   m_LocalPosition: {x: -2.3641286, y: 1.4168327, z: 9.185231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
