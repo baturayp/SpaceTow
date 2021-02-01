@@ -4,11 +4,10 @@ using UnityEngine;
 public class SpaceMan : MonoBehaviour
 {
 	public Animator spaceMan;
-	private readonly int[] backPosition = { 0, 18, 18, 18, 28, 38, 38, 48, 48, 48, 48, 28 };
+	private readonly int[] backPosition = { 0, 18, 28, 38, 48, 38, 38, 18, 28 };
 	private static readonly int PunchL = Animator.StringToHash("punchL");
 	private static readonly int PunchR = Animator.StringToHash("punchR");
 	private static readonly int AnimNumber = Animator.StringToHash("punchAnim");
-	private static readonly int AvoidWait = Animator.StringToHash("avoidWait");
 	private static readonly int FarL = Animator.StringToHash("farL");
 	private static readonly int FarR = Animator.StringToHash("farR");
 	private static readonly int HitL = Animator.StringToHash("hitL");
@@ -59,17 +58,11 @@ public class SpaceMan : MonoBehaviour
 	//take avoid position
 	public void Avoid(int trackNumber)
 	{
-		spaceMan.SetBool(AvoidWait, true);
 		spaceMan.SetTrigger(trackNumber > 2 ? LongAvoidR : LongAvoidL);
 	}
 
 	public void ShortAvoid(int trackNumber)
 	{
 		spaceMan.SetTrigger(trackNumber > 2 ? ShortAvoidR : ShortAvoidL);
-	}
-
-	public void AvoidBack(int trackNumber)
-	{
-		spaceMan.SetBool(AvoidWait, false);
 	}
 }

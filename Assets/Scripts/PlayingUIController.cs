@@ -116,9 +116,9 @@ public class PlayingUIController : MonoBehaviour
 		//lost
 		if (newHealthScore < 0f && !lostSceneShowed)
 		{
-			ShowLostScene();
-			Conductor.paused = true;
-			lostSceneShowed = true;
+			//ShowLostScene();
+			//Conductor.paused = true;
+			//lostSceneShowed = true;
 		}
 
 		healthScoreCoroutine = StartCoroutine(HealthBarUpdate(lastHealthScore, newHealthScore));

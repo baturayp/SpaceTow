@@ -56,7 +56,8 @@ public class Conductor : MonoBehaviour
 
 	//avoid movement values
 	public static int avoidPos;
-	private static float _avoidMoveWait;
+	public static bool avoiding;
+	public static bool punching;
 
 	//tutorial variables
 	public bool isTutorial;
@@ -77,13 +78,19 @@ public class Conductor : MonoBehaviour
 	//avoid from obstacles
 	public void Avoid(int trackNumber)
 	{
-		if (trackNumber != avoidPos)
+		if (punching) return;
+		if (!avoiding && trackNumber != avoidPos)
 		{
 			avoidPos = trackNumber;
 			spaceMan.Avoid(trackNumber);
 			effectLayer.PlayOneShot(obstacleSwoosh);
 		}
-		_avoidMoveWait = songposition + 0.5f;
+		else if (trackNumber != avoidPos)
+		{
+			avoidPos = trackNumber;
+			spaceMan.ShortAvoid(trackNumber);
+			effectLayer.PlayOneShot(obstacleSwoosh);
+		}
 	}
 
 	public void Inputted()
@@ -121,7 +128,7 @@ public class Conductor : MonoBehaviour
 				{
 					switch (offset < 0f)
 					{
-						case true when offset > -0.07f:
+						case true when offset > -0.03f:
 							spaceMan.Punch(frontNode.objPos, frontNode.trackNumber, true);
 							frontNode.Score(true);
 							beatQueue.Dequeue();
@@ -301,24 +308,17 @@ public class Conductor : MonoBehaviour
 					if (t.deltaPosition.x < -20 && nextTrack > 1) Avoid(2);
 					break;
 				}
-				case TouchPhase.Stationary when nextTrack > 1:
-				{
-					if (_avoidMoveWait > songposition) _avoidMoveWait = songposition + 0.125f;
-					break;
-				}
+				// case TouchPhase.Stationary when nextTrack > 1:
+				// {
+				// 	if (_avoidMoveWait > songposition) _avoidMoveWait = songposition + 0.125f;
+				// 	break;
+				// }
 			}
 		}
 
 		if (Input.GetKeyDown(KeyCode.LeftArrow)) Avoid(2);
 		if (Input.GetKeyDown(KeyCode.RightArrow)) Avoid(3);
 		if (Input.GetKeyDown(KeyCode.Space)) Inputted();
-
-		if (songposition > _avoidMoveWait)
-		{
-			if (avoidPos != 0) spaceMan.AvoidBack(avoidPos);
-			avoidPos = 0;
-			_avoidMoveWait = 0f;
-		}
 
 		//check to see if the song reaches its end
 		if (songposition > songLength || songposition > endTime)
