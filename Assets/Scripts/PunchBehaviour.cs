@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class PunchBehaviour : StateMachineBehaviour
 {
+    public static bool punching;
     private static readonly int FarL = Animator.StringToHash("farL");
 	private static readonly int FarR = Animator.StringToHash("farR");
 	private static readonly int HitL = Animator.StringToHash("hitL");
 	private static readonly int HitR = Animator.StringToHash("hitR");
 	private static readonly int EmptyHit = Animator.StringToHash("emptyHit");
+    private static readonly int SideHit = Animator.StringToHash("sideHit");
 
     // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Conductor.punching = true;
+        punching = true;
     }
 
     // OnStateUpdate is called before OnStateUpdate is called on any state inside this state machine
@@ -25,7 +27,7 @@ public class PunchBehaviour : StateMachineBehaviour
     // OnStateExit is called before OnStateExit is called on any state inside this state machine
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Conductor.punching = false;
+        punching = false;
         animator.ResetTrigger(FarL);
         animator.ResetTrigger(FarR);
         animator.ResetTrigger(HitL);
@@ -54,6 +56,11 @@ public class PunchBehaviour : StateMachineBehaviour
     // OnStateMachineExit is called when exiting a state machine via its Exit Node
     override public void OnStateMachineExit(Animator animator, int stateMachinePathHash)
     {
-        
+        punching = false;
+        animator.ResetTrigger(FarL);
+        animator.ResetTrigger(FarR);
+        animator.ResetTrigger(HitL);
+        animator.ResetTrigger(HitR);
+        animator.ResetTrigger(EmptyHit);
     }
 }

@@ -40,8 +40,12 @@ public class MusicNode : MonoBehaviour
 
 	private MeteorNode GetMeteor()
 	{
-		var randomPos = UnityEngine.Random.Range(1,9);
-		//int randomPos = 8;
+		int randomPos = 1;
+		//in portrait mode, don't use far-side meteors
+		if(Screen.orientation == ScreenOrientation.Portrait | Screen.orientation == ScreenOrientation.PortraitUpsideDown)
+		randomPos = UnityEngine.Random.Range(1,7);
+		else randomPos = UnityEngine.Random.Range(1,9);
+		
 		var randomMeteor = UnityEngine.Random.Range(0,5);
 		meteorNode = Instantiate(meteorPrefab[randomMeteor]).GetComponent<MeteorNode>();
 		meteorNode.Initialize(startLineZ, finishLineZ, beat, randomPos, trackNumber);

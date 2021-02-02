@@ -7276,7 +7276,7 @@ MonoBehaviour:
   healthBarBottom: {fileID: 1842000952}
   fadePanel: {fileID: 971456902}
   endFadePanel: {fileID: 882483349}
-  loadingIcon: {fileID: 2800000, guid: 4cf173adad96dd5309a827c7dc70a266, type: 3}
+  loadingIcon: {fileID: 2800000, guid: 4c2488d93bb49b85384758791fa2a637, type: 3}
   playCam: {fileID: 761918840}
   dollyCart: {fileID: 1919171815}
   towParticles: {fileID: 1129949831}
@@ -13035,7 +13035,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -150}
+  m_AnchoredPosition: {x: 0, y: -148}
   m_SizeDelta: {x: 54, y: 216}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1801908306
@@ -13110,7 +13110,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -150}
+  m_AnchoredPosition: {x: 0, y: -148}
   m_SizeDelta: {x: 54, y: 216}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1842000952
@@ -13506,7 +13506,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1976510563}
-  m_LocalRotation: {x: 0.008422384, y: 0.9903714, z: -0.070021726, w: 0.11912427}
+  m_LocalRotation: {x: 0.008422382, y: 0.9903714, z: -0.07002172, w: 0.11912427}
   m_LocalPosition: {x: -2.3641286, y: 1.4168327, z: 9.185231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -13861,7 +13861,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2047155308}
-  m_LocalRotation: {x: 0.008422384, y: 0.9903714, z: -0.070021726, w: 0.11912427}
+  m_LocalRotation: {x: 0.008422382, y: 0.9903714, z: -0.07002172, w: 0.11912427}
   m_LocalPosition: {x: -2.3641286, y: 1.4168327, z: 9.185231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

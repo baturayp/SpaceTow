@@ -45,6 +45,7 @@ public class Conductor : MonoBehaviour
 	//total tracks
 	private const int Len = 4;
 	private Coroutine nextPunchWait;
+	private Coroutine justPunchedRoutine;
 
 	//audio related stuff
 	public AudioSource songLayer;
@@ -53,7 +54,6 @@ public class Conductor : MonoBehaviour
 	public AudioClip shortPunchClip;
 	public AudioClip obstacleSwoosh;
 	public static bool vibration;
-	public static bool punching;
 
 	//avoid movement values
 	public static int avoidPos;
@@ -75,16 +75,30 @@ public class Conductor : MonoBehaviour
 		nextPunchWait = null;
 	}
 
+	//justPunched
+	private IEnumerator JustPunched()
+	{
+		yield return new WaitForSeconds(0.07f);
+		justPunchedRoutine = null;
+	}
+
+	private void TriggerJustPunched()
+	{
+		if (justPunchedRoutine != null) StopCoroutine(justPunchedRoutine);
+		justPunchedRoutine = StartCoroutine(JustPunched());
+	}
+
 	//avoid from obstacles
 	public void Avoid(int trackNumber)
 	{
+		if (justPunchedRoutine != null) return;
 		if (trackNumber != avoidPos)
 		{
 			avoidPos = trackNumber;
 			spaceMan.Avoid(trackNumber);
 			effectLayer.PlayOneShot(obstacleSwoosh);
 		}
-		_avoidMoveWait = songposition + 0.5f;
+		_avoidMoveWait = songposition + 0.4f;
 	}
 
 	public void Inputted()
@@ -280,7 +294,15 @@ public class Conductor : MonoBehaviour
 					{
 						beatQueue.Dequeue();
 						if (!isTutorial) uiController.ScoreDown(currNode.trackNumber, 0.025f);
-						spaceMan.GotHit(currNode.trackNumber);
+						//got hit from center
+						if (avoidPos == 0) spaceMan.GotHit(currNode.trackNumber);
+						//got hit from side
+						else 
+						{
+							spaceMan.GotHitFromSide();
+							avoidPos = 0;
+							_avoidMoveWait = 0f;
+						}
 					}
 				}
 			}
@@ -319,7 +341,6 @@ public class Conductor : MonoBehaviour
 
 		if (songposition > _avoidMoveWait)
 		{
-			if (punching) return;
 			if (avoidPos != 0) spaceMan.AvoidBack(avoidPos);
 			avoidPos = 0;
 			_avoidMoveWait = 0f;

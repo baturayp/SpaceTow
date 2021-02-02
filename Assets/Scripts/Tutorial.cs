@@ -14,6 +14,8 @@ public class Tutorial : MonoBehaviour
     private bool tapped, swiped;
     private Coroutine blink;
     public Conductor conductor;
+    private bool loading;
+    public Texture2D loadingIcon;
 
     private void OnEnable()
     {
@@ -179,19 +181,20 @@ public class Tutorial : MonoBehaviour
         }
         nextIcon.SetActive(true);
     }
+    
+    private void OnGUI ()
+	{
+		if (!loading) return;
+		GUI.DrawTexture (new Rect (Screen.width / 2 - 59, Screen.height / 2 - 75, 118, 150), loadingIcon);
+	}
 
     private IEnumerator SkipRoutine()
     {
-        nextIcon.SetActive(false);
-        var elapsedTime = 0f;
-        while (elapsedTime < 1f)
-        {
-            elapsedTime += Time.deltaTime;
-            var a = Mathf.Lerp(0f, 1f, elapsedTime / 1f);
-            fadePanel.color = new Color (0, 0, 0, a);
-            yield return null;
-        }
-
-        SceneManager.LoadScene("MainMenu");
+        var asyncLoad = SceneManager.LoadSceneAsync("MainMenu");
+		while (!asyncLoad.isDone)
+		{
+			loading = true;
+			yield return null;
+		}
     }
 }

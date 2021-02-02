@@ -338,9 +338,7 @@ public class PlayingUIController : MonoBehaviour
 	private void OnGUI ()
 	{
 		if (!loading) return;
-		GUI.BeginGroup (new Rect (Screen.width / 2 - 50, Screen.height / 2 - 50, 100, 100));
-		GUI.Box (new Rect (0,0,100,35), new GUIContent(" Loading...", loadingIcon));
-		GUI.EndGroup ();
+		GUI.DrawTexture (new Rect (Screen.width / 2 - 59, Screen.height / 2 - 75, 118, 150), loadingIcon);
 	}
 
 	private IEnumerator LoadAsync(string scene)

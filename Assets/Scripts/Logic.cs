@@ -34,8 +34,10 @@ public class Logic : MonoBehaviour
     public Image fadeLayer;
     public Animator lockAnimator;
     public GameObject toxicSmoke;
+    public Texture2D loadingIcon;
     private int lastColor;
     private int lastLevel;
+    private bool loading;
     private readonly string[] scenes = { "Chapel", "Beach", "Barn", "Toxic", "Station" };
     private readonly string[] tracks = { "twelve days", "fright night twist", "born barnstormers", "run!", "terra mystica" };
     private readonly string[] artists = { "Alexander Nakarada", "Bryan Teoh", "Brian Boyko", "Komiku", "Alexander Nakarada" };
@@ -338,18 +340,22 @@ public class Logic : MonoBehaviour
         }
     }
 
+    private void OnGUI ()
+	{
+		if (!loading) return;
+		GUI.DrawTexture (new Rect (Screen.width / 2 - 59, Screen.height / 2 - 75, 118, 150), loadingIcon);
+	}
+
     private IEnumerator LevelSelectRoutine(int selected)
     {
+        yield return new WaitForSeconds(0.2f);
+        if (routine != null || fadeRoutine != null) yield break;
         if (selected >= lastLevel) yield break;
-        var elapsedTime = 0f;
-        while (elapsedTime < 0.5f)
-        {
-            elapsedTime += Time.deltaTime;
-            var a = Mathf.Lerp(0f, 1f, elapsedTime / 0.5f);
-            var c = new Color(0, 0, 0, a);
-            fadeLayer.color = c;
-            yield return null;
-        }
-        SceneManager.LoadScene(scenes[selected]);
+        var asyncLoad = SceneManager.LoadSceneAsync(scenes[selected]);
+		while (!asyncLoad.isDone)
+		{
+			loading = true;
+			yield return null;
+		}
     }
 }

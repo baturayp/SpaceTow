@@ -1316,6 +1316,7 @@ MonoBehaviour:
   nextIcon: {fileID: 1870999698}
   fadePanel: {fileID: 987566689}
   conductor: {fileID: 1760618929}
+  loadingIcon: {fileID: 2800000, guid: 4c2488d93bb49b85384758791fa2a637, type: 3}
 --- !u!114 &1760618929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1728,7 +1729,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 90}
-  m_SizeDelta: {x: 800, y: 600}
+  m_SizeDelta: {x: 400, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2146755102
 MonoBehaviour:
@@ -1752,10 +1753,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: b21782e43715ca9ab9acac7de6b48f36, type: 3}
-    m_FontSize: 40
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 4
+    m_MinSize: 3
     m_MaxSize: 80
     m_Alignment: 4
     m_AlignByGeometry: 0
