@@ -58,7 +58,7 @@ public class ObstacleNode : MonoBehaviour
 		yield return new WaitUntil(() => Conductor.songposition >= beat);
 		if (success)
         {
-            yield return new WaitUntil(() => Conductor.songposition >= beat + 0.1f);
+            yield return new WaitUntil(() => Conductor.songposition >= beat + 0.075f);
             paused = true;
             var explosionPosition = transform.position + explosionVector;
             rigid.AddExplosionForce(10f, explosionPosition, 5.0f, 2f, ForceMode.Impulse);
