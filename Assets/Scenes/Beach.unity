@@ -13212,7 +13212,7 @@ MonoBehaviour:
   effectLayer: {fileID: 1391152776}
   longPunchClip: {fileID: 8300000, guid: 98898af425209a5ef85fdf78076022b2, type: 3}
   shortPunchClip: {fileID: 8300000, guid: 048229d8e371c6c3e92780ea8bc734bf, type: 3}
-  obstacleSwoosh: {fileID: 8300000, guid: 229600f62109a03e5abe96bf5ff0b2a9, type: 3}
+  obstacleSwoosh: {fileID: 8300000, guid: 222069c57f9531d4d82394c430845f98, type: 3}
   isTutorial: 0
 --- !u!4 &1760618930
 Transform:
