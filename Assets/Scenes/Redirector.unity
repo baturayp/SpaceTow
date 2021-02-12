@@ -342,3 +342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80ca1a96d1c13da89c6102f600c9aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
+=======
+  loadingIcon: {fileID: 2800000, guid: 4c2488d93bb49b85384758791fa2a637, type: 3}
+>>>>>>> Stashed changes

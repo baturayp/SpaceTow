@@ -3,6 +3,13 @@
   <component name="ContentModelUserStore">
     <attachedFolders />
     <explicitIncludes>
+<<<<<<< Updated upstream
+=======
+      <Path>Library/PackageCache/com.google.external-dependency-manager@1.2.163</Path>
+      <Path>Library/PackageCache/com.google.firebase.analytics@7.0.2</Path>
+      <Path>Library/PackageCache/com.google.firebase.app@7.0.2</Path>
+      <Path>Library/PackageCache/com.unity.ads@3.6.1</Path>
+>>>>>>> Stashed changes
       <Path>Library/PackageCache/com.unity.cinemachine@2.6.3</Path>
       <Path>Library/PackageCache/com.unity.collab-proxy@1.3.9</Path>
       <Path>Library/PackageCache/com.unity.ext.nunit@1.0.6</Path>
@@ -20,7 +27,14 @@
       <Path>.vscode</Path>
       <Path>Library</Path>
       <Path>Logs</Path>
+<<<<<<< Updated upstream
       <Path>Temp</Path>
+=======
+      <Path>SampleRecordings</Path>
+      <Path>ScreenShots</Path>
+      <Path>Temp</Path>
+      <Path>UIElementsSchema</Path>
+>>>>>>> Stashed changes
       <Path>UserSettings</Path>
       <Path>obj</Path>
       <Path>tmp</Path>

@@ -58,6 +58,7 @@ public class Logic : MonoBehaviour
 
     private void Start()
     {
+        Application.targetFrameRate = 60;
         len = cams.Length;
         lastLevel = PlayerPrefs.GetInt("lastLevel", 1);
         lastColor = cur = lastLevel - 1;

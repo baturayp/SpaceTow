@@ -4,6 +4,10 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Cinemachine;
 using System;
+<<<<<<< Updated upstream
+=======
+using UnityEngine.Advertisements;
+>>>>>>> Stashed changes
 
 public class PlayingUIController : MonoBehaviour
 {
@@ -31,6 +35,7 @@ public class PlayingUIController : MonoBehaviour
 	public CinemachineDollyCart dollyCart;
 	public GameObject towParticles;
 
+<<<<<<< Updated upstream
 	private void OnEnable()
 	{
 		SceneManager.sceneLoaded += OnSceneLoad;
@@ -42,6 +47,23 @@ public class PlayingUIController : MonoBehaviour
 	}
 
 	public void ScoreDown(int track)
+=======
+	//ads counter
+	[NonSerialized] public bool lostSceneShowed;
+	private bool loading;
+	private string gameId = "4010708";
+	private bool testMode = true;
+
+
+	private void Start()
+	{
+		Advertisement.Initialize(gameId, testMode);
+		Application.targetFrameRate = 60;
+		StartCoroutine(CameraRoutine());
+	}
+
+	public void ScoreDown(int track, float amount)
+>>>>>>> Stashed changes
 	{
 		if (healthScoreCoroutine != null) StopCoroutine(healthScoreCoroutine);
 		newHealthScore -= 0.05f;
@@ -222,7 +244,11 @@ public class PlayingUIController : MonoBehaviour
 
 	public void OnLastButton()
 	{
+<<<<<<< Updated upstream
 		SceneManager.LoadScene("Redirector");
+=======
+		TakeAction(0);
+>>>>>>> Stashed changes
 	}
 
 	public void ShowWinScene()
@@ -248,11 +274,52 @@ public class PlayingUIController : MonoBehaviour
 
 	public void RetryButtonOnClick()
 	{
+<<<<<<< Updated upstream
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+=======
+		TakeAction(1);
+	}
+
+	public void HomeButtonOnClick()
+	{
+		TakeAction(2);
+>>>>>>> Stashed changes
 	}
 
 	public void HomeButtonOnClick(int scene)
 	{
+<<<<<<< Updated upstream
 		StartCoroutine(HomeRoutine());
+=======
+		Advertisement.Show();
+		switch (action)
+		{
+			case 0:
+				StartCoroutine(LoadAsync(scenes[nextLevel]));
+				break;
+			case 1:
+				StartCoroutine(LoadAsync(SceneManager.GetActiveScene().name));
+				break;
+			case 2:
+				StartCoroutine(LoadAsync("MainMenu"));
+				break;
+		}
+	}
+
+	private void OnGUI ()
+	{
+		if (!loading) return;
+		GUI.DrawTexture (new Rect (Screen.width / 2 - 59, Screen.height / 2 - 75, 118, 150), loadingIcon);
+	}
+
+	private IEnumerator LoadAsync(string scene)
+	{
+		var asyncLoad = SceneManager.LoadSceneAsync(scene);
+		while (!asyncLoad.isDone)
+		{
+			loading = true;
+			yield return null;
+		}
+>>>>>>> Stashed changes
 	}
 }
