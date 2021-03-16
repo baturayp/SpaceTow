@@ -260,7 +260,7 @@ public class Conductor : MonoBehaviour
 				if (currNode.beat < songposition - BackOffset)
 				{
 					beatQueue.Dequeue();
-					if (!isTutorial) uiController.ScoreDown(currNode.trackNumber);
+					if (!isTutorial) uiController.ScoreDown(currNode.trackNumber, 0.05f);
 				}
 			}
 
@@ -280,7 +280,7 @@ public class Conductor : MonoBehaviour
 					else
 					{
 						beatQueue.Dequeue();
-						if (!isTutorial) uiController.ScoreDown(currNode.trackNumber);
+						if (!isTutorial) uiController.ScoreDown(currNode.trackNumber, 0.025f);
 						spaceMan.GotHit(currNode.trackNumber);
 						//if(punchEffects) effectLayer.PlayOneShot(obstacleMissClip);
 					}

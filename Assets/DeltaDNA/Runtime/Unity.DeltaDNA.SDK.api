@@ -1,0 +1,406 @@
+// This file is generated. Do not modify by hand.
+// XML documentation file not found. To check if public methods have XML comments,
+// make sure the XML doc file is present and located next to the scraped dll
+namespace DeltaDNA
+{
+    public class AndroidNotifications : UnityEngine.MonoBehaviour
+    {
+        public event System.Action<string> OnDidFailToRegisterForPushNotifications;
+        public event System.Action<string> OnDidLaunchWithPushNotification;
+        public event System.Action<string> OnDidReceivePushNotification;
+        public event System.Action<string> OnDidRegisterForPushNotifications;
+        public AndroidNotifications() {}
+        public void DidFailToRegisterForPushNotifications(string error);
+        public void DidReceivePushNotification(string notification);
+        public void DidRegisterForPushNotifications(string registrationId);
+        public void RegisterForPushNotifications(bool secondary = False);
+        public void UnregisterForPushNotifications();
+    }
+
+    [System.Xml.Serialization.XmlRoot(@"configuration")] public sealed class APIConfiguration
+    {
+        [System.Xml.Serialization.XmlElement(@"api_key")] public string ApiKey;
+        public APIConfiguration() {}
+    }
+
+    public static class AudiencePinpointer
+    {
+        public static void RecordInstallEvent();
+        public static void RecordPurchaseEvent(int realCurrencyAmount, string realCurrencyType);
+        public static void RecordSessionEvent();
+    }
+
+    public class Configuration : UnityEngine.ScriptableObject
+    {
+        public const string ASSET_DIRECTORY = Assets/Resources;
+        public string clientVersion;
+        public string collectUrl;
+        public string engageUrl;
+        public int environmentKey;
+        public string environmentKeyDev;
+        public string environmentKeyLive;
+        public const string FULL_ASSET_PATH = Assets/Resources/ddna_configuration.asset;
+        public string hashSecret;
+        public const string RESOURCES_CONTAINER = Assets;
+        public const string RESOURCES_DIRECTORY = Resources;
+        public const string RUNTIME_RSRC_PATH = ddna_configuration;
+        public bool useApplicationVersion;
+        public Configuration() {}
+        public static DeltaDNA.Configuration GetAssetInstance();
+    }
+
+    public class DDNA : DeltaDNA.Singleton<DeltaDNA.DDNA>
+    {
+        public event System.Action OnImageCachePopulated;
+        public event System.Action<string> OnImageCachingFailed;
+        public event System.Action OnNewSession;
+        public event System.Action OnSessionConfigurationFailed;
+        public event System.Action<bool> OnSessionConfigured;
+        public DeltaDNA.AndroidNotifications AndroidNotifications { get; }
+        public string AndroidRegistrationID { get; set; }
+        public string AppleDeveloperID { get; set; }
+        public string AppStoreID { get; set; }
+        public string ClientVersion { get; set; }
+        public string CollectURL { get; }
+        public string CrossGameUserID { get; set; }
+        public DeltaDNA.EngageFactory EngageFactory { get; }
+        public string EngageURL { get; }
+        public string EnvironmentKey { get; }
+        public string HashSecret { get; set; }
+        public bool HasStarted { get; }
+        public DeltaDNA.IosNotifications IosNotifications { get; }
+        public bool IsUploading { get; }
+        public string Platform { get; set; }
+        public string PushNotificationToken { get; set; }
+        public string SessionID { get; }
+        public DeltaDNA.Settings Settings { get; set; }
+        public string UserID { get; }
+        protected DDNA() {}
+        public void ClearPersistentData();
+        public void DownloadImageAssets();
+        public void ForgetMe();
+        public void NewSession();
+        public virtual void OnDestroy();
+        public DeltaDNA.EventAction RecordEvent(string eventName);
+        public DeltaDNA.EventAction RecordEvent<T>(T gameEvent) where T : DeltaDNA.GameEvent<T>;
+        public DeltaDNA.EventAction RecordEvent(string eventName, System.Collections.Generic.Dictionary<string, object> eventParams);
+        public void RecordPushNotification(System.Collections.Generic.Dictionary<string, object> payload);
+        public void RequestEngagement(DeltaDNA.Engagement engagement, System.Action<System.Collections.Generic.Dictionary<string, object>> callback);
+        public void RequestEngagement(DeltaDNA.Engagement engagement, System.Action<DeltaDNA.Engagement> onCompleted, System.Action<System.Exception> onError);
+        public void RequestSessionConfiguration();
+        public void SetLoggingLevel(DeltaDNA.Logger.Level level);
+        public void SetTimestampFunc(System.Func<System.Nullable<System.DateTime>> TimestampFunc);
+        public void StartSDK();
+        public void StartSDK(DeltaDNA.Configuration config);
+        public void StartSDK(string userID);
+        public void StartSDK(DeltaDNA.Configuration config, string userID);
+        [System.Obsolete(@"Deprecated as of version 4.8, please use the Editor configuration UI and StartSDK() instead")] public void StartSDK(string envKey, string collectURL, string engageURL);
+        [System.Obsolete(@"Deprecated as of version 4.8, please use the Editor configuration UI and StartSDK(userID) instead")] public void StartSDK(string envKey, string collectURL, string engageURL, string userID);
+        public void StopSDK();
+        public void StopTrackingMe();
+        public void Upload();
+        public void UseCollectTimestamp(bool useCollect);
+    }
+
+    public class EngageFactory
+    {
+        protected static DeltaDNA.Engagement BuildEngagement(string decisionPoint, DeltaDNA.Params parameters);
+        public void RequestGameParameters(string decisionPoint, System.Action<System.Collections.Generic.Dictionary<string, object>> callback);
+        public void RequestGameParameters(string decisionPoint, DeltaDNA.Params parameters, System.Action<System.Collections.Generic.Dictionary<string, object>> callback);
+        public void RequestImageMessage(string decisionPoint, System.Action<DeltaDNA.ImageMessage> callback);
+        public void RequestImageMessage(string decisionPoint, DeltaDNA.Params parameters, System.Action<DeltaDNA.ImageMessage> callback);
+    }
+
+    public class Engagement : DeltaDNA.Engagement<DeltaDNA.Engagement>
+    {
+        public Engagement(string decisionPoint) {}
+    }
+
+    public class Engagement<T> where T : DeltaDNA.Engagement<T>
+    {
+        public string DecisionPoint { get; }
+        public string Error { get; set; }
+        public string Flavour { get; }
+        public System.Collections.Generic.Dictionary<string, object> JSON { get; }
+        public string Raw { get; set; }
+        public int StatusCode { get; set; }
+        public Engagement(string decisionPoint) {}
+        public T AddParam(string key, object value);
+        public System.Collections.Generic.Dictionary<string, object> AsDictionary();
+        public virtual string ToString();
+    }
+
+    public delegate void EngageResponse(string response, int statusCode, string error);
+
+    public sealed class EventAction
+    {
+        public DeltaDNA.EventAction Add(DeltaDNA.EventActionHandler handler);
+        public void Run();
+    }
+
+    public abstract class EventActionHandler
+    {
+        protected EventActionHandler() {}
+    }
+
+    public class EventStore : System.IDisposable
+    {
+        public bool IsInitialised { get; }
+        public EventStore(string dir) {}
+        public void ClearAll();
+        public void ClearOut();
+        public static void ClearStream(System.IO.Stream stream);
+        public virtual void Dispose();
+        protected virtual void Dispose(bool disposing);
+        protected virtual void Finalize();
+        public void FlushBuffers();
+        public bool Push(string obj);
+        public static bool PushEvent(string obj, System.IO.Stream stream);
+        public System.Collections.Generic.List<string> Read();
+        public static void ReadEvents(System.IO.Stream stream, System.Collections.Generic.IList<string> events);
+        public bool Swap();
+        public static void SwapStreams(ref System.IO.Stream sin, ref System.IO.Stream sout);
+    }
+
+    public class ExecutionCountManager : DeltaDNA.SimpleDataStore<long, long>
+    {
+        public ExecutionCountManager() {}
+        protected virtual string createLine(long key, long value);
+        public long GetExecutionCount(long variantId);
+        public void incrementExecutionCount(long variantId);
+        protected virtual long parseKey(string key);
+        protected virtual long parseValue(string value);
+    }
+
+    public class GameEvent : DeltaDNA.GameEvent<DeltaDNA.GameEvent>
+    {
+        public GameEvent(string name) {}
+    }
+
+    public class GameEvent<T> where T : DeltaDNA.GameEvent<T>
+    {
+        public string Name { get; }
+        public GameEvent(string name) {}
+        public T AddParam(string key, object value);
+        public System.Collections.Generic.Dictionary<string, object> AsDictionary();
+    }
+
+    public class GameParametersHandler : DeltaDNA.EventActionHandler
+    {
+        public GameParametersHandler(System.Action<System.Collections.Generic.Dictionary<string, object>> callback) {}
+    }
+
+    public class ImageMessage
+    {
+        public event System.Action<DeltaDNA.ImageMessage.EventArgs> OnAction;
+        public event System.Action<string> OnDidFailToReceiveResources;
+        public event System.Action OnDidReceiveResources;
+        public event System.Action<DeltaDNA.ImageMessage.EventArgs> OnDismiss;
+        public event System.Action<DeltaDNA.ImageMessage.EventArgs> OnStore;
+        public System.Collections.Generic.Dictionary<string, object> Parameters { get; }
+        public void Close();
+        public static DeltaDNA.ImageMessage Create(DeltaDNA.Engagement engagement);
+        public static DeltaDNA.ImageMessage Create(DeltaDNA.Engagement engagement, System.Collections.Generic.Dictionary<string, object> options);
+        public static DeltaDNA.ImageMessage Create(DeltaDNA.DDNA ddna, DeltaDNA.Engagement engagement, System.Collections.Generic.Dictionary<string, object> options);
+        public void FetchResources();
+        public bool IsReady();
+        public bool IsShowing();
+        public void Show();
+        public class EventArgs : System.EventArgs
+        {
+            public string ActionType { get; set; }
+            public string ActionValue { get; set; }
+            public string ID { get; set; }
+            public EventArgs(string id, string type, string value) {}
+        }
+        public class StoreEventArgs : DeltaDNA.ImageMessage.EventArgs
+        {
+            public StoreEventArgs(string platform, string id, string type, object value) {}
+        }
+    }
+
+    public class ImageMessageHandler : DeltaDNA.EventActionHandler
+    {
+        public ImageMessageHandler(DeltaDNA.DDNA ddna, System.Action<DeltaDNA.ImageMessage> callback) {}
+    }
+
+    public class IosNotifications : UnityEngine.MonoBehaviour
+    {
+        public event System.Action<string> OnDidFailToRegisterForPushNotifications;
+        public event System.Action<string> OnDidLaunchWithPushNotification;
+        public event System.Action<string> OnDidReceivePushNotification;
+        public event System.Action<string> OnDidRegisterForPushNotifications;
+        public IosNotifications() {}
+        public void DidFailToRegisterForPushNotifications(string error);
+        public void DidReceivePushNotification(string notification);
+        public void DidRegisterForPushNotifications(string deviceToken);
+        public void RegisterForPushNotifications();
+        public void UnregisterForPushNotifications();
+    }
+
+    public static class Logger
+    {
+        public const string PREFIX = [DDSDK] ;
+        public static void SetLogLevel(DeltaDNA.Logger.Level logLevel);
+        public enum Level
+        {
+            public const DeltaDNA.Logger.Level DEBUG = 0;
+            public const DeltaDNA.Logger.Level ERROR = 3;
+            public const DeltaDNA.Logger.Level INFO = 1;
+            public int value__;
+            public const DeltaDNA.Logger.Level WARNING = 2;
+        }
+    }
+
+    public class OrientationChange : UnityEngine.MonoBehaviour
+    {
+        public void Init(System.Action onChange);
+    }
+
+    public class Params
+    {
+        public Params() {}
+        public Params(DeltaDNA.Params p) {}
+        public DeltaDNA.Params AddParam(string key, object value);
+        public System.Collections.Generic.Dictionary<string, object> AsDictionary();
+        public object GetParam(string key);
+    }
+
+    public sealed class Platform
+    {
+        public const string AMAZON = AMAZON;
+        public const string ANDROID = ANDROID;
+        public const string BLACKBERRY = BLACKBERRY;
+        public const string FACEBOOK = FACEBOOK;
+        public const string IOS = IOS;
+        public const string IOS_TV = IOS_TV;
+        public const string MAC_CLIENT = MAC_CLIENT;
+        public const string PC_CLIENT = PC_CLIENT;
+        public const string PS3 = PS3;
+        public const string PS4 = PS4;
+        public const string PSVITA = PSVITA;
+        public const string SWITCH = SWITCH;
+        public const string UNKNOWN = UNKNOWN;
+        public const string WEB = WEB;
+        public const string WIIU = WIIU;
+        public const string WINDOWS_MOBILE = WINDOWS_MOBILE;
+        public const string XBOX360 = XBOX360;
+        public const string XBOXONE = XBOXONE;
+        public Platform() {}
+    }
+
+    public class Product : DeltaDNA.Product<DeltaDNA.Product>
+    {
+        public Product() {}
+    }
+
+    public class Product<T> : DeltaDNA.Params where T : DeltaDNA.Product<T>
+    {
+        public Product() {}
+        public T AddItem(string name, string type, int amount);
+        public T AddVirtualCurrency(string name, string type, long amount);
+        public static int ConvertCurrency(string code, System.Decimal value);
+        public T SetRealCurrency(string type, int amount);
+    }
+
+    public class Settings
+    {
+        public bool AdvertiserGdprAgeRestrictedUser { get; set; }
+        public bool AdvertiserGdprUserConsent { get; set; }
+        public bool BackgroundEventUpload { get; set; }
+        public int BackgroundEventUploadRepeatRateSeconds { get; set; }
+        public int BackgroundEventUploadStartDelaySeconds { get; set; }
+        public bool DebugMode { get; set; }
+        public DeltaDNA.GameParametersHandler DefaultGameParameterHandler { get; set; }
+        public DeltaDNA.ImageMessageHandler DefaultImageMessageHandler { get; set; }
+        public int EngageCacheExpirySeconds { get; set; }
+        public int HttpRequestCollectTimeoutSeconds { get; set; }
+        public int HttpRequestConfigurationMaxRetries { get; set; }
+        public int HttpRequestConfigurationRetryBackoffFactorSeconds { get; set; }
+        public int HttpRequestConfigurationTimeoutSeconds { get; set; }
+        public int HttpRequestEngageTimeoutSeconds { get; set; }
+        public int HttpRequestMaxRetries { get; set; }
+        public float HttpRequestRetryDelaySeconds { get; set; }
+        public int ImageCacheLimitMB { get; set; }
+        public int MaxConcurrentImageCacheFetches { get; set; }
+        public bool MultipleActionsForEventTriggerEnabled { get; set; }
+        public bool MultipleActionsForImageMessagesEnabled { get; set; }
+        public bool OnDestroySendGameEndedEvent { get; set; }
+        public bool OnFirstRunSendNewPlayerEvent { get; set; }
+        public bool OnInitSendClientDeviceEvent { get; set; }
+        public bool OnInitSendGameStartedEvent { get; set; }
+        public bool OnPauseSendGameEndedStartedEvent { get; set; }
+        public bool SendGameRunningEveryMinute { get; set; }
+        public int SessionTimeoutSeconds { get; set; }
+        public bool UseEventStore { get; set; }
+    }
+
+    public abstract class SimpleDataStore<K, V>
+    {
+        protected abstract string createLine(K key, V value);
+        protected char getKeyValueSeparator();
+        public V GetOrDefault(K key, V defaultValue);
+        protected abstract K parseKey(string key);
+        protected abstract V parseValue(string value);
+        public void Put(K key, V value);
+    }
+
+    public class Singleton<T> : UnityEngine.MonoBehaviour where T : UnityEngine.MonoBehaviour
+    {
+        public static T Instance { get; }
+        public Singleton() {}
+        public virtual void OnDestroy();
+    }
+
+    public class Transaction : DeltaDNA.Transaction<DeltaDNA.Transaction>
+    {
+        public Transaction(string name, string type, DeltaDNA.Product productsReceived, DeltaDNA.Product productsSpent) {}
+    }
+
+    public class Transaction<T> : DeltaDNA.GameEvent<T> where T : DeltaDNA.Transaction<T>
+    {
+        public Transaction(string name, string type, DeltaDNA.Product productsReceived, DeltaDNA.Product productsSpent) {}
+        public T SetProductId(string productId);
+        public T SetReceipt(string receipt);
+        public T SetReceiptSignature(string receiptSignature);
+        public T SetServer(string server);
+        public T SetTransactionId(string transactionId);
+        public T SetTransactorId(string transactorId);
+    }
+
+    public interface TriggerCondition
+    {
+        public abstract bool CanExecute();
+    }
+
+    public class TriggerConditionParser
+    {
+        public TriggerConditionParser(System.Collections.Generic.Dictionary<string, object> campaignLimitsConfig, long variantId) {}
+        public DeltaDNA.TriggerCondition parseCondition(System.Collections.Generic.Dictionary<string, object> showCondition, DeltaDNA.ExecutionCountManager executionCountManager);
+        public System.Collections.Generic.List<DeltaDNA.TriggerCondition> parseConditions(DeltaDNA.ExecutionCountManager executionCountManager);
+    }
+
+    [System.Runtime.CompilerServices.Extension] public static class Utils
+    {
+        public static byte[] ComputeMD5Hash(byte[] buffer);
+        public static void CreateDirectory(string path);
+        public static System.IO.Stream CreateStream(string path);
+        public static bool DirectoryExists(string path);
+        public static bool FileExists(string path);
+        public static string FixURL(string url);
+        [System.Runtime.CompilerServices.Extension] public static T GetOrDefault<T, K>(System.Collections.Generic.IDictionary<K, object> dict, K key, T def);
+        public static System.Collections.Generic.Dictionary<K, V> HashtableToDictionary<K, V>(System.Collections.Generic.Dictionary<K, V> dictionary);
+        public static System.Collections.Generic.Dictionary<K, V> HashtableToDictionary<K, V>(System.Collections.Hashtable table);
+        public static bool IsDirectoryWritable(string path);
+        public static System.IO.Stream OpenStream(string path);
+    }
+}
+
+namespace DeltaDNA.MiniJSON
+{
+    public static class Json
+    {
+        public static object Deserialize(string json);
+        public static string Serialize(object obj);
+    }
+}

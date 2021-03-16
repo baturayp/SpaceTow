@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: Avarice
   productName: SpaceTow
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -146,7 +146,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.DefaultCompany.SpaceTow
+    Android: com.Avarice.SpaceTow
     Standalone: com.DefaultCompany.SpaceTow
   buildNumber:
     Standalone: 0
@@ -229,7 +229,7 @@ PlayerSettings:
   clonedFromGUID: 00000000000000000000000000000000
   templatePackageId: 
   templateDefaultScene: 
-  useCustomMainManifest: 0
+  useCustomMainManifest: 1
   useCustomLauncherManifest: 0
   useCustomMainGradleTemplate: 0
   useCustomLauncherGradleManifest: 0
@@ -738,7 +738,8 @@ PlayerSettings:
   scriptingDefineSymbols: {}
   additionalCompilerArguments: {}
   platformArchitecture: {}
-  scriptingBackend: {}
+  scriptingBackend:
+    Android: 0
   il2cppCompilerConfiguration: {}
   managedStrippingLevel: {}
   incrementalIl2cppBuild: {}
@@ -810,8 +811,8 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
-    Analytics: 0
-    Build: 0
+    Analytics: 1
+    Build: 1
     Collab: 0
     Game Performance: 0
     Purchasing: 0
@@ -830,11 +831,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 0
-  cloudProjectId: 52c98d60-2230-4b83-b6f1-e4baf725f5ba
+  cloudProjectId: b669bd56-de8e-4f2c-a0b3-5f622c92c0ba
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: SpaceTow
-  organizationId: eegemen42
+  projectName: Space Tow
+  organizationId: elxill
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   virtualTexturingSupportEnabled: 0

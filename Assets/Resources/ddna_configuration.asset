@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5928118b326994146b017350147fdc41, type: 3}
+  m_Name: ddna_configuration
+  m_EditorClassIdentifier: 
+  environmentKeyDev: b669bd56-de8e-4f2c-a0b3-5f622c92c0ba_Dev
+  environmentKeyLive: b669bd56-de8e-4f2c-a0b3-5f622c92c0ba_Live
+  environmentKey: 0
+  collectUrl: collect20681ggspc.deltadna.net/collect/api
+  engageUrl: engage20681ggspc.deltadna.net
+  hashSecret: 
+  clientVersion: 
+  useApplicationVersion: 1
