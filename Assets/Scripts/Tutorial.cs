@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Lumpn.Matomo;
 
 public class Tutorial : MonoBehaviour
 {
@@ -14,22 +15,21 @@ public class Tutorial : MonoBehaviour
     private bool tapped, swiped;
     private Coroutine blink;
     public Conductor conductor;
-    private bool loading;
-    public Texture2D loadingIcon;
 
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoad;
-    }
+    //matomo
+    [SerializeField] private MatomoTrackerData trackerData;
+#if UNITY_ANDROID
+    private readonly string platform = "Android";
+#else
+    private readonly string platform = "iOS";
+#endif
 
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoad;
-    }
-    
-    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    private void Start()
     {
         StartCoroutine(StartRoutine());
+        var tracker = trackerData.CreateTracker();
+        var session = tracker.CreateSession(SystemInfo.deviceUniqueIdentifier);
+        session.Record("Tutorial", platform + "/Start", 0);
     }
 
     public void OnNextButton()
@@ -43,7 +43,7 @@ public class Tutorial : MonoBehaviour
 
         if (Conductor.songposition > 2.95f)
         {
-            if (!message0) ShowMessage(0, "single tap anywhere to punch\nwhen a meteor starts glowing");
+            if (!message0) ShowMessage(0, "single tap anywhere to punch\nwhen a meteor glows red");
         }
 
         if (Conductor.songposition > 6.8f)
@@ -181,20 +181,28 @@ public class Tutorial : MonoBehaviour
         }
         nextIcon.SetActive(true);
     }
-    
-    private void OnGUI ()
-	{
-		if (!loading) return;
-		GUI.DrawTexture (new Rect (Screen.width / 2 - 59, Screen.height / 2 - 75, 118, 150), loadingIcon);
-	}
 
     private IEnumerator SkipRoutine()
     {
-        var asyncLoad = SceneManager.LoadSceneAsync("MainMenu");
-		while (!asyncLoad.isDone)
-		{
-			loading = true;
-			yield return null;
-		}
+        nextIcon.SetActive(false);
+        var elapsedTime = 0f;
+        while (elapsedTime < 1f)
+        {
+            elapsedTime += Time.deltaTime;
+            var a = Mathf.Lerp(0f, 1f, elapsedTime / 1f);
+            fadePanel.color = new Color(0, 0, 0, a);
+            yield return null;
+        }
+        var lastLevel = PlayerPrefs.GetInt("lastLevel", 0);
+        if (lastLevel == 0)
+        {
+            PlayerPrefs.SetInt("lastLevel", 1);
+            PlayerPrefs.Save();
+            SceneManager.LoadScene("Chapel");
+        }
+        else
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 }

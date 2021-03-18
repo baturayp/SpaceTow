@@ -174,6 +174,7 @@ public class Conductor : MonoBehaviour
 		paused = true;
 		pauseTimeStamp = -1f;
 		songInfo = developmentSong;
+		songposition = 0f;
 
 		appearTime = 2f;
 		appearTimeLength = songInfo.appearTime.Length;
@@ -347,9 +348,12 @@ public class Conductor : MonoBehaviour
 		}
 
 		//player lost
-		if (uiController.lostSceneShowed)
-		{
-			songStarted = false;
+		if (!isTutorial)
+        {
+			if (uiController.lostSceneShowed)
+			{
+				songStarted = false;
+			}
 		}
 
 		//check to see if the song reaches its end

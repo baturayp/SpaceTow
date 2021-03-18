@@ -1,0 +1,66 @@
+// This file is generated. Do not modify by hand.
+// XML documentation file not found. To check if public methods have XML comments,
+// make sure the XML doc file is present and located next to the scraped dll
+public sealed class EnableNotificationsPostProcessBuild
+{
+    public EnableNotificationsPostProcessBuild() {}
+    [UnityEditor.Callbacks.PostProcessBuild(1)] public static void OnPostProcessBuild(UnityEditor.BuildTarget buildTarget, string path);
+}
+
+namespace DeltaDNA
+{
+    public class Environment
+    {
+        public string game;
+        public int id;
+        public string name;
+        public Environment() {}
+    }
+
+    public class EnvironmentWrapper
+    {
+        public DeltaDNA.Environment[] Environments;
+        public EnvironmentWrapper() {}
+    }
+}
+
+namespace DeltaDNA.Editor
+{
+    public sealed class AddDefineSymbolsToXcodeProject : UnityEngine.ScriptableObject
+    {
+        public AddDefineSymbolsToXcodeProject() {}
+    }
+
+    public sealed class ConfigurationWindow : UnityEditor.EditorWindow
+    {
+        public ConfigurationWindow() {}
+    }
+
+    public sealed class EventsWindow : UnityEditor.EditorWindow
+    {
+        public EventsWindow() {}
+        public string[] GetEnvironmentOptions();
+    }
+
+    public class iOSConfiguration
+    {
+        [System.Xml.Serialization.XmlElement(@"enable_rich_push_notifications")] public bool enableRichPushNotifications;
+        [System.Xml.Serialization.XmlElement(@"push_notification_service_extension_identifier")] public string pushNotificationServiceExtensionIdentifier;
+        [System.Xml.Serialization.XmlIgnore] public bool Dirty { get; set; }
+        public iOSConfiguration() {}
+    }
+
+    public sealed class MenuItems : UnityEngine.MonoBehaviour
+    {
+        public MenuItems() {}
+        [UnityEditor.MenuItem(@"DeltaDNA/Run Health Check", priority = 3)] public static void CheckSdk();
+        [UnityEditor.MenuItem(@"DeltaDNA/Configure", priority = 1)] public static void ConfigureSdk();
+        [UnityEditor.MenuItem(@"DeltaDNA/Event Definitions...", priority = 2)] public static void EventDefinitions();
+        [UnityEditor.MenuItem(@"DeltaDNA/Events Manager", priority = 3)] public static void EventManager();
+    }
+
+    [UnityEditor.InitializeOnLoad] public sealed class NotificationsConfigurator
+    {
+        public NotificationsConfigurator() {}
+    }
+}

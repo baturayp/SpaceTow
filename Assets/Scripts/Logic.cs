@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Lumpn.Matomo;
 
 public class Logic : MonoBehaviour
 {
@@ -34,33 +35,25 @@ public class Logic : MonoBehaviour
     public Image fadeLayer;
     public Animator lockAnimator;
     public GameObject toxicSmoke;
-    public Texture2D loadingIcon;
     private int lastColor;
     private int lastLevel;
-    private bool loading;
     private readonly string[] scenes = { "Chapel", "Beach", "Barn", "Toxic", "Station" };
     private readonly string[] tracks = { "twelve days", "fright night twist", "born barnstormers", "run!", "terra mystica" };
     private readonly string[] artists = { "Alexander Nakarada", "Bryan Teoh", "Brian Boyko", "Komiku", "Alexander Nakarada" };
     private static readonly int NoiseColor = Shader.PropertyToID("_NoiseColor");
     private static readonly int MainColor = Shader.PropertyToID("_MainColor");
 
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoad;
-    }
-
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoad;
-    }
-
-    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
-    {
-        StartCoroutine(FadeRoutine());
-    }
+    [SerializeField] private MatomoTrackerData trackerData;
+#if UNITY_ANDROID
+    private readonly string platform = "Android";
+#else
+    private readonly string platform = "iOS";
+#endif
 
     private void Start()
     {
+        MatomoStarted();
+        StartCoroutine(FadeRoutine());
         len = cams.Length;
         lastLevel = PlayerPrefs.GetInt("lastLevel", 1);
         lastColor = cur = lastLevel - 1;
@@ -87,10 +80,27 @@ public class Logic : MonoBehaviour
         effectsToggle.isOn = PlayerPrefs.GetInt("vibration", 1) == 1;
     }
 
+    private void MatomoEnd()
+    {
+        //matomo
+        var tracker = trackerData.CreateTracker();
+        var session = tracker.CreateSession(SystemInfo.deviceUniqueIdentifier);
+        session.Record("MainMenu", platform + "/End", Time.timeSinceLevelLoad);
+    }
+
+    private void MatomoStarted()
+    {
+        //matomo
+        var tracker = trackerData.CreateTracker();
+        var session = tracker.CreateSession(SystemInfo.deviceUniqueIdentifier);
+        session.Record("MainMenu", platform + "/Start", 0);
+    }
+
     public void Update()
     {
         if (Input.touches.Length <= 0) return;
         if (SongPickingControl.settingsIsActive) return;
+        if (SongPickingControl._secondBoardIsActive) return;
 
         var t = Input.GetTouch(0);
 
@@ -133,7 +143,6 @@ public class Logic : MonoBehaviour
             StopCoroutine(routine);
         }
         routine = StartCoroutine(SetColor(lastColor, cur));
-
 
         if (songChangeRoutine != null)
         {
@@ -181,10 +190,16 @@ public class Logic : MonoBehaviour
 
     public void LevelSelect()
     {
-        if (routine != null) return;
-        if (cur < lastLevel)
+        StartCoroutine(LevelSelectWait(cur));
+    }
+
+    private IEnumerator LevelSelectWait(int l)
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (routine != null) yield break;
+        if (l < lastLevel)
         {
-            StartCoroutine(LevelSelectRoutine(cur));
+            StartCoroutine(LevelSelectRoutine(l));
         }
         else lockAnimator.Play("lockIcon", 0);
     }
@@ -340,22 +355,24 @@ public class Logic : MonoBehaviour
         }
     }
 
-    private void OnGUI ()
-	{
-		if (!loading) return;
-		GUI.DrawTexture (new Rect (Screen.width / 2 - 59, Screen.height / 2 - 75, 118, 150), loadingIcon);
-	}
-
-    private IEnumerator LevelSelectRoutine(int selected)
+    private IEnumerator LevelSelectRoutine(int level)
     {
-        yield return new WaitForSeconds(0.2f);
-        if (routine != null || fadeRoutine != null) yield break;
-        if (selected >= lastLevel) yield break;
-        var asyncLoad = SceneManager.LoadSceneAsync(scenes[selected]);
-		while (!asyncLoad.isDone)
-		{
-			loading = true;
-			yield return null;
-		}
+        MatomoEnd();
+        var elapsedTime = 0f;
+        while (elapsedTime < 0.5f)
+        {
+            elapsedTime += Time.deltaTime;
+            var a = Mathf.Lerp(0f, 1f, elapsedTime / 0.5f);
+            var c = new Color(0, 0, 0, a);
+            fadeLayer.color = c;
+            yield return null;
+        }
+        var last = PlayerPrefs.GetInt("lastLevel", 0);
+        if (last == 0)
+        {
+            SceneManager.LoadScene("Tutorial");
+        }
+        else SceneManager.LoadScene(scenes[level]);
     }
+
 }

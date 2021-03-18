@@ -9,7 +9,7 @@ public class SongPickingControl : MonoBehaviour
 	public GameObject settingsLayer;
 	public GameObject aboutLayer;
 	public static bool settingsIsActive = false;
-	private static bool _secondBoardIsActive = false;
+	public static bool _secondBoardIsActive = false;
 
 	public GameObject[] aboutSongLayers;
 
@@ -32,22 +32,14 @@ public class SongPickingControl : MonoBehaviour
 	private readonly Vector2 topEdgePivot = new Vector2(0.5f, 1f);
 	private readonly Vector2 bottomEdgePivot = new Vector2(0.5f, 0f);
 
-	private void Awake()
-	{
-		//check if song messenger exists (if player returned from other scenes)
-		if (SongInfoMessenger.instance != null)
-		{
-			//Placeholder. Do something here.
-		}
-		//if not exist, create new SongInfoMessenger
-		else
-		{
-			Instantiate(songInfoMessengerPrefab);
-		}
-	}
+    private void Start()
+    {
+		settingsIsActive = false;
+		_secondBoardIsActive = false;
+    }
 
-	//menu flip animations
-	private static IEnumerator FlipAnimCoroutine(RectTransform rectT, Vector3 start, Vector3 end, float duration, Vector2 originalPivot, Vector2 animationPivot)
+    //menu flip animations
+    private static IEnumerator FlipAnimCoroutine(RectTransform rectT, Vector3 start, Vector3 end, float duration, Vector2 originalPivot, Vector2 animationPivot)
 	{
 		rectT.pivot = animationPivot;
 		var i = 0f;

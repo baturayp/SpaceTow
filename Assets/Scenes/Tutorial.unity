@@ -1316,7 +1316,7 @@ MonoBehaviour:
   nextIcon: {fileID: 1870999698}
   fadePanel: {fileID: 987566689}
   conductor: {fileID: 1760618929}
-  loadingIcon: {fileID: 2800000, guid: 4c2488d93bb49b85384758791fa2a637, type: 3}
+  trackerData: {fileID: 11400000, guid: b451ffcf7716546818c35eb7d3334625, type: 2}
 --- !u!114 &1760618929
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,35 +1,34 @@
 {
   "dependencies": {
-    "com.google.external-dependency-manager": {
-      "version": "1.2.163",
-      "depth": 2,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://unityregistry-pa.googleapis.com"
-    },
-    "com.google.firebase.analytics": {
-      "version": "7.0.2",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.google.firebase.app": "7.0.2"
-      },
-      "url": "https://unityregistry-pa.googleapis.com"
-    },
-    "com.google.firebase.app": {
-      "version": "7.0.2",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "com.google.external-dependency-manager": "1.2.163"
-      },
-      "url": "https://unityregistry-pa.googleapis.com"
-    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
       "source": "builtin",
       "dependencies": {}
+    },
+    "com.unity.accelerate": {
+      "version": "file:/Users/batu/Downloads/com.unity.accelerate-1.4.1.tgz",
+      "depth": 0,
+      "source": "local-tarball",
+      "dependencies": {
+        "com.unity.modules.androidjni": "1.0.0",
+        "com.unity.modules.jsonserialize": "1.0.0",
+        "com.unity.modules.unityanalytics": "1.0.0",
+        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.modules.unitywebrequestwww": "1.0.0",
+        "com.unity.nuget.newtonsoft-json": "2.0.0",
+        "com.unity.purchasing": "2.2.1",
+        "com.unity.settings-manager": "1.0.3"
+      }
+    },
+    "com.unity.ads": {
+      "version": "3.6.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
     },
     "com.unity.cinemachine": {
       "version": "2.6.3",
@@ -62,10 +61,12 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.5",
+      "version": "2.0.7",
       "depth": 0,
       "source": "registry",
-      "dependencies": {},
+      "dependencies": {
+        "com.unity.test-framework": "1.1.9"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.vscode": {
@@ -75,17 +76,40 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-    "com.unity.recorder": {
-      "version": "2.5.2",
-      "depth": 0,
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "2.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.purchasing": {
+      "version": "2.2.1",
+      "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.timeline": "1.2.17"
+        "com.unity.ugui": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.recorder": {
+      "version": "2.5.4",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.timeline": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.settings-manager": {
+      "version": "1.0.3",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.test-framework": {
-      "version": "1.1.22",
+      "version": "1.1.24",
       "depth": 0,
       "source": "registry",
       "dependencies": {
